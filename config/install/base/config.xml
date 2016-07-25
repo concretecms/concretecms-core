@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<concrete5-cif version="1.0">
+
+	<!-- Default Banned Words, these are run through Rot13 -->
+	<banned_words>
+		<banned_word>shpx</banned_word><!-- Fu** -->
+		<banned_word>fuvg</banned_word><!-- Sh** -->
+		<banned_word>ovgpu</banned_word> <!-- Bi*** -->
+		<banned_word>nff</banned_word> <!-- A** -->
+	</banned_words>
+
+	<!-- Conversation Flag Types -->
+	<flag_types>
+		<flag_type>spam</flag_type>
+	</flag_types>
+</concrete5-cif>
