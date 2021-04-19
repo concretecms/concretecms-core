@@ -1,12 +1,12 @@
 <?php
-namespace Concrete\Controller\Dialog\Group;
+namespace Concrete\Controller\Dialog\Groups;
 
 use Concrete\Controller\Backend\UserInterface as BackendInterfaceController;
 use TaskPermission;
 
 class Search extends BackendInterfaceController
 {
-    protected $viewPath = '/dialogs/group/search';
+    protected $viewPath = '/dialogs/groups/search';
 
     protected function canAccess()
     {
