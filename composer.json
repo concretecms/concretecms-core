@@ -27,18 +27,22 @@
     }
   },
   "bin": [ "bin/concrete5" ],
+  "platform": {
+    "config": {
+      "php": "^7.3||^8.0",
+      "ext-dom": "*",
+      "ext-fileinfo": "*",
+      "ext-gd": "*",
+      "ext-iconv": "*",
+      "ext-mbstring": "*",
+      "ext-PDO": "*",
+      "ext-pdo_mysql": "*",
+      "ext-SimpleXML": "*",
+      "ext-curl": "*",
+      "ext-zip": "*"
+    }
+  },
   "require": {
-    "php": "^7.3||^8.0",
-    "ext-dom": "*",
-    "ext-fileinfo": "*",
-    "ext-gd": "*",
-    "ext-iconv": "*",
-    "ext-mbstring": "*",
-    "ext-PDO": "*",
-    "ext-pdo_mysql": "*",
-    "ext-SimpleXML": "*",
-    "ext-curl": "*",
-    "ext-zip": "*",
     "symfony/class-loader": "^3.4",
     "symfony/http-foundation": "^5.2",
     "symfony/routing": "^5.2",
