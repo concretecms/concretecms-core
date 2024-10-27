@@ -116,7 +116,7 @@ class Stack extends Page
     {
         $c = Page::getCurrentPage();
         if (is_object($c) && (!$c->isError())) {
-            $identifier = sprintf('/stack/name/%s/%s/%s/%s', $stackName, $c->getCollectionID(), $cvID, $multilingualContentSource);
+            $identifier = sprintf('/stack/name/%s/%s/%s', $stackName, $c->getCollectionID(), $multilingualContentSource);
             $cache = Core::make('cache/request');
             $item = $cache->getItem($identifier);
             if (!$item->isMiss()) {
