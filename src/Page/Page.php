@@ -1401,7 +1401,7 @@ class Page extends Collection implements CategoryMemberInterface,
      */
     public function export($pageNode)
     {
-        $exporter = new Exporter();
+        $exporter = $this->getExporter();
         $exporter->export($this, $pageNode);
     }
 
