@@ -43,9 +43,13 @@ class ImportConfigValuesRoutine extends AbstractRoutine
             if ($value === 'false') {
                 $value = false;
             }
+            $rawOverwrite = isset($key['overwrite']) ? (string) $key['overwrite'] : '';
+            $overwrite = $rawOverwrite === '' ? true : filter_var($rawOverwrite, FILTER_VALIDATE_BOOLEAN);
             $repository = $this->getRepository(isset($key['storage']) ? (string) $key['storage'] : '', $package);
-            $repository->set($key, $value);
-            $repository->save($key, $value);
+            if ($overwrite || !$repository->has($key)) {
+                $repository->set($key, $value);
+                $repository->save($key, $value);
+            }
         }
     }
 
