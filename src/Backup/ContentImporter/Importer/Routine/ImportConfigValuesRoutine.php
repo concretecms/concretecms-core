@@ -30,22 +30,22 @@ class ImportConfigValuesRoutine extends AbstractRoutine
             return;
         }
         $this->repositoryInstances = [];
-        foreach ($sx->config->children() as $key) {
-            $package = isset($key['package']) ? static::getPackageObject($key['package']) : null;
-            $node = (string) $key->getName();
-            if ($node !== 'option') {
-                // legacy
-                $key = $node;
+        foreach ($sx->config->children() as $element) {
+            $package = isset($element['package']) ? static::getPackageObject($element['package']) : null;
+            $elementName = $element->getName();
+            if ($elementName === 'option') {
+                $key = (string) $element['name'];
             } else {
-                $key = (string) $key['name'];
+                // legacy
+                $key = $elementName;
             }
-            $value = (string) $key;
+            $value = (string) $element;
             if ($value === 'false') {
                 $value = false;
             }
-            $rawOverwrite = isset($key['overwrite']) ? (string) $key['overwrite'] : '';
+            $rawOverwrite = isset($element['overwrite']) ? (string) $element['overwrite'] : '';
             $overwrite = $rawOverwrite === '' ? true : filter_var($rawOverwrite, FILTER_VALIDATE_BOOLEAN);
-            $repository = $this->getRepository(isset($key['storage']) ? (string) $key['storage'] : '', $package);
+            $repository = $this->getRepository(isset($element['storage']) ? (string) $element['storage'] : '', $package);
             if ($overwrite || !$repository->has($key)) {
                 $repository->set($key, $value);
                 $repository->save($key, $value);
@@ -63,6 +63,7 @@ class ImportConfigValuesRoutine extends AbstractRoutine
                 break;
             default:
                 $storage = 'file';
+                break;
         }
         $key = $storage . ($package ? "@{$package->getPackageHandle()}" : '');
         if (isset($this->repositoryInstances[$key])) {
