@@ -449,7 +449,7 @@ class Page extends Collection implements CategoryMemberInterface,
     /**
      * {@inheritdoc}
      *
-     * @see \Concrete\Core\Summary\Template\Category\CategoryMemberInterface::getSummaryCategoryHandle()
+     * @see \Concrete\Core\Summary\Category\CategoryMemberInterface::getSummaryCategoryHandle()
      */
     public function getSummaryCategoryHandle() : string
     {
