@@ -497,7 +497,7 @@ class File extends Controller
                     throw new UserMessageException(t('Could not open with ZipArchive::CREATE'));
                 }
                 foreach ($files as $key => $f) {
-                    $filename = $f->getFilename();
+                    $filename = $f->getFileNameForPresentation();
 
                     // Change the filename if it's already in the zip
                     if ($zip->locateName($filename) !== false) {
@@ -1190,8 +1190,17 @@ class File extends Controller
                 $incomingStorageLocation = $incoming->getIncomingStorageLocation()->getDisplayName();
 
                 $files = $incoming->getIncomingFilesystem()->listContents($incomingPath);
+                $files = array_values(array_filter(
+                    $files,
+                    static function (array $item) {
+                        return $item['type'] === 'file'; 
+                    }
+                ));
 
                 foreach (array_keys($files) as $index) {
+                    if (!isset($files[$index]['extension'])) {
+                        $files[$index]['extension'] = '';
+                    }
                     $files[$index]['allowed'] = $fh->extension($files[$index]['basename']);
                     $files[$index]['thumbnail'] = FileTypeList::getType($files[$index]['extension'])->getThumbnail();
                     $files[$index]['displaySize'] = $nh->formatSize($files[$index]['size'], 'KB');

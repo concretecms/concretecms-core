@@ -176,7 +176,7 @@ Returns codes:
   $okExitCode operation completed successfully
   $errExitCode errors occurred
 
-More info at http://documentation.concrete5.org/developers/appendix/cli-commands#c5-package-pack
+More info at https://documentation.concretecms.org/9-x/developers/security/cli-jobs#c5-package-pack
 EOT
             )
         ;
@@ -303,8 +303,16 @@ EOT
         }
         if ($this->input->getParameterOption(['--zip', '-z']) !== false) {
             $zipOption = (string) $this->input->getOption('zip');
-            if ($zipOption === '' || $zipOption === self::ZIPOUT_AUTO) {
-                $zipFilename = dirname($packageInfo->getPackageDirectory()) . '/' . $packageInfo->getHandle() . '-' . $packageInfo->getVersion() . '.zip';
+            if ($zipOption === '' || $zipOption === self::ZIPOUT_AUTO || substr($zipOption, -4) !== '.zip') {
+                // If the zip option is empty, set to auto, or doesn't end with '.zip', generate the zip filename
+                $baseDir = $zipOption !== '' && $zipOption !== self::ZIPOUT_AUTO ? rtrim($zipOption, '/') : dirname($packageInfo->getPackageDirectory());
+
+                // Create the directory if it doesn't exist
+                if (!is_dir($baseDir) && !mkdir($baseDir, 0777, true) && !is_dir($baseDir)) {
+                    throw new \RuntimeException("Unable to create the directory '{$baseDir}'");
+                }
+
+                $zipFilename = $baseDir . '/' . $packageInfo->getHandle() . '-' . $packageInfo->getVersion() . '.zip';
             } else {
                 $zipFilename = $zipOption;
             }
