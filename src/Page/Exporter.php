@@ -102,7 +102,7 @@ class Exporter implements ItemInterface
                 }
         
                 $r = app(Connection::class)->executeQuery('select arHandle from Areas where cID = ? and arIsGlobal = 0 and arParentID = 0', [$mixed->getCollectionID()]);
-                while ($row = $r->FetchRow()) {
+                while ($row = $r->fetchAssociative()) {
                     $ax = Area::get($mixed, $row['arHandle']);
                     $ax->export($p, $mixed);
                 }
