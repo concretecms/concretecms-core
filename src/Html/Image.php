@@ -36,7 +36,7 @@ class Image
      *     <li>bool|null `forceAbsoluteURL`: If TRUE set the img `src` will always be absolute; if NULL or not specified, we'll read the </li>
      * </ul>
      */
-    public function __construct(File $f = null, $options = null)
+    public function __construct(?File $f = null, $options = null)
     {
         if ($f === null) {
             return false;
@@ -69,15 +69,18 @@ class Image
             }
             $sources = [];
             $fallbackSrc = $forceAbsoluteURL ? null : $f->getRelativePath();
+            // In the default Picture tag all sources share the same aspect ratio 
+            $widthAttribute = $f->getAttribute('width');
+            $heightAttribute = $f->getAttribute('height');
             if (!$fallbackSrc) {
                 $fallbackSrc = $f->getURL();
             }
-            foreach ($this->theme->getThemeResponsiveImageMap() as $thumbnail => $width) {
+            foreach ($this->theme->getThemeResponsiveImageMap() as $thumbnail => $breakpointWidth) {
                 $type = Type::getByHandle($thumbnail);
                 if ($type != null) {
                     $src = $f->getThumbnailURL($type->getBaseVersion());
-                    $sources[] = ['src' => $src, 'width' => $width];
-                    if ($width == 0) {
+                    $sources[] = ['src' => $src, 'width' => $breakpointWidth, 'widthAttribute' => $widthAttribute, 'heightAttribute' => $heightAttribute];
+                    if ($widthAttribute == 0) {
                         $fallbackSrc = $src;
                     }
                 }

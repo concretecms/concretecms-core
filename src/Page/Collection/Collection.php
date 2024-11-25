@@ -623,6 +623,12 @@ class Collection extends ConcreteObject implements TrackableInterface
      */
     public function getAreaCustomStyle($area, $force = false)
     {
+        $areac = $area->getAreaCollectionObject();
+        if ($areac instanceof Stack) {
+            // this fixes the problem of users applying design to the main area on the page, and then that trickling into any
+            // stacks that have been added to other areas of the page.
+            return null;
+        }
         $result = null;
         $styleSet = null;
         $areaHandle = $area->getAreaHandle();
@@ -1252,7 +1258,7 @@ public function outputCustomStyleHeaderItems($return = false)
      * @throws \Doctrine\DBAL\Driver\Exception|\Doctrine\DBAL\Exception
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function rescanDisplayOrderFromBlock(Block $block, string $arHandle, int $fromDisplay = null)
+    public function rescanDisplayOrderFromBlock(Block $block, string $arHandle, ?int $fromDisplay = null)
     {
         /** This block doesnt have a display order */
         if ($block->getBlockDisplayOrder() === null) {

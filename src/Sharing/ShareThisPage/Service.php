@@ -28,7 +28,7 @@ class Service extends SocialNetworkService
         }
     }
 
-    public function getServiceLink(Page $c = null)
+    public function getServiceLink(?Page $c = null)
     {
         if (!is_object($c)) {
             $req = Request::getInstance();

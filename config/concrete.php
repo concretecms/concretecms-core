@@ -6,9 +6,9 @@ return [
      *
      * @var string
      */
-    'version' => '9.3.3',
-    'version_installed' => '9.3.3',
-    'version_db' => '20240711000000', // the key of the latest database migration
+    'version' => '9.4.0b1',
+    'version_installed' => '9.4.0b1',
+    'version_db' => '20241115093300', // the key of the latest database migration
 
     /*
      * Installation status
@@ -588,6 +588,9 @@ return [
             'file' => FILE_PERMISSIONS_MODE_COMPUTED,
             'directory' => DIRECTORY_PERMISSIONS_MODE_COMPUTED,
         ],
+        'download' => [
+            'filename_pattern' => '',
+        ],
     ],
 
     /*
@@ -889,6 +892,8 @@ return [
          * Determines whether the list should keep folders on top when sorting by name.
          */
         'keep_folders_on_top' => false,
+        'sort_column' => '',
+        'sort_direction' => '',
     ],
 
     'search_users' => [
