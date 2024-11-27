@@ -40,7 +40,10 @@ class ImportConfigValuesRoutine extends AbstractRoutine
                 $key = $elementName;
             }
             $value = (string) $element;
-            if ($value === 'false') {
+            $isJson = isset($element['json']) ? filter_var((string) $element['json'], FILTER_VALIDATE_BOOLEAN) : false;
+            if ($isJson) {
+                $value = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
+            } elseif ($value === 'false') { // deprecated
                 $value = false;
             }
             $rawOverwrite = isset($element['overwrite']) ? (string) $element['overwrite'] : '';
