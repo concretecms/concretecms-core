@@ -6,6 +6,7 @@ namespace Concrete\Core\Updater\Migrations\Migrations;
 
 use Concrete\Core\Application\UserInterface\Dashboard\Navigation\NavigationCache;
 use Concrete\Core\Page\Page;
+use Concrete\Core\Permission\Key\Key;
 use Concrete\Core\Updater\Migrations\AbstractMigration;
 use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
 
@@ -22,6 +23,10 @@ final class Version20241126174022 extends AbstractMigration implements Repeatabl
                 'meta_keywords' => 'error, exception, debug',
             ]
         );
+        $pk = Key::getByHandle('view_debug_error_information');
+        if (!$pk instanceof Key) {
+            Key::add('admin', 'view_debug_error_information', 'View Debug Error Information', '', false, false);
+        }
         $navigationCache = $this->app->make(NavigationCache::class);
         $navigationCache->clear();
     }

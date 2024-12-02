@@ -30,7 +30,6 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        print farts();
         $app = app();
         $info = $app->make(Info::class);
 

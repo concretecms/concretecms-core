@@ -46,6 +46,7 @@
     "symfony/http-foundation": "^5.2",
     "symfony/routing": "^5.2",
     "symfony/error-handler": "^5.2",
+    "symfony/http-kernel": "^5.2",
     "symfony/event-dispatcher": "^5.2",
     "symfony/messenger": "^5.2",
     "symfony/serializer": "^5.2",
