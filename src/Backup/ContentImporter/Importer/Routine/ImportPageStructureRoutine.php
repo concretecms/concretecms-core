@@ -100,7 +100,7 @@ class ImportPageStructureRoutine extends AbstractPageStructureRoutine implements
     /**
      * @return \Concrete\Core\Page\Page|string returns a string describing why we should import the page later on, or the created page otherwise
      */
-    private function getOrCreatePage(SimpleXMLElement $pageElement, array $localeInfo = null)
+    private function getOrCreatePage(SimpleXMLElement $pageElement, ?array $localeInfo = null)
     {
         $package = static::getPackageObject($pageElement['package']);
         $cName = isset($pageElement['name']) ? (string) $pageElement['name'] : '';

@@ -36,7 +36,7 @@ abstract class AbstractPageStructureRoutine extends AbstractRoutine
     /**
      * @param \SimpleXMLElement[] $elements
      */
-    protected function sortElementsByPath(array $elements, Closure $customComparer = null)
+    protected function sortElementsByPath(array $elements, ?Closure $customComparer = null)
     {
         $sortedElements = $elements;
         usort($sortedElements, static function (SimpleXMLElement $a, SimpleXMLElement $b) use (&$elements, $customComparer) {

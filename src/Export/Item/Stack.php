@@ -67,7 +67,7 @@ class Stack implements ItemInterface
      *
      * @return \SimpleXMLElement
      */
-    private function exportStack(SimpleXMLElement $xml, StackObject $stack, $path, SectionObject $section = null)
+    private function exportStack(SimpleXMLElement $xml, StackObject $stack, $path, ?SectionObject $section = null)
     {
         $db = app(Connection::class);
         $node = $xml->addChild('stack');

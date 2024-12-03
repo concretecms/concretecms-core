@@ -118,7 +118,7 @@ trait StackTrait
      *
      * @return \Concrete\Core\Page\Stack\Folder\Folder
      */
-    protected function createFolder($name, $calculatedPath, Folder $parentFolder = null)
+    protected function createFolder($name, $calculatedPath, ?Folder $parentFolder = null)
     {
         $folder = $this->getFolderService()->add($name, $parentFolder);
         if ($this->existingFolders !== null) {
@@ -133,7 +133,7 @@ trait StackTrait
      *
      * @return int|null
      */
-    private function getStackIDByName($name, Folder $folder = null)
+    private function getStackIDByName($name, ?Folder $folder = null)
     {
         if ($folder !== null) {
             $parentPage = $folder->getPage();
