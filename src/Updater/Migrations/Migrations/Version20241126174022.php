@@ -14,6 +14,22 @@ final class Version20241126174022 extends AbstractMigration implements Repeatabl
 {
     public function upgradeDatabase()
     {
+        // Migrate the existing config
+        $config = app('config');
+        if ($config->get('concrete.debug.display_errors') === true) {
+            if ($config->get('concrete.debug.detail') === 'debug') {
+                $config->save('concrete.error.display.guests', 'debug');
+                $config->save('concrete.error.display.privileged', 'debug');
+            } else {
+                $config->save('concrete.error.display.guests', 'message');
+                $config->save('concrete.error.display.privileged', 'message');
+            }
+        } elseif ($config->get('concrete.debug.display_errors') === false) {
+            $config->save('concrete.error.display.guests', 'generic');
+            $config->save('concrete.error.display.privileged', 'generic');
+        }
+        $config->save('concrete.debug', null); // clear it
+
         $page = Page::getByPath('/dashboard/system/environment/debug');
         if ($page && !$page->isError()) {
             $page->delete();
