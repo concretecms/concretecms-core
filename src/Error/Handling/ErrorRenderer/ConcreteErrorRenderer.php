@@ -43,15 +43,15 @@ class ConcreteErrorRenderer implements ErrorRendererInterface
             $htmlErrorRenderer = new HtmlErrorRenderer(true);
             $originalHtml = $htmlErrorRenderer->render($exception)->getAsString();
             $document = new \DOMDocument();
-            $document->loadHTML($originalHtml);
+            @$document->loadHTML($originalHtml);
             $xpath = new \DOMXPath($document);
             // Remove symfony header
-            foreach ($xpath->query('//header') as $header) {
-                $header->parentNode->removeChild($header);
+            foreach (@$xpath->query('//header') as $header) {
+                @$header->parentNode->removeChild($header);
             }
             // Remove symfony illustration
-            foreach ($xpath->query('//*[contains(attribute::class, "exception-illustration")]') as $illustration) {
-                $illustration->parentNode->removeChild($illustration);
+            foreach (@$xpath->query('//*[contains(attribute::class, "exception-illustration")]') as $illustration) {
+                @$illustration->parentNode->removeChild($illustration);
             }
             return $finalException->setAsString($document->saveHTML());
         } else {
