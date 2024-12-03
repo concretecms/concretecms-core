@@ -362,7 +362,7 @@ const COLLECTION_PRIVATE = 40;
 const BLOCK_NOT_AVAILABLE = 50;
 
 /* -- Debugging and Logging -- */
-defined('INITIAL_ERROR_REPORTING') or define('INITIAL_ERROR_REPORTING', E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
+defined('INITIAL_ERROR_REPORTING') or define('INITIAL_ERROR_REPORTING', E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 
 /* -- Deprecated - use the Channels class instead */
 const LOG_TYPE_EMAILS = 'sent_emails';
