@@ -12,6 +12,7 @@ final class Version20240508000000 extends AbstractMigration implements Repeatabl
 {
     public function upgradeDatabase()
     {
+        $this->refreshDatabaseTables(['Logs']);
         $page = Page::getByPath('/dashboard/extend/connect');
         if ($page && !$page->isError()) {
             $page->delete();
