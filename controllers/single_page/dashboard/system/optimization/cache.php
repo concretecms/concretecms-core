@@ -56,7 +56,7 @@ class Cache extends DashboardPageController
         $command = new ClearCacheCommand();
         $command->setLogCacheClear(true);
         $this->app->executeCommand($command);
-        
+
         $this->flash('success', t('Cache settings saved.'));
 
         return $this->buildRedirect($this->action(''));

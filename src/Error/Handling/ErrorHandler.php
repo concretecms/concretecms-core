@@ -34,7 +34,7 @@ class ErrorHandler extends SymfonyErrorHandler
         return $levels;
     }
 
-    public function __construct(?LoggerInterface $logger = null, Repository $config)
+    public function __construct(LoggerInterface $logger, Repository $config)
     {
         $this->config = $config;
         $errorConfiguration = $config->get('concrete.error.handling');
