@@ -156,6 +156,28 @@ return [
                     ],
                 ],
             ],
+            'social' => [
+                'opengraph' => [
+                    'enabled' => true,
+                    'field_og_type' => [
+                        'value_from' => 'value',
+                        'value' => 'website',
+                    ],
+                    'field_og_title' => [
+                        'value_from' => 'page_property',
+                        'property' => 'title',
+                    ],
+                    'field_og_description' => [
+                        'value_from' => 'page_property',
+                        'property' => 'description',
+                    ],
+                    'field_og_thumbnail' => [
+                        'value_from' => 'page_attribute',
+                        'attribute' => 'thumbnail',
+                    ],
+                    'field_fb_app_id' => '',
+                ]
+            ]
         ],
     ],
 ];

@@ -77,7 +77,7 @@
 
         <div class="ccm-dashboard-form-actions-wrapper">
             <div class="ccm-dashboard-form-actions">
-                <a href="<?=URL::to('/dashboard/system/basics/social'); ?>" class="btn btn-secondary float-start"><?=t("Cancel"); ?></a>
+                <a href="<?=URL::to('/dashboard/system/social/social_links'); ?>" class="btn btn-secondary float-start"><?=t("Cancel"); ?></a>
                 <button class="float-end btn btn-primary" type="submit" ><?=$buttonText; ?></button>
             </div>
         </div>
@@ -89,7 +89,7 @@
 
 
     <div class="ccm-dashboard-header-buttons">
-        <a href="<?php echo View::url('/dashboard/system/basics/social', 'add'); ?>" class="btn btn-primary"><?php echo t("Add Link"); ?></a>
+        <a href="<?php echo View::url('/dashboard/system/social/social_links', 'add'); ?>" class="btn btn-primary"><?php echo t("Add Link"); ?></a>
     </div>
 
 

@@ -1,14 +1,13 @@
 <?php
-namespace Concrete\Controller\SinglePage\Dashboard\System\Basics;
+namespace Concrete\Controller\SinglePage\Dashboard\System\Social;
 
-use Concrete\Core\Page\Controller\DashboardPageController;
 use Concrete\Core\Page\Controller\DashboardSitePageController;
 use Concrete\Core\Sharing\SocialNetwork\Link;
 use Concrete\Core\Sharing\SocialNetwork\ServiceList;
 use Concrete\Core\Sharing\SocialNetwork\Service;
 use Core;
 
-class Social extends DashboardSitePageController
+class SocialLinks extends DashboardSitePageController
 {
     public function view()
     {
@@ -70,7 +69,7 @@ class Social extends DashboardSitePageController
             $link->setSite($this->getSite());
             $link->setURL($url);
             $link->save();
-            $this->redirect('/dashboard/system/basics/social', 'link_added');
+            $this->redirect('/dashboard/system/social/social_links', 'link_added');
         }
         $this->add();
     }
@@ -93,7 +92,7 @@ class Social extends DashboardSitePageController
 
         if (!$this->error->has()) {
             $link->delete();
-            $this->redirect('/dashboard/system/basics/social', 'link_deleted');
+            $this->redirect('/dashboard/system/social/social_links', 'link_deleted');
         }
 
         $this->edit($slID);
@@ -112,7 +111,7 @@ class Social extends DashboardSitePageController
             $link->setServiceHandle($ssHandle);
             $link->setURL($url);
             $link->save();
-            $this->redirect('/dashboard/system/basics/social', 'link_updated');
+            $this->redirect('/dashboard/system/social/social_links', 'link_updated');
         }
     }
 
@@ -135,7 +134,7 @@ class Social extends DashboardSitePageController
         }
 
         if (!is_object($link)) {
-            $this->redirect('/dashboard/system/basics/social');
+            $this->redirect('/dashboard/system/social/social_links');
         }
         $this->socialLink = $link;
 

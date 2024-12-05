@@ -118,6 +118,7 @@ return [
         'core_announcement' => '\Concrete\Core\Announcement\AnnouncementServiceProvider',
         'core_form' => '\Concrete\Core\Form\FormServiceProvider',
         'core_session' => '\Concrete\Core\Session\SessionServiceProvider',
+        'core_sharing' => '\Concrete\Core\Sharing\SharingServiceProvider',
         'core_cookie' => '\Concrete\Core\Cookie\CookieServiceProvider',
         'core_http' => '\Concrete\Core\Http\HttpServiceProvider',
         'core_whoops' => '\Concrete\Core\Error\Provider\WhoopsServiceProvider',
