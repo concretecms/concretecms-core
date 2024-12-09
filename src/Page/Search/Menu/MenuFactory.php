@@ -63,6 +63,19 @@ class MenuFactory
             )
         );
 
+        $menu->addItem(
+            new LinkItem(
+                "#",
+                t('Cache Settings'),
+                [
+                    'data-bulk-action-type' => 'dialog',
+                    'data-bulk-action-title' => t('Cache Settings'),
+                    'data-bulk-action-url' => Url::to('/ccm/system/dialogs/page/bulk/cache'),
+                    'data-bulk-action-dialog-width' => '500',
+                    'data-bulk-action-dialog-height' => '400'
+                ]
+            )
+        );
 
         if ($this->config->get('concrete.permissions.model') !== 'simple') {
             $menu->addItem(new DividerItem());
