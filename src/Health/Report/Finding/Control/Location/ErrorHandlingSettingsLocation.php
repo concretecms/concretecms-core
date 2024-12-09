@@ -3,16 +3,16 @@ namespace Concrete\Core\Health\Report\Finding\Control\Location;
 
 use Concrete\Core\Health\Report\Finding\Control\DashboardPageLocation;
 
-class DebugSettingsLocation extends DashboardPageLocation
+class ErrorHandlingSettingsLocation extends DashboardPageLocation
 {
 
     public function getPagePath(): string
     {
-        return '/dashboard/system/environment/debug';
+        return '/dashboard/system/environment/errors';
     }
 
     public function getName(): string
     {
-        return 'Debug Settings';
+        return 'Error Handling';
     }
 }

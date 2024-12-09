@@ -18,6 +18,7 @@ class DatabaseHandler extends AbstractProcessingHandler
         }
 
         $uID = $record['extra']['user'][0] ?? 0;
+        $cID = $record['extra']['page'][0] ?? 0;
 
         $this->statement->execute(
             array(
@@ -26,6 +27,7 @@ class DatabaseHandler extends AbstractProcessingHandler
                 'message' => $record['formatted'],
                 'time' => $record['datetime']->format('U'),
                 'uID' => $uID,
+                'cID' => $cID,
             )
         );
     }
@@ -35,7 +37,7 @@ class DatabaseHandler extends AbstractProcessingHandler
         $db = Database::get();
 
         $this->statement = $db->prepare(
-            'INSERT INTO Logs (channel, level, message, time, uID) VALUES (:channel, :level, :message, :time, :uID)'
+            'INSERT INTO Logs (channel, level, message, time, uID, cID) VALUES (:channel, :level, :message, :time, :uID, :cID)'
         );
 
         $this->initialized = true;

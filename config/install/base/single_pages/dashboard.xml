@@ -1476,11 +1476,11 @@
                 </attributekey>
             </attributes>
         </page>
-        <page name="Debug Settings" path="/dashboard/system/environment/debug"
-              filename="/dashboard/system/environment/debug.php" pagetype="" description="" package="">
+        <page name="Error Handling" path="/dashboard/system/environment/errors"
+              filename="/dashboard/system/environment/errors.php" pagetype="" description="" package="">
             <attributes>
                 <attributekey handle="meta_keywords">
-                    <value>errors, exceptions, develop, support, help</value>
+                    <value>error, exception, debug</value>
                 </attributekey>
             </attributes>
         </page>

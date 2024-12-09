@@ -5,29 +5,30 @@ namespace Concrete\Core\Logging\Search\ColumnSet\Column;
 use Concrete\Core\Database\Query\AndWhereNotExistsTrait;
 use Concrete\Core\Logging\LogEntry;
 use Concrete\Core\Logging\LogList;
+use Concrete\Core\Page\Page;
 use Concrete\Core\Search\Column\Column;
 use Concrete\Core\Search\Column\PagerColumnInterface;
 use Concrete\Core\Search\ItemList\Pager\PagerProviderInterface;
 use Concrete\Core\User\UserInfo;
 
-class UserIdentifierColumn extends Column implements PagerColumnInterface
+class PageColumn extends Column implements PagerColumnInterface
 {
 
     use AndWhereNotExistsTrait;
 
     public function getColumnKey()
     {
-        return 'l.uID';
+        return 'l.cID';
     }
 
     public function getColumnName()
     {
-        return t('User');
+        return t('Page');
     }
 
     public function getColumnCallback()
     {
-        return ['\Concrete\Core\Logging\Search\ColumnSet\DefaultSet', 'getUser'];
+        return ['\Concrete\Core\Logging\Search\ColumnSet\DefaultSet', 'getPage'];
     }
 
     /**
@@ -37,11 +38,11 @@ class UserIdentifierColumn extends Column implements PagerColumnInterface
      */
     public function filterListAtOffset(PagerProviderInterface $itemList, $mixed)
     {
-        if ($mixed->getUser() instanceof UserInfo) {
+        if ($mixed->getPage() instanceof Page) {
             $query = $itemList->getQueryObject();
             $sort = $this->getColumnSortDirection() == 'desc' ? '<' : '>';
-            $where = sprintf('l.uID %s :uID', $sort);
-            $query->setParameter('uID', $mixed->getUser()->getUserID());
+            $where = sprintf('l.cID %s :cID', $sort);
+            $query->setParameter('uID', $mixed->getPage()->getCollectionID());
             $this->andWhereNotExists($query, $where);
         }
     }
