@@ -37,7 +37,7 @@ $router->all('/bulk/permissions/get_all_access_entities', 'Bulk\Permissions::get
 $router->all('/bulk/permissions', 'Bulk\Permissions::view');
 $router->all('/bulk/permissions/{task}', 'Bulk\Permissions::view');
 $router->all('/bulk/cache', 'Bulk\Cache::view');
-$router->all('/bulk/delete/cache', 'Bulk\Cache::submit');
+$router->all('/bulk/cache/submit', 'Bulk\Cache::submit');
 $router->all('/clipboard', 'Clipboard::view');
 $router->all('/delete', 'Delete::view');
 $router->all('/delete/submit', 'Delete::submit');

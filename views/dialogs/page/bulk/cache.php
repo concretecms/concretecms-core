@@ -12,7 +12,15 @@ defined('C5_EXECUTE') or die("Access Denied."); ?>
     } else {
         ?>
 
-        <form action="<?= $controller->action('submit') ?>" id="ccm-bulk-page-caching-form">
+        <form action="<?= $controller->action('submit') ?>" data-dialog-form="bulk-page-caching" id="ccm-bulk-page-caching-form">
+
+            <?php foreach ($pages as $c) {
+                $cp = new Permissions($c);
+                if ($cp->canEditPageSpeedSettings()) { ?>
+                    <input type="hidden" name="item[]" value="<?=$c->getCollectionID()?>">
+            <?php }
+            }
+            ?>
 
             <div class="mb-3">
                 <label class="form-label"><?= t('Full Page Caching') ?></label>
@@ -101,7 +109,7 @@ defined('C5_EXECUTE') or die("Access Denied."); ?>
             <div class="dialog-buttons d-flex justify-content-end">
                 <button class="btn btn-secondary me-2" type="button" data-dialog-action="cancel"
                         data-panel-detail-action="cancel"><?= t('Cancel') ?></button>
-                <button class="btn btn-success" type="button" data-dialog-action="submit"
+                <button class="btn btn-success" type="button" id="save-bulk-cache-settings-button" data-dialog-action="submit"
                         data-panel-detail-action="submit"><?= t('Save Changes') ?></button>
             </div>
         </form>
@@ -117,13 +125,22 @@ defined('C5_EXECUTE') or die("Access Denied."); ?>
             let cCacheFullPageContent = $('input[name=cCacheFullPageContent]:checked').val()
             if (cCacheFullPageContent === '1') {
                 $('input[name=cCacheFullPageContentOverrideLifetime]').prop('disabled', false);
+                if ($('input[name=cCacheFullPageContentOverrideLifetime][value="-1"]').length) {
+                    $('input[name=cCacheFullPageContentOverrideLifetime][value="-1"]').prop('disabled', true);
+                    $('input[name=cCacheFullPageContentOverrideLifetime][value=default]').prop('checked', true);
+                }
             } else {
                 $('input[name=cCacheFullPageContentOverrideLifetime]').prop('disabled', true);
-                if ($('input[name=cCacheFullPageContentOverrideLifetime][value="-2"]').length) {
-                    $('input[name=cCacheFullPageContentOverrideLifetime][value="-2"]').prop('checked', true);
+                if ($('input[name=cCacheFullPageContentOverrideLifetime][value="-1"]').length) {
+                    $('input[name=cCacheFullPageContentOverrideLifetime][value="-1"]').prop('checked', true);
                 } else {
                     $('input[name=cCacheFullPageContentOverrideLifetime][value="default"]').prop('checked', true);
                 }
+            }
+            if (cCacheFullPageContent === '-2') {
+                $('#save-bulk-cache-settings-button').prop('disabled', true)
+            } else {
+                $('#save-bulk-cache-settings-button').prop('disabled', false)
             }
             $('input[name=cCacheFullPageContentOverrideLifetime]:checked').trigger('change')
         })

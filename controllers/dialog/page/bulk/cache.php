@@ -3,10 +3,12 @@
 namespace Concrete\Controller\Dialog\Page\Bulk;
 
 use Concrete\Controller\Backend\UserInterface as BackendInterfaceController;
+use Concrete\Core\Application\EditResponse;
 use Concrete\Core\Command\Batch\Batch;
 use Concrete\Core\Page\Command\DeletePageCommand;
 use Page;
 use Permissions;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Cache extends BackendInterfaceController
 {
@@ -52,7 +54,6 @@ class Cache extends BackendInterfaceController
     public function view()
     {
         $config = $this->app->make('config');
-        $this->populatePages();
         $fullPageCaching = -3;
         $cCacheFullPageContentOverrideLifetime = -2;
         $cCacheFullPageContentOverrideLifetimeCustomValue = -1;
@@ -116,15 +117,26 @@ class Cache extends BackendInterfaceController
     public function submit()
     {
         if ($this->canAccess()) {
-            $u = new \User();
-            $uID = $u->getUserID();
-            $pages = $this->pages;
-            $batch = Batch::create(t('Delete Pages'), function () use ($uID, $pages) {
-                foreach ($pages as $page) {
-                    yield new DeletePageCommand($page->getCollectionID(), $uID);
+            foreach ($this->pages as $page) {
+				$data = array();
+				if (($cCacheFullPageContent = $this->request->request->getInt('cCacheFullPageContent')) > -2) {
+					$data['cCacheFullPageContent'] = $cCacheFullPageContent;
+				}
+				if ($cCacheFullPageContent === 1) {
+                    $data['cCacheFullPageContentOverrideLifetime'] = $this->request->request->get('cCacheFullPageContentOverrideLifetime');
+                    if ($data['cCacheFullPageContentOverrideLifetime'] === 'custom') {
+                        $data['cCacheFullPageContentLifetimeCustom'] = $this->request->request->getInt('cCacheFullPageContentLifetimeCustom');
+                    }
+				}
+                if (count($data) > 0) {
+                    $page->update($data);
                 }
-            });
-            return $this->dispatchBatch($batch);
+            }
+            $response = new EditResponse();
+            $response->setMessage(t('Cache settings updated successfully.'));
+            return new JsonResponse($response);
+        } else {
+            throw new \RuntimeException(t('Access Denied'));
         }
     }
 
