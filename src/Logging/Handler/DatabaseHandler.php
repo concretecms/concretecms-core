@@ -16,20 +16,20 @@ class DatabaseHandler extends AbstractProcessingHandler
         if (!$this->initialized) {
             $this->initialize();
         }
-
-        $uID = $record['extra']['user'][0] ?? 0;
-        $cID = $record['extra']['page'][0] ?? 0;
-
-        $this->statement->execute(
-            array(
-                'channel' => $record['channel'],
-                'level' => $record['level'],
-                'message' => $record['formatted'],
-                'time' => $record['datetime']->format('U'),
-                'uID' => $uID,
-                'cID' => $cID,
-            )
-        );
+        $params = [
+            'channel' => $record['channel'],
+            'level' => $record['level'],
+            'message' => $record['formatted'],
+            'time' => $record['datetime']->format('U'),
+            'uID' => $record['extra']['user'][0] ?? 0,
+            'cID' => $record['extra']['page'][0] ?? 0,
+        ];
+        try {
+            $this->statement->execute($params);
+        } catch (\Doctrine\DBAL\Exception\InvalidFieldNameException $x) {
+            \Concrete\Core\Database\Schema\Schema::refreshCoreXMLSchema(['Logs']);
+            $this->statement->execute($params);
+        }
     }
 
     private function initialize()
