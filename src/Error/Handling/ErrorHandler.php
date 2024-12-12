@@ -5,7 +5,6 @@ namespace Concrete\Core\Error\Handling;
 use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Error\Handling\ErrorRenderer\ConcreteErrorRenderer;
 use Concrete\Core\Logging\Handler\ErrorEnhancer\UserMessageExceptionEnhancer;
-use Concrete\Core\Permission\Checker;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Symfony\Component\ErrorHandler\ErrorHandler as SymfonyErrorHandler;
@@ -78,7 +77,7 @@ class ErrorHandler extends SymfonyErrorHandler
      */
     protected function renderConcreteException(\Throwable $exception): void
     {
-        $renderer = \in_array(\PHP_SAPI, ['cli', 'phpdbg'], true) ? new CliErrorRenderer() : new ConcreteErrorRenderer($this->config, new Checker());
+        $renderer = \in_array(\PHP_SAPI, ['cli', 'phpdbg'], true) ? new CliErrorRenderer() : app(ConcreteErrorRenderer::class, ['config' => $this->config]);
 
         $exception = $renderer->render($exception);
 
