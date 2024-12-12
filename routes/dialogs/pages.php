@@ -38,6 +38,8 @@ $router->all('/bulk/permissions', 'Bulk\Permissions::view');
 $router->all('/bulk/permissions/{task}', 'Bulk\Permissions::view');
 $router->all('/bulk/cache', 'Bulk\Cache::view');
 $router->all('/bulk/cache/submit', 'Bulk\Cache::submit');
+$router->all('/bulk/design', 'Bulk\Design::view');
+$router->all('/bulk/design/submit', 'Bulk\Design::submit');
 $router->all('/clipboard', 'Clipboard::view');
 $router->all('/delete', 'Delete::view');
 $router->all('/delete/submit', 'Delete::submit');
