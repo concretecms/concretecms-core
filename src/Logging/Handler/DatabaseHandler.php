@@ -1,11 +1,13 @@
 <?php
 namespace Concrete\Core\Logging\Handler;
 
-use Monolog\Handler\AbstractProcessingHandler;
 use Concrete\Core\Database\Connection\Connection;
+use Monolog\Handler\AbstractProcessingHandler;
 
 class DatabaseHandler extends AbstractProcessingHandler
 {
+    use HandlerTrait;
+
     /**
      * @var bool
      */
@@ -24,7 +26,7 @@ class DatabaseHandler extends AbstractProcessingHandler
         $db = app(Connection::class);
         $db->executeStatement('delete from Logs');
     }
-    
+
     /**
      * Clears log entries by channel. Requires the database handler.
      *
@@ -38,6 +40,9 @@ class DatabaseHandler extends AbstractProcessingHandler
 
     protected function write(array $record)
     {
+        if (!$this->shouldWrite($record)) {
+            return;
+        }
         if (!$this->initialized) {
             $this->initialize();
         }
