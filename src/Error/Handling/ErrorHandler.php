@@ -4,6 +4,7 @@ namespace Concrete\Core\Error\Handling;
 
 use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Error\Handling\ErrorRenderer\ConcreteErrorRenderer;
+use Concrete\Core\Logging\Handler\ErrorEnhancer\UserMessageExceptionEnhancer;
 use Concrete\Core\Permission\Checker;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
@@ -52,6 +53,19 @@ class ErrorHandler extends SymfonyErrorHandler
         parent::__construct(null,true);
         $this->setDefaultLogger($logger,  $levels);
         $this->throwAt($thrownErrors, true);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see \Symfony\Component\ErrorHandler\ErrorHandler::getErrorEnhancers()
+     */
+    protected function getErrorEnhancers(): iterable
+    {
+        yield new UserMessageExceptionEnhancer();
+        foreach (parent::getErrorEnhancers() as $enhancer) {
+            yield $enhancer;
+        }
     }
 
     /**
