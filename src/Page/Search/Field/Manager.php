@@ -9,6 +9,7 @@ use Concrete\Core\Page\Search\Field\Field\DateAddedField;
 use Concrete\Core\Page\Search\Field\Field\DateLastModifiedField;
 use Concrete\Core\Page\Search\Field\Field\DatePublicField;
 use Concrete\Core\Page\Search\Field\Field\IncludePageAliasesField;
+use Concrete\Core\Page\Search\Field\Field\IncludeSystemPagesField;
 use Concrete\Core\Page\Search\Field\Field\NumberOfChildrenField;
 use Concrete\Core\Page\Search\Field\Field\PageTemplateField;
 use Concrete\Core\Page\Search\Field\Field\PageTypeField;
@@ -44,6 +45,7 @@ class Manager extends FieldManager
             new PageTemplateField(),
             new ThemeField(),
             new IncludePageAliasesField(),
+            new IncludeSystemPagesField(),
             new VersionStatusField(),
             new PermissionsInheritanceField(),
             new DateLastModifiedField(),
