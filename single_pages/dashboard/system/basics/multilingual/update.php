@@ -381,8 +381,7 @@ new Vue({
                 const response = await window.fetch(<?= json_encode($view->action('fetchState')) ?>, {
                     method: 'POST',
                     headers: {
-                        // Tell the core it's an ajax request
-                        'X-Requested-With': 'XMLHttpRequest',
+                        Accept: 'application/json',
                     },
                     body: new URLSearchParams([
                         [<?= json_encode($token::DEFAULT_TOKEN_NAME) ?>, <?= json_encode($token->generate('ccm-ml-fetch')) ?>],
@@ -447,8 +446,7 @@ new Vue({
                 const response = await window.fetch(<?= json_encode($view->action('install')) ?>, {
                     method: 'POST',
                     headers: {
-                        // Tell the core it's an ajax request
-                        'X-Requested-With': 'XMLHttpRequest',
+                        Accept: 'application/json',
                     },
                     body: new URLSearchParams([
                         [<?= json_encode($token::DEFAULT_TOKEN_NAME) ?>, <?= json_encode($token->generate('ccm-ml-install')) ?>],
