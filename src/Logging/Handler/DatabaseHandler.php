@@ -2,14 +2,39 @@
 namespace Concrete\Core\Logging\Handler;
 
 use Monolog\Handler\AbstractProcessingHandler;
-use Database;
-use Concrete\Core\Support\Facade\Application;
-use Concrete\Core\User\User;
+use Concrete\Core\Database\Connection\Connection;
 
 class DatabaseHandler extends AbstractProcessingHandler
 {
-    protected $initialized;
+    /**
+     * @var bool
+     */
+    protected $initialized = false;
+
+    /**
+     * @var \Doctrine\DBAL\Driver\Statement
+     */
     private $statement;
+
+    /**
+     * Clears all log entries. Requires the database handler.
+     */
+    public static function clearAll()
+    {
+        $db = app(Connection::class);
+        $db->executeStatement('delete from Logs');
+    }
+    
+    /**
+     * Clears log entries by channel. Requires the database handler.
+     *
+     * @param $channel string
+     */
+    public static function clearByChannel($channel)
+    {
+        $db = app(Connection::class);
+        $db->delete('Logs', ['channel' => $channel]);
+    }
 
     protected function write(array $record)
     {
@@ -34,7 +59,7 @@ class DatabaseHandler extends AbstractProcessingHandler
 
     private function initialize()
     {
-        $db = Database::get();
+        $db = app(Connection::class);
 
         $this->statement = $db->prepare(
             'INSERT INTO Logs (channel, level, message, time, uID, cID) VALUES (:channel, :level, :message, :time, :uID, :cID)'
@@ -42,27 +67,4 @@ class DatabaseHandler extends AbstractProcessingHandler
 
         $this->initialized = true;
     }
-
-
-    /**
-     * Clears all log entries. Requires the database handler.
-     */
-    public static function clearAll()
-    {
-        $db = Database::get();
-        $db->Execute('delete from Logs');
-    }
-
-    /**
-     * Clears log entries by channel. Requires the database handler.
-     *
-     * @param $channel string
-     */
-    public static function clearByChannel($channel)
-    {
-        $db = Database::get();
-        $db->delete('Logs', array('channel' => $channel));
-    }
-
-
 }
