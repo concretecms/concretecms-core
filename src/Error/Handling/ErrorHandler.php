@@ -4,35 +4,18 @@ namespace Concrete\Core\Error\Handling;
 
 use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Error\Handling\ErrorRenderer\ConcreteErrorRenderer;
-use Concrete\Core\Logging\Levels;
 use Concrete\Core\Permission\Checker;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Symfony\Component\ErrorHandler\ErrorHandler as SymfonyErrorHandler;
 use Symfony\Component\ErrorHandler\ErrorRenderer\CliErrorRenderer;
-use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
 
 class ErrorHandler extends SymfonyErrorHandler
 {
-
     /**
-     * @var LoggerInterface|null
-     */
-    protected $logger = null;
-
-    /**
-     * @var Repository
+     * @var \Concrete\Core\Config\Repository\Repository
      */
     protected $config;
-
-    private function fillErrorLevelsFromConfig(array $errors, array $errorConfiguration, string $key): array
-    {
-        $levels = [];
-        foreach ($errors as $errorCode) {
-            $levels[$errorCode] = constant(LogLevel::class . '::' . $errorConfiguration[$key]['logLevel']);
-        }
-        return $levels;
-    }
 
     public function __construct(LoggerInterface $logger, Repository $config)
     {
@@ -96,4 +79,12 @@ class ErrorHandler extends SymfonyErrorHandler
         echo $exception->getAsString();
     }
 
+    private function fillErrorLevelsFromConfig(array $errors, array $errorConfiguration, string $key): array
+    {
+        $levels = [];
+        foreach ($errors as $errorCode) {
+            $levels[$errorCode] = constant(LogLevel::class . '::' . $errorConfiguration[$key]['logLevel']);
+        }
+        return $levels;
+    }
 }
