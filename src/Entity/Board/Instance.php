@@ -64,9 +64,19 @@ class Instance implements \JsonSerializable, ObjectInterface
     protected $dateCreated;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isGenerating = false;
+
+    /**
      * @ORM\Column(type="integer", options={"unsigned": true}, nullable=true)
      */
     protected $dateDataPoolLastUpdated;
+
+    /**
+     * @ORM\Column(type="integer", options={"unsigned": true}, nullable=true)
+     */
+    protected $dateLastGenerated;
 
     /**
      * Not to be confused with the site that is set at the board level, a shared board (e.g. a board with a site
@@ -241,6 +251,43 @@ class Instance implements \JsonSerializable, ObjectInterface
         $this->dateDataPoolLastUpdated = $dateDataPoolLastUpdated;
     }
 
+    public function isGenerating(): bool
+    {
+        return $this->isGenerating;
+    }
+
+    public function setIsGenerating(bool $isGenerating): void
+    {
+        $this->isGenerating = $isGenerating;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateLastGenerated()
+    {
+        return $this->dateLastGenerated;
+    }
+
+    /**
+     * @param mixed $dateLastGenerated
+     */
+    public function setDateLastGenerated($dateLastGenerated): void
+    {
+        $this->dateLastGenerated = $dateLastGenerated;
+    }
+
+    public function getDateLastGeneratedObject() : \DateTime
+    {
+        $dateTime = new \DateTime();
+        $dateTime->setTimestamp($this->getDateLastGenerated());
+        $site = $this->getBoard()->getSite();
+        if ($site) {
+            $dateTime->setTimezone(new \DateTimeZone($site->getTimezone()));
+        }
+        return $dateTime;
+    }
+
     #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
@@ -249,6 +296,7 @@ class Instance implements \JsonSerializable, ObjectInterface
             'boardInstanceID' => $this->getBoardInstanceID(),
             'name' => $this->getBoardInstanceName(),
             'dateCreated' => $this->getDateCreated(),
+            'dateLastGenerated' => $this->getDateLastGenerated(),
             'site' => $site,
             'board' => $this->getBoard(),
         ];

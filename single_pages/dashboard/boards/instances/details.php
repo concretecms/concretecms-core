@@ -68,33 +68,46 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
         <h4 class="mb-4"><?=t('Update Instance')?></h4>
 
-        <div class="container-fluid">
-            <form method="post" action="<?=$view->action('refresh_instance', $instance->getBoardInstanceID())?>">
-                <?=$token->output('refresh_instance')?>
-                <div class="row mb-3">
-                    <div class="ps-0 col-8 col-offset-1">
-                        <h5 class="fw-light"><?=t('Refresh')?></h5>
-                        <p><?=t('Refresh the dynamic elements within board slots without getting new items or changing any positioning.')?></p>
-                    </div>
-                    <div class="col-4">
-                        <button type="submit" class="btn float-end btn-secondary"><?=t("Refresh")?></button>
-                    </div>
-                </div>
-            </form>
-            <form method="post" action="<?=$view->action('regenerate_instance', $instance->getBoardInstanceID())?>">
-                <?=$token->output('regenerate_instance')?>
-                <div class="row mb-3">
-                    <div class="ps-0 col-8 col-offset-1">
-                        <h5 class="fw-light"><?=t('Regenerate')?></h5>
-                        <p><?=t('Regenerate board instance based on current items. Completely removes and rebuilds any board contents.')?></p>
-                    </div>
-                    <div class="col-4">
-                        <button type="submit" class="btn float-end btn-secondary"><?=t("Regenerate")?></button>
-                    </div>
-                </div>
-            </form>
+        <?php if ($instance->isGenerating() && time() - $instance->getDateLastGenerated() < 30) { ?>
+            <p><?=t('Board instance generation in progress...')?> <i class="fa fa-spin fa-sync"></i></p>
 
-        </div>
+        <?php } else { ?>
+            <div class="container-fluid">
+                <form method="post" action="<?=$view->action('refresh_instance', $instance->getBoardInstanceID())?>">
+                    <?=$token->output('refresh_instance')?>
+                    <div class="row mb-3">
+                        <div class="ps-0 col-8 col-offset-1">
+                            <h5 class="fw-light"><?=t('Refresh')?></h5>
+                            <p><?=t('Refresh the dynamic elements within board slots without getting new items or changing any positioning.')?></p>
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" class="btn float-end btn-secondary"><?=t("Refresh")?></button>
+                        </div>
+                    </div>
+                </form>
+                <form method="post" action="<?=$view->action('regenerate_instance', $instance->getBoardInstanceID())?>">
+                    <?=$token->output('regenerate_instance')?>
+                    <div class="row mb-1">
+                        <div class="ps-0 col-8 col-offset-1">
+                            <h5 class="fw-light"><?=t('Regenerate')?></h5>
+                            <p><?=t('Regenerate board instance based on current items. Completely removes and rebuilds any board contents.')?></p>
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" class="btn float-end btn-secondary"><?=t("Regenerate")?></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col ps-0">
+                            <?php if ($instance->getDateLastGenerated() > 0) { ?>
+                                <div class="small text-secondary"><?=t('Date Last Generated: %s', $instance->getDateLastGeneratedObject()->format('F d, Y g:i a'))?></div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        <?php } ?>
+
 
         <hr>
 

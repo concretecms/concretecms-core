@@ -1,6 +1,7 @@
 <?php
 namespace Concrete\Core\Workflow\Request;
 
+use Concrete\Core\Board\Command\RemoveObjectFromBoardInstancesCommand;
 use Config;
 use Loader;
 use Page;
@@ -76,6 +77,9 @@ class DeletePageRequest extends PageRequest
         } else {
             $c->delete();
         }
+
+        app()->executeCommand(new RemoveObjectFromBoardInstancesCommand('page', $c));
+
         $wpr = new WorkflowProgressResponse();
         $parent = Page::getByID($cParentID, 'ACTIVE');
         $wpr->setWorkflowProgressResponseURL(\URL::to($parent));

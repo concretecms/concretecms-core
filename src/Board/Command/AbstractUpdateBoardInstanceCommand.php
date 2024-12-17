@@ -4,7 +4,7 @@ namespace Concrete\Core\Board\Command;
 
 use Concrete\Core\Foundation\Command\Command;
 
-class UpdateBoardInstancesLinkedToObjectCommand extends Command
+abstract class AbstractUpdateBoardInstanceCommand extends Command
 {
 
     /**
@@ -35,8 +35,5 @@ class UpdateBoardInstancesLinkedToObjectCommand extends Command
     {
         return $this->object;
     }
-
-
-
 
 }

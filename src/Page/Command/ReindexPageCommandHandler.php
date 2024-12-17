@@ -2,20 +2,13 @@
 
 namespace Concrete\Core\Page\Command;
 
-use Concrete\Core\Application\ApplicationAwareInterface;
-use Concrete\Core\Application\ApplicationAwareTrait;
 use Concrete\Core\Attribute\Category\PageCategory;
-use Concrete\Core\Board\Command\UpdateBoardInstancesLinkedToObjectCommand;
-use Concrete\Core\Board\DataSource\Driver\PageDriver;
 use Concrete\Core\Cache\Page\PageCache;
 use Concrete\Core\Page\Page;
 use Concrete\Core\Page\Summary\Template\Populator;
 use Concrete\Core\Search\Index\IndexManagerInterface;
-use Concrete\Core\Board\DataSource\Driver\Manager as BoardDataSourceManager;
-
-class ReindexPageCommandHandler implements ApplicationAwareInterface
+class ReindexPageCommandHandler
 {
-    use ApplicationAwareTrait;
 
     /**
      * @var PageCategory
@@ -32,18 +25,8 @@ class ReindexPageCommandHandler implements ApplicationAwareInterface
      */
     protected $populator;
 
-    /**
-     * @var BoardDataSourceManager
-     */
-    protected $boardDataSourceManager;
-
-    public function __construct(
-        BoardDataSourceManager $boardDataSourceManager,
-        Populator $populator,
-        PageCategory $pageCategory,
-        IndexManagerInterface $indexManager
-    ) {
-        $this->boardDataSourceManager = $boardDataSourceManager;
+    public function __construct(Populator $populator, PageCategory $pageCategory, IndexManagerInterface $indexManager)
+    {
         $this->populator = $populator;
         $this->pageCategory = $pageCategory;
         $this->indexManager = $indexManager;
@@ -69,10 +52,6 @@ class ReindexPageCommandHandler implements ApplicationAwareInterface
 
             // Reindex page content.
             $this->indexManager->index(Page::class, $command->getPageID());
-
-            // Rebuild any boards that might pertain to this
-            $command = new UpdateBoardInstancesLinkedToObjectCommand('page', $c);
-            $this->app->executeCommand($command);
         }
     }
 

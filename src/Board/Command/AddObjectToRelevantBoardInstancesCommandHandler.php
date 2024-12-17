@@ -3,15 +3,15 @@
 namespace Concrete\Core\Board\Command;
 
 use Concrete\Core\Application\Application;
-use Concrete\Core\Application\ApplicationAwareInterface;
+use Concrete\Core\Board\DataSource\Driver\Manager as BoardDataSourceManager;
 use Concrete\Core\Board\DataSource\Driver\NotifierAwareDriverInterface;
 use Doctrine\ORM\EntityManager;
-use Concrete\Core\Board\DataSource\Driver\Manager as BoardDataSourceManager;
-class UpdateBoardInstancesLinkedToObjectCommandHandler
+
+class AddObjectToRelevantBoardInstancesCommandHandler
 {
-    
+
     /**
-     * @var EntityManager 
+     * @var EntityManager
      */
     protected $entityManager;
 
@@ -32,17 +32,19 @@ class UpdateBoardInstancesLinkedToObjectCommandHandler
         $this->entityManager = $entityManager;
     }
 
-    public function __invoke(UpdateBoardInstancesLinkedToObjectCommand $command)
+    public function __invoke(AddObjectToRelevantBoardInstancesCommand $command)
     {
         $driver = $this->boardDataSourceManager->driver($command->getDriver());
         if ($driver instanceof NotifierAwareDriverInterface) {
             $notifier = $driver->getBoardInstanceNotifier();
             $instances = $notifier->findBoardInstancesThatMayContainObject($command->getObject());
             foreach ($instances as $instance) {
-
+                $regenerateCommand = new RegenerateBoardInstanceCommand();
+                $regenerateCommand->setDefer(true);
+                $regenerateCommand->setInstance($instance);
+                $this->app->executeCommand($regenerateCommand);
             }
         }
     }
 
-    
 }
