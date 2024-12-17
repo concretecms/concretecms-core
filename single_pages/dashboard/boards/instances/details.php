@@ -81,18 +81,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
                     </div>
                 </div>
             </form>
-            <form method="post" action="<?=$view->action('add_content', $instance->getBoardInstanceID())?>">
-                <?=$token->output('add_content')?>
-                <div class="row mb-3">
-                    <div class="ps-0 col-8 col-offset-1">
-                        <h5 class="fw-light"><?=t('Add Content')?></h5>
-                        <p><?=t('Refreshes dynamic elements within board slots, and adds new items to the board in applicable spots.')?></p>
-                    </div>
-                    <div class="col-4">
-                        <button type="submit" class="btn float-end btn-secondary"><?=t("Add Content")?></button>
-                    </div>
-                </div>
-            </form>
             <form method="post" action="<?=$view->action('regenerate_instance', $instance->getBoardInstanceID())?>">
                 <?=$token->output('regenerate_instance')?>
                 <div class="row mb-3">

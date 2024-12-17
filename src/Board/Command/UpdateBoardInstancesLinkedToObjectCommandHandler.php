@@ -39,9 +39,7 @@ class UpdateBoardInstancesLinkedToObjectCommandHandler
             $notifier = $driver->getBoardInstanceNotifier();
             $instances = $notifier->findBoardInstancesThatMayContainObject($command->getObject());
             foreach ($instances as $instance) {
-                $regenerateCommand = new AddContentToBoardInstanceCommand();
-                $regenerateCommand->setInstance($instance);
-                $this->app->executeCommand($regenerateCommand);
+
             }
         }
     }
