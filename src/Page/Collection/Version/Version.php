@@ -3,8 +3,8 @@ namespace Concrete\Core\Page\Collection\Version;
 
 use Concrete\Core\Attribute\Key\CollectionKey;
 use Concrete\Core\Attribute\ObjectTrait;
-use Concrete\Core\Board\Command\AddObjectToRelevantBoardInstancesCommand;
-use Concrete\Core\Board\Command\UpdateBoardInstancesContainingObjectCommand;
+use Concrete\Core\Board\Command\RefreshRelevantBoardInstancesCommand;
+use Concrete\Core\Board\Command\RegenerateRelevantBoardInstancesCommand;
 use Concrete\Core\Cache\Level\RequestCache;
 use Concrete\Core\Entity\Attribute\Value\PageValue;
 use Concrete\Core\Foundation\ConcreteObject;
@@ -814,11 +814,11 @@ class Version extends ConcreteObject implements PermissionObjectInterface, Attri
 
         if ($pageWithActiveVersion && $pageWithActiveVersion->getVersionObject() && !$pageWithActiveVersion->getVersionObject()->isError()) {
             $c->reindex($doReindexImmediately);
-            $app->executeCommand(new UpdateBoardInstancesContainingObjectCommand('page', $c));
+            $app->executeCommand(new RefreshRelevantBoardInstancesCommand('page', $c));
         } else {
             // This is a new page
             $c->reindex(true); // We must reindex immediately so that summary templates are available for boards.
-            $app->executeCommand(new AddObjectToRelevantBoardInstancesCommand('page', $c));
+            $app->executeCommand(new RegenerateRelevantBoardInstancesCommand('page', $c));
         }
 
         $ev = new Event($c);

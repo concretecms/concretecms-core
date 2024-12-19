@@ -3,6 +3,7 @@ namespace Concrete\Core\Calendar\Event;
 
 use Concrete\Core\Application\ApplicationAwareInterface;
 use Concrete\Core\Application\ApplicationAwareTrait;
+use Concrete\Core\Board\Command\RegenerateRelevantBoardInstancesCommand;
 use Concrete\Core\Calendar\Event\Summary\Template\Populator;
 use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Foundation\Repetition\Comparator;
@@ -182,6 +183,8 @@ class EventService implements ApplicationAwareInterface
 
         $populator = $this->app->make(Populator::class);
         $populator->updateAvailableSummaryTemplates($event);
+
+        $this->app->executeCommand(new RegenerateRelevantBoardInstancesCommand('calendar_event', $event));
     }
 
     public function unapprove(CalendarEvent $event)
@@ -230,6 +233,8 @@ class EventService implements ApplicationAwareInterface
 
     public function delete(CalendarEvent $event)
     {
+        $this->app->executeCommand(new RegenerateRelevantBoardInstancesCommand('calendar_event', $event));
+
         $version = $event->getSelectedVersion() ?: $event->getApprovedVersion();
         if ($version && $version->getRelatedPageRelationType() === 'C') {
             $calendarPage = $version->getPageObject();

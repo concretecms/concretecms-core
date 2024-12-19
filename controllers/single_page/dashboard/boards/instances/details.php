@@ -87,7 +87,6 @@ class Details extends DashboardPageController
             }
             if (!$this->error->has()) {
                 $command = new RegenerateBoardInstanceCommand();
-                $command->setDefer(true);
                 $command->setInstance($instance);
                 $this->executeCommand($command);
 

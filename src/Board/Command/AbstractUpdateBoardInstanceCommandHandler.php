@@ -3,8 +3,8 @@
 namespace Concrete\Core\Board\Command;
 
 use Concrete\Core\Application\Application;
-use Concrete\Core\Entity\Board\DataSource\DataSource;
-use Concrete\Core\Entity\Board\Instance;
+use Concrete\Core\Board\DataSource\Driver\Manager as BoardDataSourceManager;
+use Concrete\Core\Board\DataSource\Driver\NotifierAwareDriverInterface;
 use Doctrine\ORM\EntityManager;
 
 abstract class AbstractUpdateBoardInstanceCommandHandler
@@ -19,27 +19,24 @@ abstract class AbstractUpdateBoardInstanceCommandHandler
      */
     protected $app;
 
-    public function __construct(Application $app, EntityManager $entityManager)
+    /**
+     * @var BoardDataSourceManager
+     */
+    protected $boardDataSourceManager;
+
+    public function __construct(Application $app, BoardDataSourceManager $boardDataSourceManager, EntityManager $entityManager)
     {
         $this->app = $app;
+        $this->boardDataSourceManager = $boardDataSourceManager;
         $this->entityManager = $entityManager;
     }
 
     protected function getInstances(AbstractUpdateBoardInstanceCommand $command): array
     {
-        $dataSource = $this->entityManager->getRepository(DataSource::class)
-            ->findOneByHandle($command->getDriver());
-        $instances = [];
-        if ($dataSource instanceof DataSource) {
-            $driver = $dataSource->getDriver();
-            $db = $this->entityManager->getConnection();
-            $v = [$dataSource->getId(), $driver->getItemPopulator()->getObjectUniqueItemId($command->getObject())];
-            $r = $db->executeQuery('select distinct boardInstanceID from BoardInstanceItems bii inner join BoardItems bi on (bii.boardItemID = bi.boardItemID) where bii.configuredDataSourceID = ? and bi.uniqueItemId = ?', $v);
-            while ($row = $r->fetchAssociative()) {
-                $instances[] = $this->entityManager->find(Instance::class, $row['boardInstanceID']);
-            }
+        $driver = $this->boardDataSourceManager->driver($command->getDriver());
+        if ($driver instanceof NotifierAwareDriverInterface) {
+            $notifier = $driver->getBoardInstanceNotifier();
+            return $notifier->findBoardInstancesThatMayContainObject($command->getObject());
         }
-        return $instances;
     }
-
 }
