@@ -14,14 +14,14 @@ abstract class AbstractBoardInstanceCommand extends Command implements Normaliza
 {
     use BoardInstanceTrait;
 
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = [])
+    public function normalize(NormalizerInterface $normalizer, ?string $format = null, array $context = [])
     {
         return [
             'boardInstanceID' => $this->getInstance()->getBoardInstanceID(),
         ];
     }
 
-    public function denormalize(DenormalizerInterface $denormalizer, $data, string $format = null, array $context = [])
+    public function denormalize(DenormalizerInterface $denormalizer, $data, ?string $format = null, array $context = [])
     {
         if (isset($data['boardInstanceID'])) {
             $instance = app(EntityManager::class)->find(Instance::class, $data['boardInstanceID']);
