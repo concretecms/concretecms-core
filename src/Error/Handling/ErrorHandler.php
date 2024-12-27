@@ -17,6 +17,11 @@ class ErrorHandler extends SymfonyErrorHandler
      */
     protected $config;
 
+    /**
+     * @var callable[]
+     */
+    protected $exceptionListeners = [];
+
     public function __construct(LoggerInterface $logger, Repository $config)
     {
         $this->config = $config;
@@ -55,6 +60,19 @@ class ErrorHandler extends SymfonyErrorHandler
     }
 
     /**
+     * Add a callable to be invoked when we have an exception.
+     * If the callable returns true we won't do anything.
+     *
+     * @return $this
+     */
+    public function addExceptionListener(callable $listener): self
+    {
+        $this->exceptionListeners[] = $listener;
+
+        return $this;
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @see \Symfony\Component\ErrorHandler\ErrorHandler::getErrorEnhancers()
@@ -77,6 +95,12 @@ class ErrorHandler extends SymfonyErrorHandler
      */
     protected function renderConcreteException(\Throwable $exception): void
     {
+        foreach ($this->exceptionListeners as $exceptionListener) {
+            if ($exceptionListener($exception) === true) {
+                return;
+            }
+        }
+
         $renderer = \in_array(\PHP_SAPI, ['cli', 'phpdbg'], true) ? new CliErrorRenderer() : app(ConcreteErrorRenderer::class, ['config' => $this->config]);
 
         $exception = $renderer->render($exception);
