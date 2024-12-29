@@ -1391,7 +1391,7 @@
               filename="/dashboard/system/calendar/import.php" pagetype=""
               description="" package=""/>
 
-        <page name="Boards" path="/dashboard/system/boards"
+        <page name="Boards &amp; Summary" path="/dashboard/system/boards"
               filename="/dashboard/system/boards/view.php" pagetype=""
               description="Manage global board settings" package=""/>
         <page name="Board Settings" path="/dashboard/system/boards/settings"
@@ -1400,7 +1400,9 @@
         <page name="Permissions" path="/dashboard/system/boards/permissions"
               filename="/dashboard/system/boards/permissions.php" pagetype=""
               description="" package=""/>
-
+        <page name="Summary Templates" path="/dashboard/system/boards/summary_templates"
+              filename="/dashboard/system/boards/summary_templates.php" pagetype=""
+              description="" package=""/>
         <page name="Conversations" path="/dashboard/system/conversations"
               filename="/dashboard/system/conversations/view.php" pagetype=""
               description="Manage your conversations settings" package="">
