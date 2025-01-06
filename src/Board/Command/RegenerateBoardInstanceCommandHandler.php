@@ -44,6 +44,10 @@ class RegenerateBoardInstanceCommandHandler
             $regenerateCommand->setInstance($instance);
             return $this->app->executeCommand($regenerateCommand);
         } else {
+            $command = new ClearBoardInstanceLogCommand();
+            $command->setInstance($instance);
+            $this->app->executeCommand($command);
+
             $command = new ClearBoardInstanceDataPoolCommand();
             $command->setInstance($instance);
             $this->app->executeCommand($command);

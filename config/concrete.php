@@ -514,6 +514,16 @@ return [
 
         'enable_dashboard_report' => true,
 
+        'boards' => [
+
+            /*
+             * Whether to log Board instance generation (note, this is handled by a custom, separate log mechanism)
+             *
+             * @var bool
+             */
+            'instances' => true,
+        ],
+
         'configuration' => [
             /*
              * Configuration mode

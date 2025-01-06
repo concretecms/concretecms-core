@@ -87,12 +87,17 @@ class Instance implements \JsonSerializable, ObjectInterface
      */
     protected $site;
 
-
     /**
-     * @ORM\OneToMany(targetEntity="InstanceSlot", cascade={"persist", "remove"}, mappedBy="instance")
+     * @ORM\OneToMany(targetEntity="InstanceSlot", cascade={"persist", "remove"}, mappedBy="instance", fetch="EXTRA_LAZY")
      * @ORM\OrderBy({"slot" = "ASC"})
      */
     protected $slots;
+
+    /**
+     * @ORM\OneToOne(targetEntity="InstanceLog", cascade={"persist", "remove"}, mappedBy="instance")
+     * @ORM\OrderBy({"dateCreated" = "DESC"})
+     */
+    protected $log;
 
     public function __construct()
     {
@@ -222,6 +227,22 @@ class Instance implements \JsonSerializable, ObjectInterface
     public function setDateCreated($dateCreated): void
     {
         $this->dateCreated = $dateCreated;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLog(): ?InstanceLog
+    {
+        return $this->log;
+    }
+
+    /**
+     * @param mixed $log
+     */
+    public function setLog(?InstanceLog $log = null): void
+    {
+        $this->log = $log;
     }
 
     public function getDateCreatedObject() : \DateTime

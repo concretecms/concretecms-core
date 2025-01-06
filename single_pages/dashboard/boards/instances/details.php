@@ -1,4 +1,5 @@
 <?php
+use Concrete\Core\Entity\Board\InstanceLog;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -63,6 +64,103 @@ defined('C5_EXECUTE') or die("Access Denied.");
             </div>
 
         </div>
+
+        <?php if ($instanceLoggingEnabled) { ?>
+
+            <h5 class="my-4"><?=t('Instance Log')?></h5>
+            <div class="help-block"><?=t('View details about how content was chosen and placed into the board.')?></div>
+
+            <div id="instance-log">
+                <div class="d-grid">
+                    <button type="button" class="mb-2 btn-secondary btn btn-outline-secondary" @click="fetchLog"><?=t("Instance Log")?></button>
+                </div>
+
+                <div class="modal fade" id="instance-log-modal" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"><?=t('Instance Log')?></h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="<?= t('Close') ?>"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="alert alert-info"><?=t('Note: Instance logs are automatically cleared and rebuilt any time the board instance is regenerated.')?></div>
+                                <div class="overflow-auto" v-if="logEntries.length">
+                                    <table class="w-100 table table-striped table-bordered">
+                                        <tbody>
+                                            <template v-for="entry in logEntries">
+                                            <tr>
+                                                <td class="text-nowrap">{{entry.timestampDisplay}}</td>
+                                                <td class="w-100">
+                                                    <span :class="{'d-inline-block': true, 'me-2': entry.data}">
+                                                        {{entry.message}}
+                                                    </span>
+                                                    <a href="#" v-if="entry.data" class="d-inline-block ccm-hover-icon small" @click.prevent="toggleDetails(entry.id)">
+                                                        <?=t('Details')?>
+                                                        <i :class="{'fa': true, 'fa-caret-right': !expandedLogEntries.includes(entry.id), 'fa-caret-down': expandedLogEntries.includes(entry.id)}"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr v-show="expandedLogEntries.includes(entry.id)">
+                                                <td colspan="2">
+                                                    <div style="width: 100%; overflow: hidden">
+                                                        <pre><span v-html="entry.displayData"></span></pre>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div v-else>
+                                    <?=t('No log entries found.')?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <script>
+                $(function () {
+                    Concrete.Vue.activateContext('backend', function (Vue, config) {
+                        new Vue({
+                            el: '#instance-log',
+                            data() {
+                                return {
+                                    logEntries: [],
+                                    expandedLogEntries: []
+                                };
+                            },
+                            methods: {
+                                toggleDetails(entryId) {
+                                    if (this.expandedLogEntries.includes(entryId)) {
+                                        this.expandedLogEntries.splice(this.expandedLogEntries.indexOf(entryId), 1)
+                                    } else {
+                                        this.expandedLogEntries.push(entryId)
+                                    }
+                                },
+                                fetchLog() {
+                                    const request = new ConcreteAjaxRequest({
+                                        url: '<?=$view->action('get_instance_log', $instance->getBoardInstanceID())?>',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        success: (response) => {
+                                            if (response.length) {
+                                                this.logEntries = response;
+                                            }
+                                            const modal = new bootstrap.Modal(document.getElementById('instance-log-modal'));
+                                            modal.show();
+                                        }
+                                    });
+                                },
+                            },
+                        });
+                    });
+                });
+            </script>
+
+        <?php } ?>
 
         <hr>
 

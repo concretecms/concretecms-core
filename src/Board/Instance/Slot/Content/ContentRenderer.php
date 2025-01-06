@@ -36,7 +36,7 @@ class ContentRenderer implements LoggerAwareInterface
 
     public function getLoggerChannel()
     {
-        return Channels::CHANNEL_CONTENT;
+        return Channels::CHANNEL_BOARD;
     }
 
     /**
