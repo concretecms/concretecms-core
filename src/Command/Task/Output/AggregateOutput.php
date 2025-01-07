@@ -29,10 +29,17 @@ class AggregateOutput implements OutputInterface, NormalizableInterface, Denorma
         $this->outputs[] = $output;
     }
 
-    public function write($message)
+    public function write($message): void
     {
         foreach($this->outputs as $output) {
             $output->write($message);
+        }
+    }
+
+    public function writeError($message): void
+    {
+        foreach($this->outputs as $output) {
+            $output->writeError($message);
         }
     }
 

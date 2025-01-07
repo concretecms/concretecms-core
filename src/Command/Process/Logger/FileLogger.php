@@ -53,9 +53,14 @@ class FileLogger implements LoggerInterface, NormalizableInterface, Denormalizab
         return $this->filePath;
     }
 
-    public function write($message)
+    public function write($message): void
     {
         $this->filesystem->append($this->getFilePath(), $message . "\n");
+    }
+
+    public function writeError($message): void
+    {
+        $this->filesystem->append($this->getFilePath(), '!! ' . $message . "\n");
     }
 
     public function normalize(NormalizerInterface $normalizer, ?string $format = null, array $context = [])

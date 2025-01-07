@@ -21,9 +21,18 @@ class ConsoleOutput implements OutputInterface
         $this->symfonyOutput = $symfonyOutput;
     }
 
-    public function write($message)
+    public function write($message): void
     {
         $this->symfonyOutput->writeln($message);
+    }
+
+    public function writeError($message): void
+    {
+        if ($this->symfonyOutput->isVeryVerbose()) {
+            throw new \Exception($message);
+        } else {
+            $this->symfonyOutput->writeln('<error>' . $message . '</error>');
+        }
     }
 
 }
