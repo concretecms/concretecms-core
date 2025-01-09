@@ -70,4 +70,16 @@ class DefaultSet extends ColumnSet
         $type = $this->getColumnByKey($config->get('concrete.file_manager.sort_column') ?: 'name');
         $this->setDefaultSortColumn($type, $config->get('concrete.file_manager.sort_direction') ?: 'asc');
     }
+
+    public static function getDownloads($node)
+    {
+        if ($node->getTreeNodeTypeHandle() == 'file') {
+            $file = $node->getTreeNodeFileObject();
+            if (is_object($file)) {
+                return $file->getTotalDownloads();
+            }
+        }
+
+        return '';
+    }
 }
