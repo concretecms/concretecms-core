@@ -4096,42 +4096,61 @@ EOT
      */
     protected function populatePage($cInfo, $where, $cvID)
     {
-        $db = Database::connection();
-
-        $fields = 'Pages.cID, Pages.pkgID, Pages.siteTreeID, Pages.cPointerID, Pages.cPointerExternalLink, Pages.cIsDraft, Pages.cIsActive, Pages.cIsSystemPage, Pages.cPointerExternalLinkNewWindow, Pages.cFilename, Pages.ptID, Collections.cDateAdded, Pages.cDisplayOrder, Collections.cDateModified, cInheritPermissionsFromCID, cInheritPermissionsFrom, cOverrideTemplatePermissions, cCheckedOutUID, cIsTemplate, uID, cPath, cParentID, cChildren, cCacheFullPageContent, cCacheFullPageContentOverrideLifetime, cCacheFullPageContentLifetimeCustom, Collections.cHandle';
-        $from = 'Pages INNER JOIN Collections ON Pages.cID = Collections.cID LEFT JOIN PagePaths ON (Pages.cID = PagePaths.cID AND PagePaths.ppIsCanonical = 1)';
-
-        $row = $db->fetchAssoc("SELECT {$fields} FROM {$from} {$where}", [$cInfo]);
-        if ($row !== false && $row['cPointerID'] > 0) {
-            $originalRow = $row;
-            $row = $db->fetchAssoc("SELECT {$fields}, CollectionVersions.cvName FROM {$from} LEFT JOIN CollectionVersions ON CollectionVersions.cID = ? WHERE Pages.cID = ? LIMIT 1", [$row['cID'], $row['cPointerID']]);
+        $app = Application::getFacadeApplication();
+        /** @var \Concrete\Core\Cache\Level\RequestCache $requestCache */
+        $requestCache = $app->make('cache/request');
+        $identifier = '/page/info/' . $cInfo;
+        $item = $requestCache->getItem($identifier);
+        if ($item->isHit()) {
+            $pageInfo = $item->get();
         } else {
-            $originalRow = null;
+            /** @var Connection $db */
+            $db = $app->make(Connection::class);
+
+            $fields = 'Pages.cID, Pages.pkgID, Pages.siteTreeID, Pages.cPointerID, Pages.cPointerExternalLink, Pages.cIsDraft, Pages.cIsActive, Pages.cIsSystemPage, Pages.cPointerExternalLinkNewWindow, Pages.cFilename, Pages.ptID, Collections.cDateAdded, Pages.cDisplayOrder, Collections.cDateModified, cInheritPermissionsFromCID, cInheritPermissionsFrom, cOverrideTemplatePermissions, cCheckedOutUID, cIsTemplate, uID, cPath, cParentID, cChildren, cCacheFullPageContent, cCacheFullPageContentOverrideLifetime, cCacheFullPageContentLifetimeCustom, Collections.cHandle';
+            $from = 'Pages INNER JOIN Collections ON Pages.cID = Collections.cID LEFT JOIN PagePaths ON (Pages.cID = PagePaths.cID AND PagePaths.ppIsCanonical = 1)';
+
+            $row = $db->fetchAssociative("SELECT {$fields} FROM {$from} {$where}", [$cInfo]);
+            if ($row !== false && $row['cPointerID'] > 0) {
+                $originalRow = $row;
+                $row = $db->fetchAssociative("SELECT {$fields}, CollectionVersions.cvName FROM {$from} LEFT JOIN CollectionVersions ON CollectionVersions.cID = ? WHERE Pages.cID = ? LIMIT 1", [$row['cID'], $row['cPointerID']]);
+            } else {
+                $originalRow = null;
+            }
+
+            $pageInfo = [];
+            if ($row !== false) {
+                if ($originalRow !== null) {
+                    $pageInfo['customAliasName'] = (string) $row['cvName'];
+                    unset($row['cvName']);
+                }
+                foreach ($row as $key => $value) {
+                    $pageInfo[$key] = $value;
+                }
+                if ($originalRow !== null) {
+                    $pageInfo['cPointerID'] = $originalRow['cPointerID'];
+                    $pageInfo['cIsActive'] = $originalRow['cIsActive'];
+                    $pageInfo['cPointerOriginalID'] = $originalRow['cID'];
+                    $pageInfo['cPointerOriginalSiteTreeID'] = $originalRow['siteTreeID'];
+                    $pageInfo['cPath'] = $originalRow['cPath'];
+                    $pageInfo['cParentID'] = $originalRow['cParentID'];
+                    $pageInfo['cDisplayOrder'] = $originalRow['cDisplayOrder'];
+                    $pageInfo['aliasHandle'] = (string) $originalRow['cHandle'];
+                }
+                $pageInfo['isMasterCollection'] = $row['cIsTemplate'];
+            }
         }
 
-        if ($row !== false) {
-            if ($originalRow !== null) {
-                $this->customAliasName = (string) $row['cvName'];
-                unset($row['cvName']);
-            }
-            foreach ($row as $key => $value) {
+        if ($pageInfo) {
+            foreach ($pageInfo as $key => $value) {
                 $this->{$key} = $value;
             }
-            if ($originalRow !== null) {
-                $this->cPointerID = $originalRow['cPointerID'];
-                $this->cIsActive = $originalRow['cIsActive'];
-                $this->cPointerOriginalID = $originalRow['cID'];
-                $this->cPointerOriginalSiteTreeID = $originalRow['siteTreeID'];
-                $this->cPath = $originalRow['cPath'];
-                $this->cParentID = $originalRow['cParentID'];
-                $this->cDisplayOrder = $originalRow['cDisplayOrder'];
-                $this->aliasHandle = (string) $originalRow['cHandle'];
-            }
-            $this->isMasterCollection = $row['cIsTemplate'];
             $this->loadError(false);
             if ($cvID != false) {
                 $this->loadVersionObject($cvID);
             }
+            $item->set($pageInfo);
+            $requestCache->save($item);
         } else {
             // there was no record of this particular collection in the database
             $this->loadError(COLLECTION_NOT_FOUND);
