@@ -328,6 +328,7 @@ class Text
 
     /**
      * Takes a CamelCase string and turns it into camel_case.
+     * See also laravel function snake_case which does similar but without bugs.
      *
      * @param string $string
      *
@@ -336,21 +337,6 @@ class Text
     public function uncamelcase($string)
     {
         return ConcreteObject::uncamelcase($string);
-    }
-
-    /**
-     * Takes a CamelCase string and turns it into snake_case resolving bugs in
-     * uncamelcase(). An alternative method is required because the bugged
-     * behaviour of uncamelcase() has too long a legacy and some code may
-     * actually depend on it!
-     *
-     * @param string $string
-     *
-     * @return string
-     */
-    public function camelTo_snake_case($string)
-    {
-        return $this->uncamelcase(ucfirst($string));
     }
 
     /**
