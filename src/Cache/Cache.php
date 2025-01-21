@@ -230,9 +230,14 @@ abstract class Cache implements FlushableInterface
         $app->make('cache')->disable();
 
         // See: https://github.com/concretecms/concretecms/issues/12422
-        $em = $app->make(EntityManagerInterface::class);
-        $ormMdCache = $app->make('Doctrine\Common\Cache\ArrayCache');
-        $em->getMetadataFactory()->setCache(new DoctrineAdapter($ormMdCache));
+        $db = $app->make('database');
+        if ($db->getDefaultConnection() !== null) {
+            // These would fail in case there is not a configured database
+            // connection, which is the case during installation.
+            $em = $app->make(EntityManagerInterface::class);
+            $ormMdCache = $app->make('Doctrine\Common\Cache\ArrayCache');
+            $em->getMetadataFactory()->setCache(new DoctrineAdapter($ormMdCache));
+        }
     }
 
     /**
@@ -246,8 +251,13 @@ abstract class Cache implements FlushableInterface
         $app->make('cache')->enable();
 
         // See: https://github.com/concretecms/concretecms/issues/12422
-        $em = $app->make(EntityManagerInterface::class);
-        $ormMdCache = $app->make('orm/cache');
-        $em->getMetadataFactory()->setCache(new DoctrineAdapter($ormMdCache));
+        $db = $app->make('database');
+        if ($db->getDefaultConnection() !== null) {
+            // These would fail in case there is not a configured database
+            // connection, which is the case during installation.
+            $em = $app->make(EntityManagerInterface::class);
+            $ormMdCache = $app->make('orm/cache');
+            $em->getMetadataFactory()->setCache(new DoctrineAdapter($ormMdCache));
+        }
     }
 }
