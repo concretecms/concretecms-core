@@ -328,6 +328,7 @@ class Text
 
     /**
      * Takes a CamelCase string and turns it into camel_case.
+     * See also laravel function snake_case which does similar but without bugs.
      *
      * @param string $string
      *
