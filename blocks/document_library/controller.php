@@ -751,9 +751,9 @@ class Controller extends BlockController implements UsesFeatureInterface
                     $file->getFileID(), t('Details'));
             case 'title':
                 if ($this->downloadFileMethod == 'force') {
-                    return sprintf('<a href="%s">%s</a>', $file->getForceDownloadURL(), $file->getTitle());
+                    return sprintf('<a href="%1$s" download="%2$s">%2$s</a>', $file->getForceDownloadURL(), h($file->getTitle()));
                 } else {
-                    return sprintf('<a href="%s">%s</a>', $file->getDownloadURL(), $file->getTitle());
+                    return sprintf('<a href="%1$s" download="%2$s">%2$s</a>', $file->getDownloadURL(), h($file->getTitle()));
                 }
             case 'filename':
                 return $file->getFileName();
