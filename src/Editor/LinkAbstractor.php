@@ -142,20 +142,34 @@ class LinkAbstractor extends ConcreteObject
                     $fo = \Concrete\Core\File\File::getByID($fID);
                 }
                 if ($fo !== null) {
-                    $usePictureTag = null;
                     $style = (string) $picture->style;
                     // move width px to width attribute and height px to height attribute
                     $widthPattern = '/(?:^width|[^-]width):\\s([0-9]+)px;?/i';
                     if (preg_match($widthPattern, $style, $matches)) {
                         $style = preg_replace($widthPattern, '', $style);
                         $picture->width = $matches[1];
-                        $usePictureTag = false;
                     }
                     $heightPattern = '/(?:^height|[^-]height):\\s([0-9]+)px;?/i';
                     if (preg_match($heightPattern, $style, $matches)) {
                         $style = preg_replace($heightPattern, '', $style);
                         $picture->height = $matches[1];
-                        $usePictureTag = false;
+                    }
+                    $usePictureTag = null;
+                    if ($usePictureTag === null) {
+                        $widthFromHtml = (string) $picture->width;
+                        if ($widthFromHtml === (string) (int) $widthFromHtml && is_numeric($widthFromAttributes = (string) $fo->getAttribute('width'))) {
+                            if ($widthFromHtml !== $widthFromAttributes) {
+                                $usePictureTag = false;
+                            }
+                        }
+                    }
+                    if ($usePictureTag === null) {
+                        $heightFromHtml = (string) $picture->height;
+                        if ($heightFromHtml === (string) (int) $heightFromHtml && is_numeric($heightFromAttributes = (string) $fo->getAttribute('height'))) {
+                            if ($heightFromHtml !== $heightFromAttributes) {
+                                $usePictureTag = false;
+                            }
+                        }
                     }
                     if ($style === '') {
                         unset($picture->style);
