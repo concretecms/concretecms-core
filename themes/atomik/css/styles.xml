@@ -30,6 +30,11 @@
             <font type="google" name="Josefin Sans" />
             <font type="google" name="Work Sans" />
         </preset>
+        <preset identifier="midnight-velvet">
+            <font type="google" name="Poppins" />
+            <font type="google" name="Inter" />
+            <font type="google" name="Oswald" />
+        </preset>
     </webfonts>
     <set name="Base Colors">
         <style name="Primary" variable="primary" type="color"/>
