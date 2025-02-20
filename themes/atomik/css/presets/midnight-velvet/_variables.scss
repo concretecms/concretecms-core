@@ -6,6 +6,10 @@
 $body-emphasis-color: #fff;
 $body-bg: #212529;
 $body-color: #dee2e6;
+$body-secondary-bg: #343a40;
+$body-secondary-color: rgba($body-color, .75);
+$body-tertiary-bg: #2e3236;
+$body-tertiary-color: rgba($body-color, .5);
 
 // Colors - Base Bootstrap
 $success: #66BB6A; // Soft emerald green
@@ -33,3 +37,6 @@ $headings-font-weight: 800 !default;
 // Links
 $link-color: $primary;
 $link-decoration: none;
+
+// Doc Library
+$theme-document-library-icon-filter: invert(1);
