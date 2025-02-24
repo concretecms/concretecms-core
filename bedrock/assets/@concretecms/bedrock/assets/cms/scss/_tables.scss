@@ -9,7 +9,18 @@ div.ccm-ui {
     thead {
       th {
         border-bottom-width: 1px;
+        color: $gray-500;
         font-size: 0.75rem;
+
+        @include color-mode(dark) {
+          > a {
+            color: $gray-300;
+
+            &:hover {
+              color: white;
+            }
+          }
+        }
 
         > a {
           color: $gray-700;
@@ -28,6 +39,9 @@ div.ccm-ui {
 
             &:hover {
               color: black;
+              @include color-mode(dark) {
+                color: white;
+              }
             }
 
             &::after {
@@ -110,6 +124,10 @@ div.ccm-ui {
       color: $gray-700;
       font-size: 1rem;
 
+      @include color-mode(dark) {
+        color: $gray-200;
+      }
+
       a {
         color: $gray-700;
         text-decoration: none;
@@ -139,6 +157,15 @@ div.ccm-ui {
         background-color: $gray-200;
         color: #000;
         cursor: pointer;
+
+        @include color-mode(dark) {
+          background-color: $gray-700;
+          color: $gray-100;
+
+          &.ccm-search-results-name {
+            color: $gray-100;
+          }
+        }
       }
 
       .ccm-search-results-em,
