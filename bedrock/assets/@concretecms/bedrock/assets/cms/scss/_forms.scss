@@ -1,4 +1,16 @@
 .ccm-ui {
+
+  @include color-mode(dark) {
+    .form-control,
+    .form-select {
+      color: $light-blue;
+
+      &:focus {
+        color: $light-blue;
+      }
+    }
+  }
+
   fieldset {
     legend {
       color: $gray-500;
@@ -8,6 +20,13 @@
   .form-group {
     // bootstrap 5 doesn't have .form-group classes anymore. But we need some kind of nice default sizing.
     margin-bottom: $form-group-margin-bottom;
+  }
+
+  .form-label {
+    color: $gray-700;
+    @include color-mode(dark) {
+      color: $gray-300;
+    }
   }
 
 }

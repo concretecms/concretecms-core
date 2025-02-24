@@ -21,6 +21,24 @@
     background-color: $sitemap-container-background-color;
     border: 0;
 
+    @include color-mode(dark) {
+      span.fancytree-expander,
+      span.icon-folder,
+      span.icon-home,
+      span.icon-page {
+        filter: invert(1);
+      }
+
+      span.fancytree-active {
+        span.fancytree-expander,
+        span.icon-folder,
+        span.icon-home,
+        span.icon-page {
+          filter: none;
+        }
+      }
+    }
+
     .ccm-page-home {
       img {
         // Locales
@@ -203,6 +221,9 @@
           line-height: $sitemap-hover-item-height;
           margin: 0;
           padding: 0 10px;
+          @include color-mode(dark) {
+            color: $sitemap-normal-item-text-color-dark;
+          }
         }
       }
 

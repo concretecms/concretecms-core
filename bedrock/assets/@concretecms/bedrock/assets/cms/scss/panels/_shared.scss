@@ -20,6 +20,11 @@ div.ccm-panel {
   width: 320px;
   z-index: $index-level-panel; // has to come above the detail actions wrapper
   /* overflow: hidden; */ /* This causes problems with floating palettes inside the panels. So let's only apply this during transitions */
+
+  @include color-mode(dark) {
+    background-color: $panel-background-color-dark;
+  }
+
   div.ccm-panel-close {
     position: absolute;
     right: 17px;
@@ -42,6 +47,9 @@ div#ccm-panel-overlay {
 
 div#ccm-panel-overlay.ccm-panel-translucent {
   background-color: rgba(255, 255, 255, 0.7);
+  @include color-mode(dark) {
+    background-color: rgba(33, 33, 33, 0.7);
+  }
 }
 
 html.ccm-panel-ready {
@@ -235,9 +243,17 @@ div.ccm-panel-content {
         text-decoration: none;
         transition: $panel-menu-item-transition;
 
+        @include color-mode(dark) {
+          color: $panel-menu-item-color-dark;
+        }
+
         &:hover {
           background-color: $panel-menu-item-hover-bg-color;
           color: $panel-menu-item-hover-color;
+          @include color-mode(dark) {
+            background-color: $panel-menu-item-hover-bg-color-dark;
+            color: $panel-menu-item-hover-color-dark;
+          }
 
         }
 
@@ -435,7 +451,7 @@ html.ccm-panel-right div.ccm-panel-detail {
 }
 
 div.ccm-panel-detail-content {
-  background-color: white;
+  background-color: var(--bs-body-bg);
   min-height: 100%;
   min-width: 100%;
   padding: 40px 40px 80px;
@@ -549,6 +565,14 @@ div.ccm-panel-content {
       text-decoration: none;
       transition: color 0.1s ease-in-out;
 
+      @include color-mode(dark) {
+        color: $gray-400;
+
+        svg {
+          fill: $gray-400;
+        }
+      }
+
       &:hover {
         color: $blue;
 
@@ -583,6 +607,11 @@ div.ccm-panel-detail-form-actions {
   padding: 15px 20px 15px 340px;
   position: fixed;
   width: 100%;
+
+  @include color-mode(dark) {
+    background-color: $gray-900;
+    border-top: 1px solid $gray-700;
+  }
 }
 
 /**

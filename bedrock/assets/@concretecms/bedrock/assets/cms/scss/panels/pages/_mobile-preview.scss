@@ -1,7 +1,11 @@
 #ccm-panel-detail-mobile-preview {
   > .ccm-panel-detail-content {
-    background: rgba(255, 255, 255, 0.4);
+    background: $gray-500;
     text-align: center;
+
+    @include color-mode(dark) {
+      background: $gray-600;
+    }
 
     > .ccm-device-preview {
       display: inline-block;

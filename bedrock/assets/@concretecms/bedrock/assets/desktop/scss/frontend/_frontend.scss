@@ -1,1 +1,5 @@
+$color-mode-type: media-query;
+
+@import 'bootstrap/scss/mixins/color-mode';
+@import '../../../../assets/cms/scss/variables.scss';
 @import 'waiting-for-me';
