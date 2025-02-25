@@ -97,16 +97,10 @@ div.ccm-block-desktop-waiting-for-me {
 
         &.btn-close {
           border: 1px solid $gray-300; // This needs to be explicit because .btn-close has strong styling otherwise
-          @include color-mode(dark) {
-            border: 1px solid $gray-700;
-          }
         }
 
         i {
           color: $gray-300;
-          @include color-mode(dark) {
-            color: 1px solid $gray-700;
-          }
         }
 
         &:active {
@@ -124,4 +118,22 @@ div.ccm-block-desktop-waiting-for-me {
     text-align: center;
   }
 
+}
+
+@include color-mode(dark) {
+  div.ccm-block-desktop-waiting-for-me {
+    div.ccm-block-desktop-waiting-for-me-item {
+      div.ccm-block-desktop-waiting-for-me-menu {
+        .btn {
+          &.btn-close {
+            border: 1px solid $gray-700;
+          }
+          i {
+            color: 1px solid $gray-700;
+          }
+        }
+      }
+    }
+  }
+  border: 1px solid $gray-700;
 }

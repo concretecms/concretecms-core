@@ -14,7 +14,14 @@
     .ccm-panel-page-design-title {
       color: $gray-700;
       font-weight: bold;
-      @include color-mode(dark) {
+    }
+  }
+}
+
+@include color-mode(dark) {
+  #ccm-panel-page-design {
+    .ccm-panel-content-inner {
+      .ccm-panel-page-design-title {
         color: $gray-400;
       }
     }

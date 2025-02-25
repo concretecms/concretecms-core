@@ -59,10 +59,6 @@
       text-decoration: none;
       transition: $panel-menu-item-transition;
 
-      @include color-mode(dark) {
-        color: $panel-menu-item-color-dark;
-      }
-
       // Plus and minus icons
       .fa,
       .fas {
@@ -90,10 +86,6 @@
       &:hover {
         background-color: $panel-menu-item-hover-bg-color;
         text-decoration: none;
-
-        @include color-mode(dark) {
-          background-color: $panel-menu-item-hover-bg-color-dark;
-        }
 
         .fa-plus-circle {
           opacity: 1;
@@ -172,11 +164,6 @@
       border: 2px solid darken($panel-background-color, 0.2);
       padding: 12px 45px 15px 48px;
 
-      @include color-mode(dark) {
-        background-color: $panel-background-color-dark;
-        border: 2px solid lighten($panel-background-color-dark, 0.3);
-      }
-
       [data-remove-attribute-key] {
         color: inherit;
         font-size: 21px;
@@ -185,6 +172,26 @@
         margin-right: 8px;
         vertical-align: middle;
       }
+    }
+  }
+}
+
+@include color-mode(dark) {
+  #ccm-menu-page-attributes {
+    .ccm-menu-page-attributes-set {
+      a[data-attribute-key] {
+        color: $panel-menu-item-color-dark;
+
+        &:hover {
+          background-color: $panel-menu-item-hover-bg-color-dark;
+        }
+      }
+    }
+  }
+  #ccm-detail-page-attributes {
+    &[data-attribute-key-id] {
+      background-color: $panel-background-color-dark;
+      border: 2px solid lighten($panel-background-color-dark, 0.3);
     }
   }
 }

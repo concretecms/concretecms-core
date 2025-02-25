@@ -3,10 +3,6 @@
     background: $gray-500;
     text-align: center;
 
-    @include color-mode(dark) {
-      background: $gray-600;
-    }
-
     > .ccm-device-preview {
       display: inline-block;
     }
@@ -143,4 +139,12 @@ div.ccm-menu-device-set {
 
   }
 
+}
+
+@include color-mode(dark) {
+  #ccm-panel-detail-mobile-preview {
+    > .ccm-panel-detail-content {
+      background: $gray-600;
+    }
+  }
 }
