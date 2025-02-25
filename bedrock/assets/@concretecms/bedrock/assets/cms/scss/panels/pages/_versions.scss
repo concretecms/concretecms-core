@@ -33,10 +33,6 @@ section#ccm-panel-page-versions {
       background-color: $panel-background-color-accent;
       padding: $table-cell-padding-y $table-cell-padding-x;
       vertical-align: top;
-
-      @include color-mode(dark) {
-        background-color: $panel-background-color-accent-dark;
-      }
     }
 
     span.ccm-panel-page-versions-version-id {
@@ -82,6 +78,17 @@ section#ccm-panel-page-versions {
 
     p {
       margin-bottom: $paragraph-margin-bottom / 3;
+    }
+  }
+}
+
+@include color-mode(dark) {
+  section#ccm-panel-page-versions {
+    table {
+      th,
+      td {
+        background-color: $panel-background-color-accent-dark;
+      }
     }
   }
 }

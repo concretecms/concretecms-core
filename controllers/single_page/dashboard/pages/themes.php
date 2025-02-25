@@ -3,6 +3,8 @@
 namespace Concrete\Controller\SinglePage\Dashboard\Pages;
 
 use Concrete\Core\Block\BlockType\Set;
+use Concrete\Core\Navigation\Breadcrumb\Dashboard\DashboardBreadcrumbFactory;
+use Concrete\Core\Navigation\Item\Item;
 use Concrete\Core\Package\ItemCategory\Manager;
 use Concrete\Core\Package\PackageService;
 use Concrete\Core\Page\Controller\DashboardPageController;
@@ -26,7 +28,7 @@ class Themes extends DashboardSitePageController
         $this->set('tArray', $tArray);
         $this->set('tArray2', $tArray2);
 
-        $activeTheme = Theme::getSiteTheme();
+        $activeTheme = Theme::getByID($this->site->getThemeID());
         $this->set('activeTheme', $activeTheme);
 
         if ($activeTheme->hasSkins()) {
@@ -142,6 +144,20 @@ class Themes extends DashboardSitePageController
             }
         }
         return $this->buildRedirect($this->action());
+    }
+
+    public function configure()
+    {
+        $theme = Theme::getByID($this->site->getThemeID());
+        if ($theme) {
+            $breadcrumb = $this->app->make(DashboardBreadcrumbFactory::class)->getBreadcrumb($this->getPageObject());
+            $breadcrumb->add(new Item('', t('Configure')));
+            $this->setBreadcrumb($breadcrumb);
+            $this->render('/dashboard/pages/themes/configure');
+        } else {
+            $this->error->add(t('Invalid theme'));
+            $this->view();
+        }
     }
 
     public function preview($pThemeID = null, $previewPageID = null)

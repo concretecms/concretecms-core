@@ -143,7 +143,12 @@ div#ccm-toolbar {
     font-style: italic;
     margin: 10px 0;
     padding: 10px 20px;
-    @include color-mode(dark) {
+  }
+}
+
+@include color-mode(dark) {
+  .ccm-ui {
+    .help-block {
       background-color: $dark-blue;
       color: $gray-200;
     }

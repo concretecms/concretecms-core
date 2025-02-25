@@ -16,11 +16,6 @@ div#ccm-intelligent-search-results {
   width: 251px;
   z-index: $index-level-intelligent-search;
 
-  @include color-mode(dark) {
-    background-color: $gray-900;
-    border-color: $gray-800;
-  }
-
   span {
     display: none;
   }
@@ -193,5 +188,12 @@ div#ccm-intelligent-search-results {
   to {
     -webkit-transform: translateX(1.5em);
     transform: translateX(1.5em);
+  }
+}
+
+@include color-mode(dark) {
+  div#ccm-intelligent-search-results {
+    background-color: $gray-900;
+    border-color: $gray-800;
   }
 }

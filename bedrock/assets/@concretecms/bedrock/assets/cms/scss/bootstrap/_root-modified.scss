@@ -129,7 +129,7 @@
   // scss-docs-end root-form-validation-variables
 }
 
-@media (prefers-color-scheme: dark) {
+[data-bs-theme="dark"] {
   .ccm-ui {
     color-scheme: dark;
     // scss-docs-start root-dark-mode-vars
