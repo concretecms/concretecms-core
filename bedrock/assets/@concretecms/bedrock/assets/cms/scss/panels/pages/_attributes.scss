@@ -177,6 +177,13 @@
 }
 
 @include color-mode(dark) {
+  #ccm-detail-page-attributes {
+    &[data-attribute-key-id] {
+      background-color: $panel-background-color-dark;
+      border: 2px solid lighten($panel-background-color-dark, 0.3);
+    }
+  }
+
   #ccm-menu-page-attributes {
     .ccm-menu-page-attributes-set {
       a[data-attribute-key] {
@@ -186,12 +193,6 @@
           background-color: $panel-menu-item-hover-bg-color-dark;
         }
       }
-    }
-  }
-  #ccm-detail-page-attributes {
-    &[data-attribute-key-id] {
-      background-color: $panel-background-color-dark;
-      border: 2px solid lighten($panel-background-color-dark, 0.3);
     }
   }
 }

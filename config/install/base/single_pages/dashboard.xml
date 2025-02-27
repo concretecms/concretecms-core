@@ -709,11 +709,11 @@
             </attributes>
         </page>
 
-        <page name="Accessibility" path="/dashboard/system/basics/accessibility"
-              filename="/dashboard/system/basics/accessibility.php" pagetype="" description="" package="">
+        <page name="Appearance" path="/dashboard/system/basics/appearance"
+              filename="/dashboard/system/basics/appearance.php" pagetype="" description="" package="">
             <attributes>
                 <attributekey handle="meta_keywords">
-                    <value>accessibility, easy mode</value>
+                    <value>accessibility, appearance, dark mode, tooltips</value>
                 </attributekey>
             </attributes>
         </page>

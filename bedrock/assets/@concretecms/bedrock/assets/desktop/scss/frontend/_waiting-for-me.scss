@@ -122,12 +122,15 @@ div.ccm-block-desktop-waiting-for-me {
 
 @include color-mode(dark) {
   div.ccm-block-desktop-waiting-for-me {
+    border: 1px solid $gray-700;
+
     div.ccm-block-desktop-waiting-for-me-item {
       div.ccm-block-desktop-waiting-for-me-menu {
         .btn {
           &.btn-close {
             border: 1px solid $gray-700;
           }
+
           i {
             color: 1px solid $gray-700;
           }
@@ -135,5 +138,4 @@ div.ccm-block-desktop-waiting-for-me {
       }
     }
   }
-  border: 1px solid $gray-700;
 }
