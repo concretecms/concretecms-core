@@ -6,9 +6,9 @@ return [
      *
      * @var string
      */
-    'version' => '9.4.0b1',
-    'version_installed' => '9.4.0b1',
-    'version_db' => '20241217194138', // the key of the latest database migration
+    'version' => '9.4.0b2',
+    'version_installed' => '9.4.0b2',
+    'version_db' => '20250227155410', // the key of the latest database migration
 
     /*
      * Installation status
@@ -917,6 +917,20 @@ return [
          * @var bool
          */
         'toolbar_tooltips' => true,
+    ],
+
+    /*
+     * ------------------------------------------------------------------------
+     * Appearance
+     * ------------------------------------------------------------------------
+     */
+    'appearance' => [
+        /*
+         * Show titles in the toolbars
+         *
+        * @var string (auto | light | dark)
+         */
+        'color_scheme' => 'auto',
     ],
 
     /*

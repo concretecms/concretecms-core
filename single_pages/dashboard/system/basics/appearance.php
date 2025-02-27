@@ -1,9 +1,10 @@
 <form action="<?= View::action('save') ?>" method="post">
     <?php
-    Core::make('token')->output('accessibility');
+    Core::make('token')->output('appearance');
     ?>
     <fieldset>
         <div class="form-group">
+            <legend><?=t('Toolbar')?></legend>
             <div class="form-check">
                 <input class="form-check-input" id="show_titles" name="show_titles" value="1" type="checkbox" <?= $show_titles ? 'checked' : '' ?> />
                 <label class="form-check-label" for="show_titles">
@@ -42,7 +43,29 @@
             </div>
         </div>
     </fieldset>
-    <h2></h2>
+    <fieldset>
+        <div class="form-group">
+            <legend><?=t('Dashboard Color Scheme')?></legend>
+            <div class="form-check">
+                <input class="form-check-input" id="colorSchemeAuto" name="colorScheme" value="auto" type="radio" <?= $colorScheme === 'auto' ? 'checked' : '' ?> />
+                <label class="form-check-label" for="colorSchemeAuto">
+                    <?= t('Auto – use system preferences to determine Dashboard theme color scheme.') ?>
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" id="colorSchemeLight" name="colorScheme" value="light" type="radio" <?= $colorScheme === 'light' ? 'checked' : '' ?> />
+                <label class="form-check-label" for="colorSchemeLight">
+                    <?= t('Light Theme') ?>
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" id="colorSchemeDark" name="colorScheme" value="dark" type="radio" <?= $colorScheme === 'dark' ? 'checked' : '' ?> />
+                <label class="form-check-label" for="colorSchemeDark">
+                    <?= t('Dark Theme') ?>
+                </label>
+            </div>
+        </div>
+    </fieldset>
 
     <div class="ccm-dashboard-form-actions-wrapper">
         <div class="ccm-dashboard-form-actions">

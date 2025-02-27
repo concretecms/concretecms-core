@@ -331,6 +331,7 @@ div#ccm-toolbar {
           border-right: 1px solid $gray-700;
         }
       }
+
       li.ccm-toolbar-search {
         background-color: black;
         border-left: 1px solid $gray-700;
@@ -361,7 +362,6 @@ div#ccm-toolbar {
     }
   }
 }
-
 
 /* Disabling the toolbar */
 div#ccm-toolbar-disabled {
