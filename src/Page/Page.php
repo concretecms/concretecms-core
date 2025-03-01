@@ -4211,12 +4211,12 @@ EOT
         }
     }
 
-    public function getPageSkin()
+    public function getPageSkinIdentifier(bool $fallbackToSite = true): ?string
     {
-        $skinIdentifier = null;
         if (isset($this->vObj->pThemeSkinIdentifier)) {
-            $skinIdentifier = $this->vObj->pThemeSkinIdentifier;
-        } else {
+            return $this->vObj->pThemeSkinIdentifier;
+        } else if ($fallbackToSite) {
+            $skinIdentifier = null;
             $site = $this->getSite();
             if (!$site) {
                 $site = Core::make('site')->getSite();
@@ -4224,13 +4224,12 @@ EOT
             if ($site->getThemeSkinIdentifier()) {
                 $skinIdentifier = $site->getThemeSkinIdentifier();
             }
+            if (!$skinIdentifier) {
+                $skinIdentifier = SkinInterface::SKIN_DEFAULT;
+            }
+            return $skinIdentifier;
         }
-        if (!$skinIdentifier) {
-            $skinIdentifier = SkinInterface::SKIN_DEFAULT;
-        }
-        $theme = $this->getCollectionThemeObject();
-        $skin = $theme->getSkinByIdentifier($skinIdentifier);
-        return $skin;
+        return null;
     }
 
     /**
