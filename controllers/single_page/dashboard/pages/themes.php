@@ -59,24 +59,40 @@ class Themes extends DashboardSitePageController
     }
 
 
-    public function save_selected_skin($themeSkinIdentifier = null, $token = null)
+    public function save_selected_skin()
     {
         $activeTheme = Theme::getSiteTheme();
-        if (!$this->token->validate('save_selected_skin', $token)) {
+        if (!$this->token->validate('save_selected_skin')) {
             $this->error->add($this->token->getErrorMessage());
         }
 
+        $themeSkinIdentifier = $this->request->request->get('activeSkinIdentifier');
         if (!$themeSkinIdentifier) {
-            $this->error->add(t('You must specify a valid theme skin identifier.'));
+            $this->error->add(t('You must specify a valid theme skin.'));
         }
 
+        $darkMode = $this->request->request->getBoolean('darkMode');
+        if ($darkMode) {
+            $themeSkinIdentifierDark = $this->request->request->get('activeSkinIdentifierDark');
+            if (!$themeSkinIdentifierDark) {
+                $this->error->add(t('You must specify a valid theme skin for dark mode.'));
+            }
+        }
         if (!$this->error->has()) {
+            if (!$darkMode) {
+                $themeSkinIdentifierDark = null;
+            } else {
+                $themeSkinIdentifierDark = h($themeSkinIdentifierDark);
+            }
+
             $this->site->setThemeSkinIdentifier(h($themeSkinIdentifier));
+            $this->site->setThemeSkinIdentifierDark($themeSkinIdentifierDark);
             $this->entityManager->persist($this->site);
             $this->entityManager->flush();
             $this->flash('success', t('Theme skin updated.'));
+            return $this->buildRedirect($this->action('configure'));
         }
-        return $this->buildRedirect($this->action());
+        $this->configure();
     }
 
     public function reset_customizations()
@@ -126,7 +142,7 @@ class Themes extends DashboardSitePageController
                 $this->flash('success', t('Theme documentation installed.'));
             }
         }
-        return $this->buildRedirect($this->action());
+        return $this->buildRedirect($this->action('configure'));
     }
 
     public function uninstall_documentation($pThemeID = null)
@@ -143,7 +159,7 @@ class Themes extends DashboardSitePageController
                 $this->flash('success', t('Theme documentation removed.'));
             }
         }
-        return $this->buildRedirect($this->action());
+        return $this->buildRedirect($this->action('configure'));
     }
 
     public function configure()
@@ -151,8 +167,27 @@ class Themes extends DashboardSitePageController
         $theme = Theme::getByID($this->site->getThemeID());
         if ($theme) {
             $breadcrumb = $this->app->make(DashboardBreadcrumbFactory::class)->getBreadcrumb($this->getPageObject());
-            $breadcrumb->add(new Item('', t('Configure')));
+            $breadcrumb->add(new Item('', $theme->getThemeDisplayName('text')));
             $this->setBreadcrumb($breadcrumb);
+
+            $themeSkinIdentifier = null;
+            if ($theme->hasSkins()) {
+                $themeSkinIdentifier = $this->site->getThemeSkinIdentifier();
+                if (!$themeSkinIdentifier) {
+                    $themeSkinIdentifier = SkinInterface::SKIN_DEFAULT;
+                }
+                $themeSkinIdentifierDark = $this->site->getThemeSkinIdentifierDark();
+                $themeSkins = $theme->getSkins();
+                $skins = [];
+                foreach ($themeSkins as $skin) {
+                    $skins[$skin->getIdentifier()] = $skin->getName();
+                }
+                $this->set('skins', $skins);
+                $this->set('activeSkinIdentifier', $themeSkinIdentifier);
+                $this->set('activeSkinIdentifierDark', $themeSkinIdentifierDark);
+            }
+
+            $this->set('configureTheme', $theme);
             $this->render('/dashboard/pages/themes/configure');
         } else {
             $this->error->add(t('Invalid theme'));
