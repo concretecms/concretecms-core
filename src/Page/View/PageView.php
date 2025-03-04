@@ -288,7 +288,11 @@ class PageView extends View
                 $skin = $this->themeObject->getSkinByIdentifier($skinIdentifier);
                 $stylesheet = $skin->getStylesheet();
             } else {
-                $stylesheet = new SiteStylesheet($this->c->getSite());
+                $site = $this->c->getSite();
+                if (!$site) {
+                    $site = app('site')->getSite();
+                }
+                $stylesheet = new SiteStylesheet($site);
             }
         }
         if ($customStyles) {
