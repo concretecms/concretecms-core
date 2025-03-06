@@ -58,7 +58,7 @@ abstract class Layout extends ConcreteObject
         $al = null;
         $db = Database::connection();
         $row = $db->GetRow('select arLayoutID, arLayoutIsPreset, arLayoutUsesThemeGridFramework from AreaLayouts where arLayoutID = ?', [$arLayoutID]);
-        if (is_array($row) && $row['arLayoutID']) {
+        if (is_array($row) && array_key_exists('arLayoutID', $row) && $row['arLayoutID']) {
             if ($row['arLayoutUsesThemeGridFramework']) {
                 $al = new ThemeGridLayout();
             } elseif ($row['arLayoutIsPreset']) {
