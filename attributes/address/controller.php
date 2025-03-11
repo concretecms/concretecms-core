@@ -37,7 +37,7 @@ class Controller extends AttributeTypeController implements
     public $akDefaultCountry;
     public $akCustomCountries;
     public $akGeolocateCountry;
-    
+
     protected $searchIndexFieldDefinition = [
         'address1' => [
             'type' => 'string',
@@ -144,6 +144,10 @@ class Controller extends AttributeTypeController implements
 
     public function validateForm($data)
     {
+        if (!is_array($data)) {
+            return false;
+        }
+
         if (empty($data['country'])) {
             return false;
         }
