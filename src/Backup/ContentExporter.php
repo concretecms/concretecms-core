@@ -1,19 +1,12 @@
 <?php
 namespace Concrete\Core\Backup;
 
-use Block;
+use Concrete\Core\File\File;
 use Concrete\Core\Page\Feed;
+use Concrete\Core\Page\Page;
 use Concrete\Core\Page\Type\Composer\FormLayoutSetControl;
+use Concrete\Core\Page\Type\Type as PageType;
 use Concrete\Core\Tree\Node\Type\FileFolder;
-use File;
-use FileList;
-use Job;
-use Loader;
-use Package;
-use Page;
-use PageTemplate;
-use PageTheme;
-use PageType;
 
 class ContentExporter
 {
