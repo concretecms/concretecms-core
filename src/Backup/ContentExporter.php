@@ -10,8 +10,8 @@ use Concrete\Core\Tree\Node\Type\FileFolder;
 
 class ContentExporter
 {
-    protected static $mcBlockIDs = array();
-    protected static $ptComposerOutputControlIDs = array();
+    protected static $mcBlockIDs = [];
+    protected static $ptComposerOutputControlIDs = [];
 
     /**
      * @deprecated
