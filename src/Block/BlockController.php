@@ -4,8 +4,9 @@ namespace Concrete\Core\Block;
 use Concrete\Core\Area\Area;
 use Concrete\Core\Backup\ContentExporter;
 use Concrete\Core\Backup\ContentImporter;
-use Concrete\Core\Entity\Block\BlockType\BlockType;
 use Concrete\Core\Block\View\BlockViewTemplate;
+use Concrete\Core\Entity\Block\BlockType\BlockType;
+use Concrete\Core\Error\ErrorList\ErrorList;
 use Concrete\Core\File\Tracker\FileTrackableInterface;
 use Concrete\Core\Legacy\BlockRecord;
 use Concrete\Core\Page\Controller\PageController;
@@ -19,7 +20,6 @@ use Database;
 use Events;
 use Package;
 use Page;
-use Concrete\Core\Error\ErrorList\ErrorList;
 
 class BlockController extends \Concrete\Core\Controller\AbstractController
 {
