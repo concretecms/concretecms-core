@@ -50,12 +50,49 @@ class BlockController extends \Concrete\Core\Controller\AbstractController
     protected $btCacheBlockOutputOnPost = false;
     protected $btCacheBlockOutputForRegisteredUsers = false;
     protected $bActionCID;
+
+    /**
+     * The names of the columns that contain a page ID.
+     *
+     * @var string[]
+     */
     protected $btExportPageColumns = [];
+
+    /**
+     * The names of the columns that contain a file ID.
+     *
+     * @var string[]
+     */
     protected $btExportFileColumns = [];
+
+    /**
+     * The names of the columns that contain rich text (that is, HTML with possibly links to files and pages).
+     *
+     * @var string[]
+     */
     protected $btExportContentColumns = [];
+
+    /**
+     * The names of the columns that contain a page type ID.
+     *
+     * @var string[]
+     */
     protected $btExportPageTypeColumns = [];
+
+    /**
+     * The names of the columns that contain a feed ID.
+     *
+     * @var string[]
+     */
     protected $btExportPageFeedColumns = [];
+
+    /**
+     * The names of the columns that contain a file folder ID.
+     *
+     * @var string[]
+     */
     protected $btExportFileFolderColumns = [];
+
     protected $btWrapperClass = '';
     protected $btDefaultSet;
     protected $identifier;
@@ -95,6 +132,11 @@ class BlockController extends \Concrete\Core\Controller\AbstractController
         return $this->getBlockTypeName();
     }
 
+    /**
+     * Get the names of the columns that contain page IDs.
+     *
+     * @return string[]
+     */
     public function getBlockTypeExportPageColumns()
     {
         return $this->btExportPageColumns;
