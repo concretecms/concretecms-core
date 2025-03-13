@@ -427,11 +427,12 @@ class BlockController extends \Concrete\Core\Controller\AbstractController
             // remove columns we don't want
             unset($columns['bid']);
             $r = $db->Execute('select * from ' . $tbl . ' where bID = ?', [$this->bID]);
+            $btExportPageColumns = $this->getBlockTypeExportPageColumns();
             while ($record = $r->fetch()) {
                 $tableRecord = $data->addChild('record');
                 foreach ($record as $key => $value) {
                     if (isset($columns[strtolower($key)])) {
-                        if (in_array($key, $this->btExportPageColumns)) {
+                        if (in_array($key, $btExportPageColumns)) {
                             $tableRecord->addChild($key, ContentExporter::replacePageWithPlaceHolder($value));
                         } elseif (in_array($key, $this->btExportFileColumns)) {
                             $tableRecord->addChild($key, ContentExporter::replaceFileWithPlaceHolder($value));
@@ -533,11 +534,12 @@ class BlockController extends \Concrete\Core\Controller\AbstractController
         $args = [];
         $inspector = \Core::make('import/value_inspector');
         if (isset($blockNode->data)) {
+            $btExportPageColumns = $this->getBlockTypeExportPageColumns();
             foreach ($blockNode->data as $data) {
                 if ($data['table'] == $this->getBlockTypeDatabaseTable()) {
                     if (isset($data->record)) {
                         foreach ($data->record->children() as $key => $node) {
-                            if (in_array($key, $this->btExportPageColumns)
+                            if (in_array($key, $btExportPageColumns)
                                 || in_array($key, $this->btExportFileColumns)
                                 || in_array($key, $this->btExportPageTypeColumns)
                                 || in_array($key, $this->btExportPageFeedColumns)
@@ -563,6 +565,7 @@ class BlockController extends \Concrete\Core\Controller\AbstractController
     {
         $inspector = \Core::make('import/value_inspector');
         if (isset($blockNode->data)) {
+            $btExportPageColumns = $this->getBlockTypeExportPageColumns();
             foreach ($blockNode->data as $data) {
                 if (strtoupper((string) $data['table']) != strtoupper((string) $this->getBlockTypeDatabaseTable())) {
                     $table = (string) $data['table'];
@@ -572,7 +575,7 @@ class BlockController extends \Concrete\Core\Controller\AbstractController
                             $aar->bID = $b->getBlockID();
                             foreach ($record->children() as $key => $node) {
                                 $nodeName = $node->getName();
-                                if (in_array($key, $this->btExportPageColumns)
+                                if (in_array($key, $btExportPageColumns)
                                     || in_array($key, $this->btExportFileColumns)
                                     || in_array($key, $this->btExportPageTypeColumns)
                                     || in_array($key, $this->btExportPageFeedColumns)
