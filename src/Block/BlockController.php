@@ -5,6 +5,7 @@ use Concrete\Core\Area\Area;
 use Concrete\Core\Backup\ContentExporter;
 use Concrete\Core\Backup\ContentImporter;
 use Concrete\Core\Block\View\BlockViewTemplate;
+use Concrete\Core\Database\Connection\Connection;
 use Concrete\Core\Editor\LinkAbstractor;
 use Concrete\Core\Entity\Block\BlockType\BlockType;
 use Concrete\Core\Error\ErrorList\ErrorList;
@@ -414,7 +415,7 @@ class BlockController extends \Concrete\Core\Controller\AbstractController
         } else {
             $tables = [$this->getBlockTypeDatabaseTable()];
         }
-        $db = Database::connection();
+        $db = $this->app->make(Connection::class);
 
         $xml = $this->app->make(Xml::class);
         foreach ($tables as $tbl) {
@@ -426,9 +427,9 @@ class BlockController extends \Concrete\Core\Controller\AbstractController
             $columns = $db->MetaColumns($tbl);
             // remove columns we don't want
             unset($columns['bid']);
-            $r = $db->Execute('select * from ' . $tbl . ' where bID = ?', [$this->bID]);
+            $r = $db->executeQuery('select * from ' . $tbl . ' where bID = ?', [$this->bID]);
             $btExportPageColumns = $this->getBlockTypeExportPageColumns();
-            while ($record = $r->fetch()) {
+            while (($record = $r->fetchAssociative()) !== false) {
                 $tableRecord = $data->addChild('record');
                 foreach ($record as $key => $value) {
                     if (isset($columns[strtolower($key)])) {
