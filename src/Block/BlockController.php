@@ -5,6 +5,7 @@ use Concrete\Core\Area\Area;
 use Concrete\Core\Backup\ContentExporter;
 use Concrete\Core\Backup\ContentImporter;
 use Concrete\Core\Block\View\BlockViewTemplate;
+use Concrete\Core\Editor\LinkAbstractor;
 use Concrete\Core\Entity\Block\BlockType\BlockType;
 use Concrete\Core\Error\ErrorList\ErrorList;
 use Concrete\Core\File\Tracker\FileTrackableInterface;
@@ -398,6 +399,8 @@ class BlockController extends \Concrete\Core\Controller\AbstractController
                             $tableRecord->addChild($key, ContentExporter::replacePageFeedWithPlaceHolder($value));
                         } elseif (in_array($key, $this->btExportFileFolderColumns)) {
                             $tableRecord->addChild($key, ContentExporter::replaceFileFolderWithPlaceHolder($value));
+                        } elseif (in_array($key, $this->btExportContentColumns)) {
+                            $tableRecord->addChild($key, LinkAbstractor::export((string) $value));
                         } else {
                             $xml->createChildElement($tableRecord, $key, $value);
                         }

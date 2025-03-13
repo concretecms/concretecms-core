@@ -7,8 +7,6 @@ use Concrete\Core\Editor\LinkAbstractor;
 use Concrete\Core\Feature\Features;
 use Concrete\Core\Feature\UsesFeatureInterface;
 use Concrete\Core\File\Tracker\FileTrackableInterface;
-use Concrete\Core\Page\Page;
-use Concrete\Core\Utility\Service\Xml;
 
 /**
  * The controller for the content block.
@@ -78,6 +76,13 @@ class Controller extends BlockController implements FileTrackableInterface, Uses
     protected $btCacheBlockOutputLifetime = 0; //until manually updated or cleared
 
     /**
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Core\Block\BlockController::$btExportContentColumns
+     */
+    protected $btExportContentColumns = ['content'];
+
+    /**
      * {@inhertdoc}.
      */
     public function getRequiredFeatures(): array
@@ -143,34 +148,6 @@ class Controller extends BlockController implements FileTrackableInterface, Uses
     public function getContentEditMode()
     {
         return LinkAbstractor::translateFromEditMode($this->content);
-    }
-
-    /**
-     * @param \SimpleXMLElement $blockNode
-     * @param Page $page
-     *
-     * @return array<string, string>
-     */
-    public function getImportData($blockNode, $page)
-    {
-        $content = $blockNode->data->record->content;
-        $content = LinkAbstractor::import($content);
-
-        return ['content' => $content];
-    }
-
-    /**
-     * @param \SimpleXMLElement $blockNode
-     *
-     * @return void
-     */
-    public function export(\SimpleXMLElement $blockNode)
-    {
-        $data = $blockNode->addChild('data');
-        $data->addAttribute('table', $this->btTable);
-        $record = $data->addChild('record');
-        $content = LinkAbstractor::export($this->content);
-        $this->app->make(Xml::class)->createChildElement($record, 'content', $content);
     }
 
     /**
