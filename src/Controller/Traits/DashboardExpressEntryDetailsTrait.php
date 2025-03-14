@@ -273,11 +273,11 @@ trait DashboardExpressEntryDetailsTrait
             $this->flash('error', t('No details about the form provided.'));
 
             if (is_object($entry)) {
-                return $this->buildRedirect(\URL::to(\Page::getCurrentPage(), 'edit_entry', $entry->getID()))->send();
+                return $this->buildRedirect(\URL::to(\Page::getCurrentPage(), 'edit_entry', $entry->getID()));
             } else if (is_object($entity)) {
-                return $this->buildRedirect(\URL::to(\Page::getCurrentPage(), 'results', $entity->getID()))->send();
+                return $this->buildRedirect(\URL::to(\Page::getCurrentPage(), 'results', $entity->getID()));
             } else {
-                return $this->buildRedirect(\URL::to(\Page::getCurrentPage()))->send();
+                return $this->buildRedirect(\URL::to(\Page::getCurrentPage()));
             }
         }
     }
