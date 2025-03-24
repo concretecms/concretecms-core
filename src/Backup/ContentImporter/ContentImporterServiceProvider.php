@@ -33,6 +33,7 @@ class ContentImporterServiceProvider extends ServiceProvider
                 return $inspector;
             }
         );
+        $this->app->alias('import/value_inspector', ValueInspector\ValueInspectorInterface::class);
 
         $this->app->singleton(
             'import/item/manager',
