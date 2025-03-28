@@ -66,7 +66,7 @@ class Xml
     public function appendCData(SimpleXMLElement $element, string $value): void
     {
         $domElement = dom_import_simplexml($element);
-        $domElement->appendChild($domElement->ownerDocument->createCDataSection($this->serialize($value)));
+        $domElement->appendChild($domElement->ownerDocument->createCDataSection($value));
     }
 
     /**
