@@ -222,7 +222,7 @@ class Controller extends AttributeTypeController implements
 
     public function validateForm($p)
     {
-        return $p['value'] != false;
+        return is_array($p) && isset($p['value']) && $p['value'] != false;
     }
 
     public function validateValue()
