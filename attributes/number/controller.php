@@ -83,7 +83,7 @@ class Controller extends AttributeTypeController implements SimpleTextExportable
 
     public function validateForm($p)
     {
-        return !empty($p['value']);
+        return is_array($p) && !empty($p['value']);
     }
 
     public function validateValue()
