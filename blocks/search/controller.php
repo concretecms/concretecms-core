@@ -170,7 +170,7 @@ class Controller extends BlockController implements UsesFeatureInterface
 
         return $this->hText;
     }
-    
+
     public function getRequiredFeatures(): array
     {
         return [
@@ -291,7 +291,11 @@ class Controller extends BlockController implements UsesFeatureInterface
             } else {
                 $resultsPage = null;
                 $c = Page::getCurrentPage();
-                $resultsURL = $c->getCollectionPath();
+                if (is_object($c)) {
+                    $resultsURL = $c->getCollectionPath();
+                } else {
+                    $resultsURL = '/';
+                }
             }
         }
 
@@ -306,7 +310,11 @@ class Controller extends BlockController implements UsesFeatureInterface
 
         //run query if display results elsewhere not set, or the cID of this page is set
         if ($resultsPage === null && (string) $this->resultsURL === '') {
-            if ((string) $this->request->request('query') !== '' || $this->request->request('akID') || $this->request->request('month')) {
+            $query = $this->request->request('query');
+            if (!is_string($query)) {
+                $query = '';
+            }
+            if ($query !== '' || $this->request->request('akID') || $this->request->request('month')) {
                 $this->do_search();
             }
         }
@@ -472,6 +480,9 @@ class Controller extends BlockController implements UsesFeatureInterface
         $search_paths = $this->request->request('search_paths');
         if (is_array($search_paths)) {
             foreach ($search_paths as $path) {
+                if (!is_string($path)) {
+                    continue;
+                }
                 if ($path === '') {
                     continue;
                 }
