@@ -496,6 +496,10 @@ class PageList extends DatabaseItemList implements PagerProviderInterface, Pagin
      */
     public function filterByPagesWithCustomStyles()
     {
+        if ($this->queryHasAlias('cvStyles')) {
+            return;
+        }
+
         $this->query->innerJoin(
             'cv',
             'CollectionVersionThemeCustomStyles',
@@ -578,7 +582,14 @@ class PageList extends DatabaseItemList implements PagerProviderInterface, Pagin
      */
     public function filterByPath($path, $includeAllChildren = true)
     {
-        $this->query->leftJoin('p', 'PagePaths', 'pp', 'p.cID = pp.cID and pp.ppIsCanonical = true');
+        if (!is_string($path)) {
+            return;
+        }
+
+        if (!$this->queryHasAlias('pp')) {
+            $this->query->leftJoin('p', 'PagePaths', 'pp', 'p.cID = pp.cID and pp.ppIsCanonical = true');
+        }
+
         if (!$includeAllChildren) {
             $this->query->andWhere('pp.cPath = :cPath');
             $this->query->setParameter('cPath', $path);
@@ -848,5 +859,35 @@ class PageList extends DatabaseItemList implements PagerProviderInterface, Pagin
             $selects[0] = 'distinct p.cID';
             $this->query->select($selects);
         }
+    }
+
+    /**
+     * Checks whether the query already contains the given alias.
+     *
+     * This avoids the following kind of query exceptions in case the join would
+     * be added multiple times:
+     * The given alias 'pp' is not unique in FROM and JOIN clause table.
+     *
+     * This can happen e.g. at Concrete\Block\Search\Controller due to the
+     * `filterByPath` method potentially called multiple times.
+     *
+     * @property string $alias The alias to look for in the join statements.
+     *
+     * @example <code><pre>
+     * $this->queryHasAlias('pp');
+     * </code></pre>
+     */
+    protected function queryHasAlias($alias): bool
+    {
+        $queryParts = $this->query->getQueryPart('join');
+        foreach ($queryParts as $tableJoins) {
+            foreach ($tableJoins as $join) {
+                $value = $join['joinAlias'] ?? null;
+                if ($value === $alias) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
