@@ -429,9 +429,10 @@ class LinkAbstractor extends ConcreteObject
             foreach ($r->find('concrete-picture') as $picture) {
                 $fID = $picture->fid;
                 $f = $entityManager->find(File::class, $fID);
-                if (is_object($f)) {
+                $fv = $f ? $f->getApprovedVersion() : null;
+                if ($fv) {
                     $picture->fid = false;
-                    $picture->file = $f->getPrefix() . ':' . $f->getFilename();
+                    $picture->file = $fv->getPrefix() . ':' . $fv->getFilename();
                 }
             }
             $text = (string) $r->restore_noise($r);
