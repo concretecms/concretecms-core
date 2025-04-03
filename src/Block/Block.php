@@ -900,7 +900,9 @@ EOT
      */
     public function isAliasOfMasterCollection()
     {
-        return $this->getBlockCollectionObject()->isBlockAliasedFromMasterCollection($this);
+        $blockCollection = $this->getBlockCollectionObject();
+
+        return $blockCollection ? $blockCollection->isBlockAliasedFromMasterCollection($this) : false;
     }
 
     /**
