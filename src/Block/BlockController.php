@@ -99,6 +99,7 @@ class BlockController extends \Concrete\Core\Controller\AbstractController
     protected $identifier;
     /** @var null|string  */
     protected $btTable = null;
+    protected $btExportTables = null;
     protected $btID;
     /** @var array */
     protected $requestArray;
@@ -410,11 +411,7 @@ class BlockController extends \Concrete\Core\Controller\AbstractController
 
     public function export(\SimpleXMLElement $blockNode)
     {
-        if (isset($this->btExportTables)) {
-            $tables = $this->btExportTables;
-        } else {
-            $tables = [$this->getBlockTypeDatabaseTable()];
-        }
+        $tables = $this->btExportTables ?? [$this->getBlockTypeDatabaseTable()];
         $db = $this->app->make(Connection::class);
 
         $xml = $this->app->make(Xml::class);
