@@ -3,11 +3,11 @@ namespace Concrete\Core\Html\Service;
 
 class Seo
 {
-    private $siteName = '';
-    private $titleSegments = array();
-    private $titleSegmentSeparator = ' :: ';
-    private $titleFormat = '%1$s :: %2$s';
-    private $hasCustomTitle = false;
+    protected $siteName = '';
+    protected $titleSegments = array();
+    protected $titleSegmentSeparator = ' :: ';
+    protected $titleFormat = '%1$s :: %2$s';
+    protected $hasCustomTitle = false;
 
     public function setSiteName($name)
     {
