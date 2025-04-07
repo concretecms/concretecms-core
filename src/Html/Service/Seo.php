@@ -1,12 +1,17 @@
 <?php
+
 namespace Concrete\Core\Html\Service;
 
 class Seo
 {
     protected $siteName = '';
-    protected $titleSegments = array();
+
+    protected $titleSegments = [];
+
     protected $titleSegmentSeparator = ' :: ';
+
     protected $titleFormat = '%1$s :: %2$s';
+
     protected $hasCustomTitle = false;
 
     public function setSiteName($name)
@@ -49,7 +54,7 @@ class Seo
 
     public function clearTitleSegments()
     {
-        $this->titleSegments = array();
+        $this->titleSegments = [];
     }
 
     public function setTitleFormat($format)
