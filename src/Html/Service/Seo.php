@@ -28,6 +28,11 @@ class Seo
         return $this;
     }
 
+    public function getTitleSegments(): array
+    {
+        return $this->titleSegments;
+    }
+
     public function addTitleSegment($segment)
     {
         array_push($this->titleSegments, $segment);
