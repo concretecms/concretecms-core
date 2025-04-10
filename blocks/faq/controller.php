@@ -32,7 +32,7 @@ class Controller extends BlockController implements UsesFeatureInterface
     {
         return t('Frequently Asked Questions Block');
     }
-    
+
     public function getRequiredFeatures(): array
     {
         return [
@@ -132,5 +132,37 @@ class Controller extends BlockController implements UsesFeatureInterface
             );
             ++$i;
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Core\Block\BlockController::export()
+     */
+    public function export(\SimpleXMLElement $blockNode)
+    {
+        parent::export($blockNode);
+        $nodesToRemove = $blockNode->xpath('./data[@table="btFaqEntries"]/record/id');
+        if ($nodesToRemove) {
+            foreach ($nodesToRemove as $nodeToRemove) {
+                unset($nodeToRemove[0]);
+            }
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Core\Block\BlockController::importAdditionalData()
+     */
+    protected function importAdditionalData($b, $blockNode)
+    {
+        $nodesToRemove = $blockNode->xpath('./data[@table="btFaqEntries"]/record/id');
+        if ($nodesToRemove) {
+            foreach ($nodesToRemove as $nodeToRemove) {
+                unset($nodeToRemove[0]);
+            }
+        }
+        parent::importAdditionalData($b, $blockNode);
     }
 }
