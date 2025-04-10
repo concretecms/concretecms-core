@@ -51,6 +51,9 @@ class BlockController extends \Concrete\Core\Controller\AbstractController
     protected $btCacheBlockOutputOnPost = false;
     protected $btCacheBlockOutputForRegisteredUsers = false;
     protected $bActionCID;
+    /** @var null|string  */
+    protected $btTable = null;
+    protected $btExportTables = null;
 
     /**
      * The names of the columns that contain a page ID.
@@ -97,9 +100,6 @@ class BlockController extends \Concrete\Core\Controller\AbstractController
     protected $btWrapperClass = '';
     protected $btDefaultSet;
     protected $identifier;
-    /** @var null|string  */
-    protected $btTable = null;
-    protected $btExportTables = null;
     protected $btID;
     /** @var array */
     protected $requestArray;
