@@ -212,18 +212,18 @@ if ($view->controller->getAction() == 'preview_version') { ?>
         <?php if ($file->hasFileUUID()) { ?>
             <dt><?= t('Identifier') ?></dt>
             <dd class="mb-5">
-                <input type="text" class="bg-white form-control" readonly onclick="this.select()" value="<?= h($fileVersion->getFileUUID()) ?>">
+                <input type="text" class="form-control" readonly onclick="this.select()" value="<?= h($fileVersion->getFileUUID()) ?>">
                 <div class="text-muted mt-2"><i><?= t('Use this identifier if you need to work with this file programmatically, or in a REST API operation.') ?></i></div>
             </dd>
         <?php } ?>
         <dt><?= t('Direct URL') ?></dt>
         <dd class="mb-5">
-            <input type="text" class="bg-white form-control" readonly onclick="this.select()" value="<?= h($fileVersion->getURL()) ?>">
+            <input type="text" class="form-control" readonly onclick="this.select()" value="<?= h($fileVersion->getURL()) ?>">
             <div class="text-muted mt-2"><i><?= t('If you need to embed an image directly in HTML, use this URL.') ?></i></div>
         </dd>
         <dt><?= t('Tracking URL') ?></dt>
         <dd>
-            <input type="text" class="bg-white form-control" readonly onclick="this.select()" value="<?= h($fileVersion->getDownloadURL()) ?>">
+            <input type="text" class="form-control" readonly onclick="this.select()" value="<?= h($fileVersion->getDownloadURL()) ?>">
             <div class="text-muted mt-2"><i><?= t("By using this URL Concrete will still be able to manage permissions and track statistics on its use.") ?></i></div>
         </dd>
     </dl>
