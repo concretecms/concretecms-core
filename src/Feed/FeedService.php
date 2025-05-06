@@ -2,7 +2,7 @@
 namespace Concrete\Core\Feed;
 
 use Concrete\Core\Cache\Adapter\LaminasCacheDriver;
-use GuzzleHttp\Client;
+use Concrete\Core\Http\Client\Client;
 use Laminas\Feed\Reader\Feed\FeedInterface;
 use Laminas\Feed\Reader\Reader;
 
