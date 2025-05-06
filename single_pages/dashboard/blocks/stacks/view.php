@@ -95,7 +95,7 @@ if (isset($neutralStack)) {
             }
             $deleteLabels = null;
         ?>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary px-3">
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav me-auto">
                         <?php
