@@ -54,7 +54,7 @@ class OpenGraph
         $element = new Element('meta');
         $element->setIsSelfClosing(true);
         $element->property($property);
-        $element->content($content);
+        $element->content(htmlspecialchars($content, ENT_QUOTES, APP_CHARSET));
         return $element;
     }
 
@@ -75,7 +75,7 @@ class OpenGraph
         if ($valueFrom) {
             switch ($valueFrom) {
                 case 'page_attribute':
-                    $content = h((string) $page->getAttribute($field['attribute']));
+                    $content = (string) $page->getAttribute($field['attribute']);
                     break;
                 case 'page_property':
                     switch ($field['property']) {
