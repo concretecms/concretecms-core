@@ -33,7 +33,7 @@ class Seo
         return $this;
     }
 
-    public function getTitleSegments(): array
+    public function getTitleSegments()
     {
         return $this->titleSegments;
     }
