@@ -5,6 +5,7 @@ use Concrete\Core\Entity\File\File;
 use Concrete\Core\Page\Page;
 use Concrete\Core\Site\Config\Liaison;
 use Concrete\Core\Site\Service;
+use Concrete\Core\Url\Resolver\Manager\ResolverManagerInterface;
 use HtmlObject\Element;
 
 class OpenGraph
@@ -38,10 +39,16 @@ class OpenGraph
      */
     protected $siteService;
 
-    public function __construct(Service $siteService)
+    /**
+     * @var \Concrete\Core\Url\Resolver\Manager\ResolverManagerInterface
+     */
+    protected $resolverManager;
+
+    public function __construct(Service $siteService, ResolverManagerInterface $resolverManager)
     {
         $this->siteService = $siteService;
         $this->config = $siteService->getSite()->getConfigRepository();
+        $this->resolverManager = $resolverManager;
     }
 
     /**
@@ -130,9 +137,8 @@ class OpenGraph
         if ($tag = $this->createTagFromConfig($page, 'field_fb_app_id', self::TAG_FB_APP_ID)) {
             $tags[] = $tag;
         }
-        $canonicalUrl = $site->getSiteCanonicalURL();
-        if ($canonicalUrl) {
-            $tags[] = $this->createTag(self::TAG_OG_URL, $canonicalUrl);
+        if ($site->getSiteCanonicalURL()) {
+            $tags[] = $this->createTag(self::TAG_OG_URL, (string) $this->resolverManager->resolve($page));
         }
         $imageAttribute = $this->config->get('social.opengraph.field_og_thumbnail');
         if ($imageAttribute['value_from'] === 'page_attribute') {
