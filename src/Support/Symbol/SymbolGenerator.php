@@ -26,6 +26,11 @@ class SymbolGenerator
      */
     protected $aliasNamespaces = [''];
 
+    /**
+     * @var \Concrete\Core\Support\Symbol\CheckerGenerator
+     */
+    protected $checkerGenerator;
+
     public function __construct()
     {
         $list = ClassAliasList::getInstance();
@@ -36,6 +41,7 @@ class SymbolGenerator
             }
             $this->registerClass($alias, $class);
         }
+        $this->checkerGenerator = app(CheckerGenerator::class);
     }
 
     /**
@@ -65,11 +71,16 @@ class SymbolGenerator
      */
     public function render($eol = "\n", $padding = '    ', $methodFilter = null)
     {
+        $checkerWritten = false;
         $lines = [];
         $lines[] = '<?php';
         $lines[] = '';
         $lines[] = '// Generated on ' . date('c');
-        foreach ($this->aliasNamespaces as $namespace) {
+        $namespaces = $this->aliasNamespaces;
+        if (!in_array($this->checkerGenerator->getNamespace(), $namespaces, true)) {
+            $namespaces[] = $this->checkerGenerator->getNamespace();
+        }
+        foreach ($namespaces as $namespace) {
             $lines[] = '';
             $lines[] = rtrim("namespace {$namespace}");
             $lines[] = '{';
@@ -90,6 +101,12 @@ class SymbolGenerator
                         $lines[] = $padding . str_replace($eol, $eol . $padding, rtrim($rendered_class));
                     }
                 }
+            }
+            if ($checkerWritten === false && $this->checkerGenerator->getNamespace() === $namespace) {
+                foreach ($this->checkerGenerator->renderLines($padding) as $line) {
+                    $lines[] = "{$padding}{$line}";
+                }
+                $checkerWritten = true;
             }
             $lines[] = '}';
         }
