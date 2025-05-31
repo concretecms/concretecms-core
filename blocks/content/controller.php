@@ -7,6 +7,7 @@ use Concrete\Core\Editor\LinkAbstractor;
 use Concrete\Core\Feature\Features;
 use Concrete\Core\Feature\UsesFeatureInterface;
 use Concrete\Core\File\Tracker\FileTrackableInterface;
+use Concrete\Core\File\Tracker\RichTextExtractor;
 
 /**
  * The controller for the content block.
@@ -155,25 +156,25 @@ class Controller extends BlockController implements FileTrackableInterface, Uses
      */
     public function save($args)
     {
+        $this->content = '';
         if (isset($args['content'])) {
-            $args['content'] = LinkAbstractor::translateTo($args['content']);
+            $this->content = $args['content'] = LinkAbstractor::translateTo($args['content']);
         }
         parent::save($args);
     }
 
     /**
-     * @return int[]|string[]
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Core\File\Tracker\FileTrackableInterface::getUsedFiles()
      */
     public function getUsedFiles()
     {
-        return array_merge(
-            $this->getUsedFilesImages(),
-            $this->getUsedFilesDownload()
-        );
+        return $this->app->make(RichTextExtractor::class)->extractFiles($this->content);
     }
 
     /**
-     * @return int[]|string[]
+     * @deprecated use \Concrete\Core\File\Tracker\RichTextExtractor
      */
     protected function getUsedFilesImages()
     {
@@ -190,7 +191,7 @@ class Controller extends BlockController implements FileTrackableInterface, Uses
     }
 
     /**
-     * @return int[]|string[]
+     * @deprecated use \Concrete\Core\File\Tracker\RichTextExtractor
      */
     protected function getUsedFilesDownload()
     {
