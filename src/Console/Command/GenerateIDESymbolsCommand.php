@@ -42,7 +42,11 @@ EOT
             if ($p !== false) {
                 unset($what[$p]);
             }
-            $output->write('Generating fake PHP classes to help IDE... ');
+            if (app()->isInstalled()) {
+                $output->write('Generating fake PHP classes to help IDE... ');
+            } else {
+                $output->write('Generating fake PHP classes to help IDE <fg=yellow>(PARTIAL since Concrete is not installed)</>... ');
+            }
             $this->generateIDEClasses();
             $output->writeln('<info>done.</info>');
         }
