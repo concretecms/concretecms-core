@@ -39,6 +39,7 @@ class CheckerGenerator
     public function __construct(FileService $fileService, bool $isInstalled)
     {
         $this->fileService = $fileService;
+        $this->isInstalled = $isInstalled;
     }
 
     public function getNamespace(): string
