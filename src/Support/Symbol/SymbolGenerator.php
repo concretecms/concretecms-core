@@ -9,6 +9,7 @@ namespace Concrete\Core\Support\Symbol;
 
 use Concrete\Core\Foundation\ClassAliasList;
 use Concrete\Core\Support\Symbol\ClassSymbol\ClassSymbol;
+use Throwable;
 
 class SymbolGenerator
 {
@@ -31,8 +32,14 @@ class SymbolGenerator
      */
     protected $checkerGenerator;
 
-    public function __construct()
+    /**
+     * @var bool
+     */
+    protected $isInstalled;
+
+    public function __construct(?bool $isInstalled = null)
     {
+        $this->isInstalled = $isInstalled ?? app()->isInstalled();
         $list = ClassAliasList::getInstance();
         foreach ($list->getRegisteredAliases() as $alias => $class) {
             if (!class_exists($class)) {
@@ -52,7 +59,15 @@ class SymbolGenerator
      */
     public function registerClass($alias, $class)
     {
-        $classSymbol = new ClassSymbol($alias, $class);
+        if ($this->isInstalled) {
+            $classSymbol = new ClassSymbol($alias, $class);
+        } else {
+            try {
+                $classSymbol = new ClassSymbol($alias, $class);
+            } catch (Throwable $_) {
+                return;
+            }
+        }
         $this->classes[$alias] = $classSymbol;
         $aliasNamespace = $classSymbol->getAliasNamespace();
         if (!in_array($aliasNamespace, $this->aliasNamespaces, true)) {
