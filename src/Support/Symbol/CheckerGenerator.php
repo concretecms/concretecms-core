@@ -31,7 +31,12 @@ class CheckerGenerator
      */
     private $namespace;
 
-    public function __construct(FileService $fileService)
+    /**
+     * @var bool
+     */
+    private $isInstalled;
+
+    public function __construct(FileService $fileService, bool $isInstalled)
     {
         $this->fileService = $fileService;
     }
@@ -131,8 +136,10 @@ class CheckerGenerator
     private function listMethods(): array
     {
         $all = $this->listMethodsIn('Concrete\Core', DIR_BASE_CORE . '/' . DIRNAME_CLASSES);
-        foreach (Category::getList() as $category) {
-            $all = array_merge($all, $this->generateMethodsFromCategory($category->getPermissionKeyCategoryHandle()));
+        if ($this->isInstalled) {
+            foreach (Category::getList() as $category) {
+                $all = array_merge($all, $this->generateMethodsFromCategory($category->getPermissionKeyCategoryHandle()));
+            }
         }
         $merged = [];
         foreach ($all as $item) {
@@ -203,7 +210,7 @@ class CheckerGenerator
         if (!is_string($categoryHandle = $objectInterfaceInstance->getPermissionObjectKeyCategoryHandle())) {
             $categoryHandle = '';
         }
-        if ($categoryHandle !== '') {
+        if ($categoryHandle !== '' && $this->isInstalled) {
             $category = Category::getByHandle($categoryHandle);
             if ($category) {
                 $result = array_merge($result, $this->generateMethodsFromCategory($categoryHandle, $objectInterfaceClassName));
@@ -236,15 +243,17 @@ class CheckerGenerator
     private function generateMethodsFromCategory(string $categoryHandle, string $objectInterfaceClassName = ''): array
     {
         $result = [];
-        foreach (Key::getList($categoryHandle) as $key) {
-            $name = 'can' . camelcase($key->getPermissionKeyHandle());
-            $method = new Method($name);
-            $method
-                ->addDescription($key->getPermissionKeyDescription() ?: $key->getPermissionKeyName() ?: '')
-                ->addForObjectOfClass($objectInterfaceClassName)
-                ->addCategoryKeyHandle($categoryHandle)
-            ;
-            $result[] = $method;
+        if ($this->isInstalled) {
+            foreach (Key::getList($categoryHandle) as $key) {
+                $name = 'can' . camelcase($key->getPermissionKeyHandle());
+                $method = new Method($name);
+                $method
+                    ->addDescription($key->getPermissionKeyDescription() ?: $key->getPermissionKeyName() ?: '')
+                    ->addForObjectOfClass($objectInterfaceClassName)
+                    ->addCategoryKeyHandle($categoryHandle)
+                ;
+                $result[] = $method;
+            }
         }
 
         return $result;

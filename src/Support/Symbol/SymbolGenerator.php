@@ -48,7 +48,7 @@ class SymbolGenerator
             }
             $this->registerClass($alias, $class);
         }
-        $this->checkerGenerator = app(CheckerGenerator::class);
+        $this->checkerGenerator = app(CheckerGenerator::class, ['isInstalled' => $this->isInstalled]);
     }
 
     /**
