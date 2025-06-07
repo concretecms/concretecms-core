@@ -43,13 +43,8 @@ EOT
                 unset($what[$p]);
             }
             $output->write('Generating fake PHP classes to help IDE... ');
-            if (!Core::make('app')->isInstalled()) {
-                $output->writeln('<error>failed: Concrete is not installed.</error>');
-                $rc = static::FAILURE;
-            } else {
-                $this->generateIDEClasses();
-                $output->writeln('<info>done.</info>');
-            }
+            $this->generateIDEClasses();
+            $output->writeln('<info>done.</info>');
         }
         $p = array_search('phpstorm', $what);
         if ($p !== false || in_array('all', $what)) {
