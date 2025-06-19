@@ -1869,9 +1869,9 @@ class Version implements ObjectInterface
                 /** @var ThumbnailPlaceholderService $thumbnailPlaceholderService */
                 $thumbnailPlaceholderService = $app->make(ThumbnailPlaceholderService::class);
                 $result = $thumbnailPlaceholderService->getThumbnailPlaceholder($this, $type->getBaseVersion());
-            } else {
-                $result = $this->getTypeObject()->getThumbnail();
             }
+        } else {
+            $result = $this->getTypeObject()->getThumbnail();
         }
 
         return $result;
