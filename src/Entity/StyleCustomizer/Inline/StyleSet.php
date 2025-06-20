@@ -14,181 +14,253 @@ class StyleSet
     /**
      * @ORM\Id @ORM\Column(type="integer")
      * @ORM\GeneratedValue
+     *
+     * @var int|null NULL it not saved yet
      */
     protected $issID;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $customClass;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $customID;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $customElementAttribute;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $backgroundColor;
 
     /**
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     protected $backgroundImageFileID = 0;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $backgroundRepeat = 'no-repeat';
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $backgroundSize = 'auto';
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $backgroundPosition = '0% 0%';
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $borderColor;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $borderStyle;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $borderWidth;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $borderRadius;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $baseFontSize;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $alignment;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $textColor;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $linkColor;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $marginTop;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $marginBottom;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $marginLeft;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $marginRight;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $paddingTop;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $paddingBottom;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $paddingLeft;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $paddingRight;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $rotate;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $boxShadowHorizontal;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $boxShadowVertical;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $boxShadowBlur;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $boxShadowSpread;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
      */
     protected $boxShadowColor;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     *
+     * @var bool|null
      */
     protected $boxShadowInset = false;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     *
+     * @var bool|null
      */
     protected $hideOnExtraSmallDevice = false;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     *
+     * @var bool|null
      */
     protected $hideOnSmallDevice = false;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     *
+     * @var bool|null
      */
     protected $hideOnMediumDevice = false;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     *
+     * @var bool|null
      */
     protected $hideOnLargeDevice = false;
 
