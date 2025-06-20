@@ -764,6 +764,9 @@ class StyleSet
     public function export(\SimpleXMLElement $node)
     {
         $node = $node->addChild('style');
+        $node->addChild('customClass', $this->getCustomClass());
+        $node->addChild('customID', $this->getCustomID());
+        $node->addChild('customElementAttribute', $this->getCustomElementAttribute());
         $node->addChild('backgroundColor', $this->getBackgroundColor());
         $fID = $this->backgroundImageFileID;
         if ($fID) {
@@ -772,22 +775,22 @@ class StyleSet
         $node->addChild('backgroundRepeat', $this->getBackgroundRepeat());
         $node->addChild('backgroundSize', $this->getBackgroundSize());
         $node->addChild('backgroundPosition', $this->getBackgroundPosition());
-        $node->addChild('borderWidth', $this->getBorderWidth());
         $node->addChild('borderColor', $this->getBorderColor());
         $node->addChild('borderStyle', $this->getBorderStyle());
+        $node->addChild('borderWidth', $this->getBorderWidth());
         $node->addChild('borderRadius', $this->getBorderRadius());
         $node->addChild('baseFontSize', $this->getBaseFontSize());
         $node->addChild('alignment', $this->getAlignment());
         $node->addChild('textColor', $this->getTextColor());
         $node->addChild('linkColor', $this->getLinkColor());
-        $node->addChild('paddingTop', $this->getPaddingTop());
-        $node->addChild('paddingBottom', $this->getPaddingBottom());
-        $node->addChild('paddingLeft', $this->getPaddingLeft());
-        $node->addChild('paddingRight', $this->getPaddingRight());
         $node->addChild('marginTop', $this->getMarginTop());
         $node->addChild('marginBottom', $this->getMarginBottom());
         $node->addChild('marginLeft', $this->getMarginLeft());
         $node->addChild('marginRight', $this->getMarginRight());
+        $node->addChild('paddingTop', $this->getPaddingTop());
+        $node->addChild('paddingBottom', $this->getPaddingBottom());
+        $node->addChild('paddingLeft', $this->getPaddingLeft());
+        $node->addChild('paddingRight', $this->getPaddingRight());
         $node->addChild('rotate', $this->getRotate());
         $node->addChild('boxShadowHorizontal', $this->getBoxShadowHorizontal());
         $node->addChild('boxShadowVertical', $this->getBoxShadowVertical());
@@ -795,9 +798,6 @@ class StyleSet
         $node->addChild('boxShadowSpread', $this->getBoxShadowSpread());
         $node->addChild('boxShadowColor', $this->getBoxShadowColor());
         $node->addChild('boxShadowInset', $this->getBoxShadowInset());
-        $node->addChild('customClass', $this->getCustomClass());
-        $node->addChild('customID', $this->getCustomID());
-        $node->addChild('customElementAttribute', $this->getCustomElementAttribute());
         $node->addChild('hideOnExtraSmallDevice', $this->getHideOnExtraSmallDevice());
         $node->addChild('hideOnSmallDevice', $this->getHideOnSmallDevice());
         $node->addChild('hideOnMediumDevice', $this->getHideOnMediumDevice());
