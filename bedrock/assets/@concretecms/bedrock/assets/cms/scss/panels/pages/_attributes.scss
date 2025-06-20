@@ -178,10 +178,12 @@
 
 @include color-mode(dark) {
   #ccm-detail-page-attributes {
-    &[data-attribute-key-id] {
-      background-color: $panel-background-color-dark;
-      border: 2px solid lighten($panel-background-color-dark, 0.3);
-    }
+    .form-group {
+      &[data-attribute-key-id] {
+        background-color: $panel-background-color-dark;
+        border: 2px solid lighten($panel-background-color-dark, 0.3);
+      }
+      }
   }
 
   #ccm-menu-page-attributes {

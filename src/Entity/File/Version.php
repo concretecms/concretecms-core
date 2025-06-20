@@ -1853,6 +1853,7 @@ class Version implements ObjectInterface
      */
     public function getDetailThumbnailImage()
     {
+        $result = $this->getTypeObject()->getThumbnail();
         if ($this->getTypeObject()->supportsThumbnails()) {
             $app = Application::getFacadeApplication();
             $config = $app->make('config');
@@ -1870,8 +1871,6 @@ class Version implements ObjectInterface
                 $thumbnailPlaceholderService = $app->make(ThumbnailPlaceholderService::class);
                 $result = $thumbnailPlaceholderService->getThumbnailPlaceholder($this, $type->getBaseVersion());
             }
-        } else {
-            $result = $this->getTypeObject()->getThumbnail();
         }
 
         return $result;
