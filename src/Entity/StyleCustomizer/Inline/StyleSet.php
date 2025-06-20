@@ -23,62 +23,14 @@ class StyleSet
     protected $customClass;
 
     /**
-     * @param mixed $customClass
-     */
-    public function setCustomClass($customClass)
-    {
-        $this->customClass = $customClass;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCustomClass()
-    {
-        return $this->customClass;
-    }
-
-    /**
      * @ORM\Column(type="string", nullable=true)
      */
     protected $customID;
 
     /**
-     * @param mixed $customID
-     */
-    public function setCustomID($customID)
-    {
-        $this->customID = $customID;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCustomID()
-    {
-        return $this->customID;
-    }
-
-    /**
      * @ORM\Column(type="string", nullable=true)
      */
     protected $customElementAttribute;
-
-    /**
-     * @param mixed $customElementAttribute
-     */
-    public function setCustomElementAttribute($customElementAttribute)
-    {
-        $this->customElementAttribute = $customElementAttribute;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCustomElementAttribute()
-    {
-        return $this->customElementAttribute;
-    }
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -124,22 +76,6 @@ class StyleSet
      * @ORM\Column(type="string", nullable=true)
      */
     protected $borderRadius;
-
-    /**
-     * @param mixed $borderWidth
-     */
-    public function setBorderWidth($borderWidth)
-    {
-        $this->borderWidth = $borderWidth;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBorderWidth()
-    {
-        return $this->borderWidth;
-    }
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -255,6 +191,70 @@ class StyleSet
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $hideOnLargeDevice = false;
+
+    /**
+     * @param mixed $customClass
+     */
+    public function setCustomClass($customClass)
+    {
+        $this->customClass = $customClass;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCustomClass()
+    {
+        return $this->customClass;
+    }
+
+    /**
+     * @param mixed $customID
+     */
+    public function setCustomID($customID)
+    {
+        $this->customID = $customID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCustomID()
+    {
+        return $this->customID;
+    }
+
+    /**
+     * @param mixed $customElementAttribute
+     */
+    public function setCustomElementAttribute($customElementAttribute)
+    {
+        $this->customElementAttribute = $customElementAttribute;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCustomElementAttribute()
+    {
+        return $this->customElementAttribute;
+    }
+
+    /**
+     * @param mixed $borderWidth
+     */
+    public function setBorderWidth($borderWidth)
+    {
+        $this->borderWidth = $borderWidth;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBorderWidth()
+    {
+        return $this->borderWidth;
+    }
 
     /**
      * @param mixed $alignment
@@ -479,8 +479,6 @@ class StyleSet
     {
         $this->boxShadowInset = $boxShadowInset;
     }
-
-
 
     /**
      * @param mixed $linkColor
