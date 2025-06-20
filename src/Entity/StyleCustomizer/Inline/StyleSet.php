@@ -939,19 +939,19 @@ class StyleSet
         if (($value = (string) $this->getBoxShadowColor()) !== '') {
             $style->addChild('boxShadowColor', $value);
         }
-        if (($value = $this->getBoxShadowInset()) !== null) {
+        if (($value = (bool) $this->getBoxShadowInset()) !== false) {
             $style->addChild('boxShadowInset', $value ? '1' : '0');
         }
-        if (($value = $this->getHideOnExtraSmallDevice()) !== null) {
+        if (($value = (bool) $this->getHideOnExtraSmallDevice()) !== false) {
             $style->addChild('hideOnExtraSmallDevice', $value ? '1' : '0');
         }
-        if (($value = $this->getHideOnSmallDevice()) !== null) {
+        if (($value = (bool) $this->getHideOnSmallDevice()) !== false) {
             $style->addChild('hideOnSmallDevice', $value ? '1' : '0');
         }
-        if (($value = $this->getHideOnMediumDevice()) !== null) {
+        if (($value = (bool) $this->getHideOnMediumDevice()) !== false) {
             $style->addChild('hideOnMediumDevice', $value ? '1' : '0');
         }
-        if (($value = $this->getHideOnLargeDevice()) !== null) {
+        if (($value = (bool) $this->getHideOnLargeDevice()) !== false) {
             $style->addChild('hideOnLargeDevice', $value ? '1' : '0');
         }
         if ($style->count() === 0) {
