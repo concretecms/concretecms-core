@@ -2,6 +2,7 @@
 namespace Concrete\Core\Entity\StyleCustomizer\Inline;
 
 use Concrete\Core\Backup\ContentExporter;
+use Concrete\Core\File\File;
 use Concrete\Core\Page\Theme\GridFramework\GridFramework;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -357,11 +358,9 @@ class StyleSet
      */
     public function getBackgroundImageFileObject()
     {
-        if ($this->backgroundImageFileID) {
-            $f = \File::getByID($this->backgroundImageFileID);
+        $fID = $this->getBackgroundImageFileID();
 
-            return $f;
-        }
+        return $fID ? File::getByID($fID) : null;
     }
 
     /**
