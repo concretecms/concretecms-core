@@ -6,6 +6,7 @@ use Concrete\Core\File\File;
 use Concrete\Core\Page\Theme\GridFramework\GridFramework;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
+use SimpleXMLElement;
 
 /**
  * @ORM\Entity
@@ -845,47 +846,117 @@ class StyleSet
         $em->flush();
     }
 
-    public function export(\SimpleXMLElement $node)
+    public function export(SimpleXMLElement $node)
     {
-        $node = $node->addChild('style');
-        $node->addChild('customClass', $this->getCustomClass());
-        $node->addChild('customID', $this->getCustomID());
-        $node->addChild('customElementAttribute', $this->getCustomElementAttribute());
-        $node->addChild('backgroundColor', $this->getBackgroundColor());
-        $fID = $this->backgroundImageFileID;
-        if ($fID) {
-            $node->addChild('backgroundImage', ContentExporter::replaceFileWithPlaceHolder($fID));
+        $style = $node->addChild('style');
+        if (($value = (string) $this->getCustomClass()) !== '') {
+            $style->addChild('customClass', $value);
         }
-        $node->addChild('backgroundRepeat', $this->getBackgroundRepeat());
-        $node->addChild('backgroundSize', $this->getBackgroundSize());
-        $node->addChild('backgroundPosition', $this->getBackgroundPosition());
-        $node->addChild('borderColor', $this->getBorderColor());
-        $node->addChild('borderStyle', $this->getBorderStyle());
-        $node->addChild('borderWidth', $this->getBorderWidth());
-        $node->addChild('borderRadius', $this->getBorderRadius());
-        $node->addChild('baseFontSize', $this->getBaseFontSize());
-        $node->addChild('alignment', $this->getAlignment());
-        $node->addChild('textColor', $this->getTextColor());
-        $node->addChild('linkColor', $this->getLinkColor());
-        $node->addChild('marginTop', $this->getMarginTop());
-        $node->addChild('marginBottom', $this->getMarginBottom());
-        $node->addChild('marginLeft', $this->getMarginLeft());
-        $node->addChild('marginRight', $this->getMarginRight());
-        $node->addChild('paddingTop', $this->getPaddingTop());
-        $node->addChild('paddingBottom', $this->getPaddingBottom());
-        $node->addChild('paddingLeft', $this->getPaddingLeft());
-        $node->addChild('paddingRight', $this->getPaddingRight());
-        $node->addChild('rotate', $this->getRotate());
-        $node->addChild('boxShadowHorizontal', $this->getBoxShadowHorizontal());
-        $node->addChild('boxShadowVertical', $this->getBoxShadowVertical());
-        $node->addChild('boxShadowBlur', $this->getBoxShadowBlur());
-        $node->addChild('boxShadowSpread', $this->getBoxShadowSpread());
-        $node->addChild('boxShadowColor', $this->getBoxShadowColor());
-        $node->addChild('boxShadowInset', $this->getBoxShadowInset());
-        $node->addChild('hideOnExtraSmallDevice', $this->getHideOnExtraSmallDevice());
-        $node->addChild('hideOnSmallDevice', $this->getHideOnSmallDevice());
-        $node->addChild('hideOnMediumDevice', $this->getHideOnMediumDevice());
-        $node->addChild('hideOnLargeDevice', $this->getHideOnLargeDevice());
+        if (($value = (string) $this->getCustomID()) !== '') {
+            $style->addChild('customID', $value);
+        }
+        if (($value = (string) $this->getCustomElementAttribute()) !== '') {
+            $style->addChild('customElementAttribute', $value);
+        }
+        if (($value = (string) $this->getBackgroundColor()) !== '') {
+            $style->addChild('backgroundColor', $value);
+        }
+        if (($value = (int) $this->getBackgroundImageFileID()) !== 0) {
+            $style->addChild('backgroundImage', ContentExporter::replaceFileWithPlaceHolder($value));
+        }
+        if (($value = (string) $this->getBackgroundRepeat()) !== '') {
+            $style->addChild('backgroundRepeat', $value);
+        }
+        if (($value = (string) $this->getBackgroundSize()) !== '') {
+            $style->addChild('backgroundSize', $value);
+        }
+        if (($value = (string) $this->getBackgroundPosition()) !== '') {
+            $style->addChild('backgroundPosition', $value);
+        }
+        if (($value = (string) $this->getBorderColor()) !== '') {
+            $style->addChild('borderColor', $value);
+        }
+        if (($value = (string) $this->getBorderStyle()) !== '') {
+            $style->addChild('borderStyle', $value);
+        }
+        if (($value = (string) $this->getBorderWidth()) !== '') {
+            $style->addChild('borderWidth', $value);
+        }
+        if (($value = (string) $this->getBorderRadius()) !== '') {
+            $style->addChild('borderRadius', $value);
+        }
+        if (($value = (string) $this->getBaseFontSize()) !== '') {
+            $style->addChild('baseFontSize', $value);
+        }
+        if (($value = (string) $this->getAlignment()) !== '') {
+            $style->addChild('alignment', $value);
+        }
+        if (($value = (string) $this->getTextColor()) !== '') {
+            $style->addChild('textColor', $value);
+        }
+        if (($value = (string) $this->getLinkColor()) !== '') {
+            $style->addChild('linkColor', $value);
+        }
+        if (($value = (string) $this->getMarginTop()) !== '') {
+            $style->addChild('marginTop', $value);
+        }
+        if (($value = (string) $this->getMarginBottom()) !== '') {
+            $style->addChild('marginBottom', $value);
+        }
+        if (($value = (string) $this->getMarginLeft()) !== '') {
+            $style->addChild('marginLeft', $value);
+        }
+        if (($value = (string) $this->getMarginRight()) !== '') {
+            $style->addChild('marginRight', $value);
+        }
+        if (($value = (string) $this->getPaddingTop()) !== '') {
+            $style->addChild('paddingTop', $value);
+        }
+        if (($value = (string) $this->getPaddingBottom()) !== '') {
+            $style->addChild('paddingBottom', $value);
+        }
+        if (($value = (string) $this->getPaddingLeft()) !== '') {
+            $style->addChild('paddingLeft', $value);
+        }
+        if (($value = (string) $this->getPaddingRight()) !== '') {
+            $style->addChild('paddingRight', $value);
+        }
+        if (($value = (string) $this->getRotate()) !== '') {
+            $style->addChild('rotate', $value);
+        }
+        if (($value = (string) $this->getBoxShadowHorizontal()) !== '') {
+            $style->addChild('boxShadowHorizontal', $value);
+        }
+        if (($value = (string) $this->getBoxShadowVertical()) !== '') {
+            $style->addChild('boxShadowVertical', $value);
+        }
+        if (($value = (string) $this->getBoxShadowBlur()) !== '') {
+            $style->addChild('boxShadowBlur', $value);
+        }
+        if (($value = (string) $this->getBoxShadowSpread()) !== '') {
+            $style->addChild('boxShadowSpread', $value);
+        }
+        if (($value = (string) $this->getBoxShadowColor()) !== '') {
+            $style->addChild('boxShadowColor', $value);
+        }
+        if (($value = $this->getBoxShadowInset()) !== null) {
+            $style->addChild('boxShadowInset', $value ? '1' : '0');
+        }
+        if (($value = $this->getHideOnExtraSmallDevice()) !== null) {
+            $style->addChild('hideOnExtraSmallDevice', $value ? '1' : '0');
+        }
+        if (($value = $this->getHideOnSmallDevice()) !== null) {
+            $style->addChild('hideOnSmallDevice', $value ? '1' : '0');
+        }
+        if (($value = $this->getHideOnMediumDevice()) !== null) {
+            $style->addChild('hideOnMediumDevice', $value ? '1' : '0');
+        }
+        if (($value = $this->getHideOnLargeDevice()) !== null) {
+            $style->addChild('hideOnLargeDevice', $value ? '1' : '0');
+        }
+        if ($style->count() === 0) {
+            unset($node->style);
+        }
     }
 
     public function isHiddenOnDevice($class)
