@@ -192,6 +192,11 @@ class StyleSet
      */
     protected $hideOnLargeDevice = false;
 
+    public function getID()
+    {
+        return $this->issID;
+    }
+
     /**
      * @param mixed $customClass
      */
@@ -240,36 +245,33 @@ class StyleSet
         return $this->customElementAttribute;
     }
 
-    /**
-     * @param mixed $borderWidth
-     */
-    public function setBorderWidth($borderWidth)
+    public function setBackgroundColor($backgroundColor)
     {
-        $this->borderWidth = $borderWidth;
+        $this->backgroundColor = $backgroundColor;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getBorderWidth()
+    public function getBackgroundColor()
     {
-        return $this->borderWidth;
+        return $this->backgroundColor;
     }
 
-    /**
-     * @param mixed $alignment
-     */
-    public function setAlignment($alignment)
+    public function setBackgroundImageFileID($backgroundImageFileID)
     {
-        $this->alignment = $alignment;
+        $this->backgroundImageFileID = $backgroundImageFileID;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAlignment()
+    public function getBackgroundImageFileID()
     {
-        return $this->alignment;
+        return $this->backgroundImageFileID;
+    }
+
+    public function getBackgroundImageFileObject()
+    {
+        if ($this->backgroundImageFileID) {
+            $f = \File::getByID($this->backgroundImageFileID);
+
+            return $f;
+        }
     }
 
     /**
@@ -321,22 +323,6 @@ class StyleSet
     }
 
     /**
-     * @param mixed $baseFontSize
-     */
-    public function setBaseFontSize($baseFontSize)
-    {
-        $this->baseFontSize = $baseFontSize;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBaseFontSize()
-    {
-        return $this->baseFontSize;
-    }
-
-    /**
      * @param mixed $borderColor
      */
     public function setBorderColor($borderColor)
@@ -369,6 +355,22 @@ class StyleSet
     }
 
     /**
+     * @param mixed $borderWidth
+     */
+    public function setBorderWidth($borderWidth)
+    {
+        $this->borderWidth = $borderWidth;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBorderWidth()
+    {
+        return $this->borderWidth;
+    }
+
+    /**
      * @param mixed $borderStyle
      */
     public function setBorderRadius($borderRadius)
@@ -385,115 +387,35 @@ class StyleSet
     }
 
     /**
-     * @param mixed $boxShadowBlur
+     * @param mixed $baseFontSize
      */
-    public function setBoxShadowBlur($boxShadowBlur)
+    public function setBaseFontSize($baseFontSize)
     {
-        $this->boxShadowBlur = $boxShadowBlur;
+        $this->baseFontSize = $baseFontSize;
     }
 
     /**
      * @return mixed
      */
-    public function getBoxShadowBlur()
+    public function getBaseFontSize()
     {
-        return $this->boxShadowBlur;
+        return $this->baseFontSize;
     }
 
     /**
-     * @param mixed $boxShadowColor
+     * @param mixed $alignment
      */
-    public function setBoxShadowColor($boxShadowColor)
+    public function setAlignment($alignment)
     {
-        $this->boxShadowColor = $boxShadowColor;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBoxShadowColor()
-    {
-        return $this->boxShadowColor;
-    }
-
-    /**
-     * @param mixed $boxShadowHorizontal
-     */
-    public function setBoxShadowHorizontal($boxShadowHorizontal)
-    {
-        $this->boxShadowHorizontal = $boxShadowHorizontal;
+        $this->alignment = $alignment;
     }
 
     /**
      * @return mixed
      */
-    public function getBoxShadowHorizontal()
+    public function getAlignment()
     {
-        return $this->boxShadowHorizontal;
-    }
-
-    /**
-     * @param mixed $boxShadowSpread
-     */
-    public function setBoxShadowSpread($boxShadowSpread)
-    {
-        $this->boxShadowSpread = $boxShadowSpread;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBoxShadowSpread()
-    {
-        return $this->boxShadowSpread;
-    }
-
-    /**
-     * @param mixed $boxShadowVertical
-     */
-    public function setBoxShadowVertical($boxShadowVertical)
-    {
-        $this->boxShadowVertical = $boxShadowVertical;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBoxShadowVertical()
-    {
-        return $this->boxShadowVertical;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getBoxShadowInset(): ?bool
-    {
-        return $this->boxShadowInset;
-    }
-
-    /**
-     * @param bool $boxShadowInset
-     */
-    public function setBoxShadowInset(bool $boxShadowInset)
-    {
-        $this->boxShadowInset = $boxShadowInset;
-    }
-
-    /**
-     * @param mixed $linkColor
-     */
-    public function setLinkColor($linkColor)
-    {
-        $this->linkColor = $linkColor;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLinkColor()
-    {
-        return $this->linkColor;
+        return $this->alignment;
     }
 
     /**
@@ -513,24 +435,35 @@ class StyleSet
     }
 
     /**
-     * @param mixed $rotate
+     * @param mixed $linkColor
      */
-    public function setRotate($rotate)
+    public function setLinkColor($linkColor)
     {
-        $this->rotate = $rotate;
+        $this->linkColor = $linkColor;
     }
 
     /**
      * @return mixed
      */
-    public function getRotate()
+    public function getLinkColor()
     {
-        return $this->rotate;
+        return $this->linkColor;
     }
 
-    public function getID()
+    /**
+     * @param mixed $marginTop
+     */
+    public function setMarginTop($marginTop)
     {
-        return $this->issID;
+        $this->marginTop = $marginTop;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMarginTop()
+    {
+        return $this->marginTop;
     }
 
     /**
@@ -582,19 +515,19 @@ class StyleSet
     }
 
     /**
-     * @param mixed $marginTop
+     * @param mixed $paddingTop
      */
-    public function setMarginTop($marginTop)
+    public function setPaddingTop($paddingTop)
     {
-        $this->marginTop = $marginTop;
+        $this->paddingTop = $paddingTop;
     }
 
     /**
      * @return mixed
      */
-    public function getMarginTop()
+    public function getPaddingTop()
     {
-        return $this->marginTop;
+        return $this->paddingTop;
     }
 
     /**
@@ -646,56 +579,115 @@ class StyleSet
     }
 
     /**
-     * @param mixed $paddingTop
+     * @param mixed $rotate
      */
-    public function setPaddingTop($paddingTop)
+    public function setRotate($rotate)
     {
-        $this->paddingTop = $paddingTop;
+        $this->rotate = $rotate;
     }
 
     /**
      * @return mixed
      */
-    public function getPaddingTop()
+    public function getRotate()
     {
-        return $this->paddingTop;
+        return $this->rotate;
     }
 
-    public function setBackgroundColor($backgroundColor)
+    /**
+     * @param mixed $boxShadowHorizontal
+     */
+    public function setBoxShadowHorizontal($boxShadowHorizontal)
     {
-        $this->backgroundColor = $backgroundColor;
-    }
-
-    public function setBackgroundImageFileID($backgroundImageFileID)
-    {
-        $this->backgroundImageFileID = $backgroundImageFileID;
-    }
-
-    public function getBackgroundColor()
-    {
-        return $this->backgroundColor;
-    }
-
-    public function getBackgroundImageFileID()
-    {
-        return $this->backgroundImageFileID;
-    }
-
-    public function getBackgroundImageFileObject()
-    {
-        if ($this->backgroundImageFileID) {
-            $f = \File::getByID($this->backgroundImageFileID);
-
-            return $f;
-        }
+        $this->boxShadowHorizontal = $boxShadowHorizontal;
     }
 
     /**
      * @return mixed
      */
-    public function getHideOnExtraSmallDevice()
+    public function getBoxShadowHorizontal()
     {
-        return $this->hideOnExtraSmallDevice;
+        return $this->boxShadowHorizontal;
+    }
+
+    /**
+     * @param mixed $boxShadowVertical
+     */
+    public function setBoxShadowVertical($boxShadowVertical)
+    {
+        $this->boxShadowVertical = $boxShadowVertical;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBoxShadowVertical()
+    {
+        return $this->boxShadowVertical;
+    }
+
+    /**
+     * @param mixed $boxShadowBlur
+     */
+    public function setBoxShadowBlur($boxShadowBlur)
+    {
+        $this->boxShadowBlur = $boxShadowBlur;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBoxShadowBlur()
+    {
+        return $this->boxShadowBlur;
+    }
+
+    /**
+     * @param mixed $boxShadowSpread
+     */
+    public function setBoxShadowSpread($boxShadowSpread)
+    {
+        $this->boxShadowSpread = $boxShadowSpread;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBoxShadowSpread()
+    {
+        return $this->boxShadowSpread;
+    }
+
+    /**
+     * @param mixed $boxShadowColor
+     */
+    public function setBoxShadowColor($boxShadowColor)
+    {
+        $this->boxShadowColor = $boxShadowColor;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBoxShadowColor()
+    {
+        return $this->boxShadowColor;
+    }
+
+    /**
+     * @param bool $boxShadowInset
+     */
+    public function setBoxShadowInset(bool $boxShadowInset)
+    {
+        $this->boxShadowInset = $boxShadowInset;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getBoxShadowInset(): ?bool
+    {
+        return $this->boxShadowInset;
     }
 
     /**
@@ -709,9 +701,9 @@ class StyleSet
     /**
      * @return mixed
      */
-    public function getHideOnSmallDevice()
+    public function getHideOnExtraSmallDevice()
     {
-        return $this->hideOnSmallDevice;
+        return $this->hideOnExtraSmallDevice;
     }
 
     /**
@@ -725,9 +717,9 @@ class StyleSet
     /**
      * @return mixed
      */
-    public function getHideOnMediumDevice()
+    public function getHideOnSmallDevice()
     {
-        return $this->hideOnMediumDevice;
+        return $this->hideOnSmallDevice;
     }
 
     /**
@@ -741,9 +733,9 @@ class StyleSet
     /**
      * @return mixed
      */
-    public function getHideOnLargeDevice()
+    public function getHideOnMediumDevice()
     {
-        return $this->hideOnLargeDevice;
+        return $this->hideOnMediumDevice;
     }
 
     /**
@@ -752,6 +744,14 @@ class StyleSet
     public function setHideOnLargeDevice($hideOnLargeDevice)
     {
         $this->hideOnLargeDevice = $hideOnLargeDevice;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHideOnLargeDevice()
+    {
+        return $this->hideOnLargeDevice;
     }
 
     public function save()
