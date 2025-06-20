@@ -959,6 +959,13 @@ class StyleSet
         }
     }
 
+    /**
+     * @param int $class the value of one of the GridFramework::DEVICE_CLASSES_HIDE_ON_... constants
+     *
+     * @return bool|null
+     *
+     * @see \Concrete\Core\Page\Theme\GridFramework\GridFramework
+     */
     public function isHiddenOnDevice($class)
     {
         switch ($class) {
