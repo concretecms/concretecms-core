@@ -4,6 +4,7 @@ namespace Concrete\Core\Entity\StyleCustomizer\Inline;
 use Concrete\Core\Backup\ContentExporter;
 use Concrete\Core\File\File;
 use Concrete\Core\Page\Theme\GridFramework\GridFramework;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -839,7 +840,7 @@ class StyleSet
 
     public function save()
     {
-        $em = \ORM::entityManager();
+        $em = app(EntityManagerInterface::class);
         $em->persist($this);
         $em->flush();
     }
