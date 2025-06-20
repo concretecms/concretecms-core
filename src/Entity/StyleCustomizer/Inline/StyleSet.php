@@ -15,7 +15,7 @@ class StyleSet
      * @ORM\Id @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      *
-     * @var int|null NULL it not saved yet
+     * @var int|null NULL if and only if not yet saved
      */
     protected $issID;
 
@@ -264,13 +264,16 @@ class StyleSet
      */
     protected $hideOnLargeDevice = false;
 
+    /**
+     * @return int|null NULL if and only if not yet saved
+     */
     public function getID()
     {
         return $this->issID;
     }
 
     /**
-     * @param mixed $customClass
+     * @param string|null $customClass
      */
     public function setCustomClass($customClass)
     {
@@ -278,7 +281,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getCustomClass()
     {
@@ -286,7 +289,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $customID
+     * @param string|null $customID
      */
     public function setCustomID($customID)
     {
@@ -294,7 +297,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getCustomID()
     {
@@ -302,7 +305,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $customElementAttribute
+     * @param string|null $customElementAttribute
      */
     public function setCustomElementAttribute($customElementAttribute)
     {
@@ -310,33 +313,48 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getCustomElementAttribute()
     {
         return $this->customElementAttribute;
     }
 
+    /**
+     * @param string|null $backgroundColor
+     */
     public function setBackgroundColor($backgroundColor)
     {
         $this->backgroundColor = $backgroundColor;
     }
 
+    /**
+     * @return string|null
+     */
     public function getBackgroundColor()
     {
         return $this->backgroundColor;
     }
 
+    /**
+     * @param int $backgroundImageFileID
+     */
     public function setBackgroundImageFileID($backgroundImageFileID)
     {
-        $this->backgroundImageFileID = $backgroundImageFileID;
+        $this->backgroundImageFileID = (int) $backgroundImageFileID;
     }
 
+    /**
+     * @return int
+     */
     public function getBackgroundImageFileID()
     {
         return $this->backgroundImageFileID;
     }
 
+    /**
+     * @return \Concrete\Core\Entity\File\File|null
+     */
     public function getBackgroundImageFileObject()
     {
         if ($this->backgroundImageFileID) {
@@ -347,7 +365,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $backgroundRepeat
+     * @param string|null $backgroundRepeat
      */
     public function setBackgroundRepeat($backgroundRepeat)
     {
@@ -355,7 +373,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getBackgroundRepeat()
     {
@@ -363,7 +381,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $backgroundSize
+     * @param string|null $backgroundSize
      */
     public function setBackgroundSize($backgroundSize)
     {
@@ -371,7 +389,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getBackgroundSize()
     {
@@ -379,7 +397,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $backgroundPosition
+     * @param string|null $backgroundPosition
      */
     public function setBackgroundPosition($backgroundPosition)
     {
@@ -387,7 +405,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getBackgroundPosition()
     {
@@ -395,7 +413,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $borderColor
+     * @param string|null $borderColor
      */
     public function setBorderColor($borderColor)
     {
@@ -403,7 +421,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getBorderColor()
     {
@@ -411,7 +429,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $borderStyle
+     * @param string|null $borderStyle
      */
     public function setBorderStyle($borderStyle)
     {
@@ -419,7 +437,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getBorderStyle()
     {
@@ -427,7 +445,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $borderWidth
+     * @param string|null $borderWidth
      */
     public function setBorderWidth($borderWidth)
     {
@@ -435,7 +453,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getBorderWidth()
     {
@@ -443,7 +461,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $borderStyle
+     * @param string|null $borderStyle
      */
     public function setBorderRadius($borderRadius)
     {
@@ -451,7 +469,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getBorderRadius()
     {
@@ -459,7 +477,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $baseFontSize
+     * @param string|null $baseFontSize
      */
     public function setBaseFontSize($baseFontSize)
     {
@@ -467,7 +485,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getBaseFontSize()
     {
@@ -475,7 +493,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $alignment
+     * @param string|null $alignment
      */
     public function setAlignment($alignment)
     {
@@ -483,7 +501,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getAlignment()
     {
@@ -491,7 +509,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $textColor
+     * @param string|null $textColor
      */
     public function setTextColor($textColor)
     {
@@ -499,7 +517,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getTextColor()
     {
@@ -507,7 +525,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $linkColor
+     * @param string|null $linkColor
      */
     public function setLinkColor($linkColor)
     {
@@ -515,7 +533,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getLinkColor()
     {
@@ -523,7 +541,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $marginTop
+     * @param string|null $marginTop
      */
     public function setMarginTop($marginTop)
     {
@@ -531,7 +549,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getMarginTop()
     {
@@ -539,7 +557,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $marginBottom
+     * @param string|null $marginBottom
      */
     public function setMarginBottom($marginBottom)
     {
@@ -547,7 +565,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getMarginBottom()
     {
@@ -555,7 +573,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $marginLeft
+     * @param string|null $marginLeft
      */
     public function setMarginLeft($marginLeft)
     {
@@ -563,7 +581,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getMarginLeft()
     {
@@ -571,7 +589,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $marginRight
+     * @param string|null $marginRight
      */
     public function setMarginRight($marginRight)
     {
@@ -579,7 +597,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getMarginRight()
     {
@@ -587,7 +605,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $paddingTop
+     * @param string|null $paddingTop
      */
     public function setPaddingTop($paddingTop)
     {
@@ -595,7 +613,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getPaddingTop()
     {
@@ -603,7 +621,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $paddingBottom
+     * @param string|null $paddingBottom
      */
     public function setPaddingBottom($paddingBottom)
     {
@@ -611,7 +629,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getPaddingBottom()
     {
@@ -619,7 +637,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $paddingLeft
+     * @param string|null $paddingLeft
      */
     public function setPaddingLeft($paddingLeft)
     {
@@ -627,7 +645,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getPaddingLeft()
     {
@@ -635,7 +653,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $paddingRight
+     * @param string|null $paddingRight
      */
     public function setPaddingRight($paddingRight)
     {
@@ -643,7 +661,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getPaddingRight()
     {
@@ -651,7 +669,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $rotate
+     * @param string|null $rotate
      */
     public function setRotate($rotate)
     {
@@ -659,7 +677,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getRotate()
     {
@@ -667,7 +685,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $boxShadowHorizontal
+     * @param string|null $boxShadowHorizontal
      */
     public function setBoxShadowHorizontal($boxShadowHorizontal)
     {
@@ -675,7 +693,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getBoxShadowHorizontal()
     {
@@ -683,7 +701,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $boxShadowVertical
+     * @param string|null $boxShadowVertical
      */
     public function setBoxShadowVertical($boxShadowVertical)
     {
@@ -691,7 +709,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getBoxShadowVertical()
     {
@@ -699,7 +717,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $boxShadowBlur
+     * @param string|null $boxShadowBlur
      */
     public function setBoxShadowBlur($boxShadowBlur)
     {
@@ -707,7 +725,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getBoxShadowBlur()
     {
@@ -715,7 +733,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $boxShadowSpread
+     * @param string|null $boxShadowSpread
      */
     public function setBoxShadowSpread($boxShadowSpread)
     {
@@ -723,7 +741,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getBoxShadowSpread()
     {
@@ -731,7 +749,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $boxShadowColor
+     * @param string|null $boxShadowColor
      */
     public function setBoxShadowColor($boxShadowColor)
     {
@@ -739,31 +757,25 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getBoxShadowColor()
     {
         return $this->boxShadowColor;
     }
 
-    /**
-     * @param bool $boxShadowInset
-     */
     public function setBoxShadowInset(bool $boxShadowInset)
     {
         $this->boxShadowInset = $boxShadowInset;
     }
 
-    /**
-     * @return bool
-     */
     public function getBoxShadowInset(): ?bool
     {
         return $this->boxShadowInset;
     }
 
     /**
-     * @param mixed $hideOnExtraSmallDevice
+     * @param bool|null $hideOnExtraSmallDevice
      */
     public function setHideOnExtraSmallDevice($hideOnExtraSmallDevice)
     {
@@ -771,7 +783,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return bool|null
      */
     public function getHideOnExtraSmallDevice()
     {
@@ -779,7 +791,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $hideOnSmallDevice
+     * @param bool|null $hideOnSmallDevice
      */
     public function setHideOnSmallDevice($hideOnSmallDevice)
     {
@@ -787,7 +799,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return bool|null
      */
     public function getHideOnSmallDevice()
     {
@@ -795,7 +807,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $hideOnMediumDevice
+     * @param bool|null $hideOnMediumDevice
      */
     public function setHideOnMediumDevice($hideOnMediumDevice)
     {
@@ -803,7 +815,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return bool|null
      */
     public function getHideOnMediumDevice()
     {
@@ -811,7 +823,7 @@ class StyleSet
     }
 
     /**
-     * @param mixed $hideOnLargeDevice
+     * @param bool|null $hideOnLargeDevice
      */
     public function setHideOnLargeDevice($hideOnLargeDevice)
     {
@@ -819,7 +831,7 @@ class StyleSet
     }
 
     /**
-     * @return mixed
+     * @return bool|null
      */
     public function getHideOnLargeDevice()
     {
