@@ -138,7 +138,7 @@ class OpenGraph
             $tags[] = $tag;
         }
         if ($site->getSiteCanonicalURL()) {
-            $tags[] = $this->createTag(self::TAG_OG_URL, (string) $this->resolverManager->resolve($page));
+            $tags[] = $this->createTag(self::TAG_OG_URL, (string) $this->resolverManager->resolve([$page]));
         }
         $imageAttribute = $this->config->get('social.opengraph.field_og_thumbnail');
         if ($imageAttribute['value_from'] === 'page_attribute') {
