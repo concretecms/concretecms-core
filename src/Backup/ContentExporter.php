@@ -74,7 +74,7 @@ class ContentExporter
     }
 
     /**
-     * @param int|string|mixed $fID the ID of the file
+     * @param int|string|mixed $fID the ID or the UUID of the file
      *
      * @return string|null
      *
@@ -82,10 +82,13 @@ class ContentExporter
      */
     public static function replaceFileWithPlaceHolder($fID)
     {
-        if (!is_numeric($fID) || ($fID = (int) $fID) <= 0) {
+        if (uuid_is_valid((string) $fID)) {
+            $f = File::getByUUID($fID);
+        } elseif (is_numeric($fID) && ($fID = (int) $fID) > 0) {
+            $f = File::getByID($fID);
+        } else {
             return null;
         }
-        $f = File::getByID($fID);
         $fv = $f ? $f->getApprovedVersion() : null;
         if (!$fv) {
             return null;
