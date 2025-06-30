@@ -80,17 +80,29 @@ if ($view->controller->getAction() == 'preview_version') { ?>
                             </li>
                             <?php
                         }
-                        if ($genericType === \Concrete\Core\File\Type\Type::T_IMAGE
+                        if ($genericType === \Concrete\Core\File\Type\Type::T_IMAGE 
                             && $filePermissions->canEditFileContents()) {
+                            // If it's an SVG there will be not thumbnails to edit, so we don't show the thumbnails option. It would also make no sense given the nature of SVG as an image format.
+                            if ($fileVersion->getTypeObject()->isSVG()) {
+                                $dialogURL = '/ccm/system/file/view?fID=';
+                                $dialogLinkLabel = t('View');
+                                $dialogLinkTitle = t('View this SVG.');
+                                $dialogTitle = t('View');
+                            } else {
+                                $dialogURL = '/ccm/system/dialogs/file/thumbnails?fID=';
+                                $dialogLinkLabel = t('Thumbnails');
+                                $dialogLinkTitle = t('Adjust the thumbnails for this image.');
+                                $dialogTitle = t('Edit');
+                            }
                             ?>
                             <li><a
                                     data-bs-placement="left"
                                     class="dropdown-item launch-tooltip dialog-launch"
-                                    dialog-title="<?= t('Edit') ?>"
+                                    dialog-title="<?= $dialogTitle ?>"
                                     dialog-width="90%" dialog-height="75%"
-                                    title="<?= t('Adjust the thumbnails for this image.') ?>"
-                                    href="<?=URL::to('/ccm/system/dialogs/file/thumbnails?fID=' . $file->getFileID())?>"
-                            ><?= t('Thumbnails') ?></a></li>
+                                    title="<?= $dialogLinkTitle ?>"
+                                    href="<?=URL::to($dialogURL . $file->getFileID())?>"
+                            ><?= $dialogLinkLabel ?></a></li>
                             <?php
                         }
                         if ($fileVersion->canEdit() && $filePermissions->canEditFileContents()) {
