@@ -1,6 +1,6 @@
 @import url(//fonts.googleapis.com/css?family=Prata:400,800);
 @import url(//fonts.googleapis.com/css?family=Lato:300,400,500,800);
-/*!
+:root{--bs-light-accent:#f0e5d8;--bs-light-accent-rgb:240,229,216;--bs-light-accent-bg-subtle:#fefcfb;--bs-light-accent-border-subtle:#f9f5ef;--bs-light-accent-text-emphasis:#f0e5d8;--bs-accent:#1b755e;--bs-accent-rgb:27,117,94;--bs-accent-bg-subtle:#e8f1ef;--bs-accent-border-subtle:#a4c8bf;--bs-accent-text-emphasis:#1b755e;--bs-dark-accent:#014357;--bs-dark-accent-rgb:1,67,87;--bs-dark-accent-bg-subtle:#e6ecee;--bs-dark-accent-border-subtle:#99b4bc;--bs-dark-accent-text-emphasis:#014357}/*!
  * Bootstrap  v5.3.3 (https://getbootstrap.com/)
  * Copyright 2011-2024 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
