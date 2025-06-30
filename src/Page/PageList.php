@@ -208,41 +208,24 @@ class PageList extends DatabaseItemList implements PagerProviderInterface, Pagin
                 ->andWhere('p.cIsTemplate = 0');
         }
 
-        $app = Application::getFacadeApplication();
         switch ($this->pageVersionToRetrieve) {
             case self::PAGE_VERSION_RECENT:
-                $query->innerJoin(
-                    'p',
-                    '(select cID, max(cvID) as max_cvID from CollectionVersions group by cID)',
-                    'cv_max',
-                    'cv_max.cID = p.cID and cv_max.max_cvID = cv.cvID'
-                );
+                $query->andWhere('cv.cvID = (select max(cvID) from CollectionVersions where cID = cv.cID)');
                 break;
             case self::PAGE_VERSION_RECENT_UNAPPROVED:
-                $query->innerJoin(
-                    'p',
-                    '(select cID, max(cvID) as max_cvID from CollectionVersions where cvIsApproved = 0 group by cID)',
-                    'cv_max',
-                    'cv_max.cID = p.cID and cv_max.max_cvID = cv.cvID'
-                );
+                $query
+                    ->andWhere('cv.cvID = (select max(cvID) from CollectionVersions where cID = cv.cID)')
+                    ->andWhere($expr->eq('cvIsApproved', 0));
                 break;
             case self::PAGE_VERSION_SCHEDULED:
-                $query->innerJoin(
-                    'p',
-                    '(select cID, max(cvPublishDate) as max_cvPublishDate from CollectionVersions where cvIsApproved = 1 and ((cvPublishDate > :cvPublishDate) and (cvPublishEndDate >= :cvPublishDate or cvPublishEndDate is null)) group by cID)',
-                    'cv_max',
-                    'cv_max.cID = p.cID and cv_max.max_cvPublishDate = cv.cvPublishDate'
-                );
-                $query->setParameter('cvPublishDate', $app->make('date')->getOverridableNow());
+                $now = new \DateTime();
+                $query->andWhere('cv.cvID = (select cvID from CollectionVersions where cID = cv.cID and cvIsApproved = 1 and ((cvPublishDate > :cvPublishDate) and (cvPublishEndDate >= :cvPublishDate or cvPublishEndDate is null)) order by cvPublishDate desc limit 1)');
+                $query->setParameter('cvPublishDate', $now->format('Y-m-d H:i:s'));
                 break;
             case self::PAGE_VERSION_ACTIVE:
             default:
-                $query->innerJoin(
-                  'p',
-                  '(select cID, max(cvID) as max_cvID from CollectionVersions where cvIsApproved = 1 and ((cvPublishDate <= :cvPublishDate or cvPublishDate is null) and (cvPublishEndDate >= :cvPublishDate or cvPublishEndDate is null)) group by cID)',
-                  'cv_max',
-                  'cv_max.cID = p.cID and cv_max.max_cvID = cv.cvID'
-                );
+                $app = Application::getFacadeApplication();
+                $query->andWhere('cv.cvID = (select max(cvID) from CollectionVersions where cID = cv.cID and cvIsApproved = 1 and ((cvPublishDate <= :cvPublishDate or cvPublishDate is null) and (cvPublishEndDate >= :cvPublishDate or cvPublishEndDate is null)))');
                 $query->setParameter('cvPublishDate', $app->make('date')->getOverridableNow());
                 break;
         }
