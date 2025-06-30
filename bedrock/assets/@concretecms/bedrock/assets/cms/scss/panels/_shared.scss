@@ -607,12 +607,22 @@ div.ccm-panel-content {
 }
 
 @include color-mode(dark) {
-  header {
-    a {
-      color: $gray-400;
+  div.ccm-panel-content {
+    header {
+      a {
+        color: $gray-400;
 
-      svg {
-        fill: $gray-400;
+        svg {
+          fill: $gray-400;
+        }
+
+        &:hover {
+          color: $blue;
+
+          svg {
+            fill: $blue;
+          }
+        }
       }
     }
   }

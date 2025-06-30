@@ -219,9 +219,9 @@
 
 @include color-mode(dark) {
   .ccm-ui {
-    .ccm-sitemap-tree {
-      ul.ui-fancytree {
-        li[role=treeitem] {
+    ul.ui-fancytree {
+      li[role=treeitem] {
+        span.fancytree-node {
           span.fancytree-expander,
           span.icon-folder,
           span.icon-home,

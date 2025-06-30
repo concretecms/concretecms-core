@@ -2351,7 +2351,9 @@ EOT
             while ($row = $r->fetchAssociative()) {
                 if ($row['cID'] > 0) {
                     $c = self::getByID($row['cID'], $version);
-                    $children[] = $c;
+                    if ($c && !$c->isError() && $c->getVersionID() > 0) {
+                        $children[] = $c;
+                    }
                 }
             }
         }
