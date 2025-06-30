@@ -1,7 +1,7 @@
 @import url(//fonts.googleapis.com/css?family=Montserrat:500);
 @import url(//fonts.googleapis.com/css?family=Bebas+Neue:400);
 @import url(//fonts.googleapis.com/css?family=Raleway:800);
-/*!
+:root{--bs-light-accent:#9ba5b0;--bs-light-accent-rgb:155,165,176;--bs-light-accent-bg-subtle:#f5f6f7;--bs-light-accent-border-subtle:#d7dbdf;--bs-light-accent-text-emphasis:#9ba5b0;--bs-accent:#f14a20;--bs-accent-rgb:241,74,32;--bs-accent-bg-subtle:#feede9;--bs-accent-border-subtle:#f9b7a6;--bs-accent-text-emphasis:#f14a20;--bs-dark-accent:#014357;--bs-dark-accent-rgb:1,67,87;--bs-dark-accent-bg-subtle:#e6ecee;--bs-dark-accent-border-subtle:#99b4bc;--bs-dark-accent-text-emphasis:#014357}/*!
  * Bootstrap  v5.3.3 (https://getbootstrap.com/)
  * Copyright 2011-2024 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)

@@ -1853,6 +1853,7 @@ class Version implements ObjectInterface
      */
     public function getDetailThumbnailImage()
     {
+        $result = $this->getTypeObject()->getThumbnail();
         if ($this->getTypeObject()->supportsThumbnails() || $this->getTypeObject()->isSVG()) {
             $app = Application::getFacadeApplication();
             $config = $app->make('config');
@@ -1872,8 +1873,6 @@ class Version implements ObjectInterface
             } elseif ($this->getTypeObject()->isSVG()) {
                 $result = '<img class="ccm-file-manager-detail-thumbnail" src="' . $this->getThumbnailURL($type->getBaseVersion()) . '" />';
             }
-        } else {
-            $result = $this->getTypeObject()->getThumbnail();
         }
 
         return $result;
