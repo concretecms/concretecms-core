@@ -1,7 +1,7 @@
 @import url(//fonts.googleapis.com/css?family=Poppins:400,600);
 @import url(//fonts.googleapis.com/css?family=Oswald:500);
 @import url(//fonts.googleapis.com/css?family=Inter:800);
-/*!
+:root{--bs-light-accent:#8a7eae;--bs-light-accent-rgb:138,126,174;--bs-light-accent-bg-subtle:#f3f2f7;--bs-light-accent-border-subtle:#d0cbdf;--bs-light-accent-text-emphasis:#8a7eae;--bs-accent:#c46cff;--bs-accent-rgb:196,108,255;--bs-accent-bg-subtle:#f9f0ff;--bs-accent-border-subtle:#e7c4ff;--bs-accent-text-emphasis:#c46cff;--bs-dark-accent:#3e3360;--bs-dark-accent-rgb:62,51,96;--bs-dark-accent-bg-subtle:#ecebef;--bs-dark-accent-border-subtle:#b2adbf;--bs-dark-accent-text-emphasis:#3e3360}/*!
  * Bootstrap  v5.3.3 (https://getbootstrap.com/)
  * Copyright 2011-2024 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
