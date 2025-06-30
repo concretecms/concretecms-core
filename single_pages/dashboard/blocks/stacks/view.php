@@ -96,10 +96,10 @@ if (isset($neutralStack)) {
             $deleteLabels = null;
         ?>
             <nav class="navbar navbar-expand-lg bg-body-tertiary px-3">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#stacksNavbar" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                <button class="navbar-toggler px-2 py-0" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.edit-bar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="<?= t('Toggle navigation') ?>">
+                    <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
                 </button>
-                <div class="collapse navbar-collapse" id="stacksNavbar">
+                <div class="collapse navbar-collapse edit-bar">
                     <ul class="navbar-nav me-auto">
                         <?php
                         if ($areaPermissions->canAddBlocks()) {
