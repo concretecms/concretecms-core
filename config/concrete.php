@@ -435,6 +435,23 @@ return [
 
     /*
      * ------------------------------------------------------------------------
+     * Boards settings
+     * ------------------------------------------------------------------------
+     */
+    'boards' => [
+        /*
+         * If true, we will attempt to automatically update boards
+         * when their content items (pages, events, etc...) change
+         * Set this to false via the web UI if you're using the console command
+         * or other means to keep the boards up to date.
+         *
+         * @var bool
+         */
+        'automatically_refresh_instances' => true,
+    ],
+
+    /*
+     * ------------------------------------------------------------------------
      * Events settings
      * ------------------------------------------------------------------------
      */
