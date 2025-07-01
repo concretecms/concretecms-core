@@ -39,7 +39,7 @@ abstract class AbstractUpdateBoardInstanceCommandHandler implements LoggerAwareI
         Application $app,
         BoardDataSourceManager $boardDataSourceManager,
         EntityManager $entityManager,
-        Repository $config,
+        Repository $config
     )
     {
         $this->app = $app;
