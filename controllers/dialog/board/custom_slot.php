@@ -65,14 +65,25 @@ protected function validateCustomSlotToken()
         $items = [];
         if (!empty($this->request->request->get('selectedItemIds'))) {
             foreach ($this->request->request->get('selectedItemIds') as $itemId) {
-                $items[] = $entityManager->find(InstanceItem::class, $itemId);
+                $item = $entityManager->find(InstanceItem::class, $itemId);
+                // Only accept items that actually belong to the instance this user has been authorized
+                // to edit. Otherwise permission to edit one board would be enough to dereference an
+                // item belonging to another board and have its content rendered into this response.
+                if ($item instanceof InstanceItem
+                    && $item->getInstance()
+                    && $item->getInstance()->getBoardInstanceID() == $instance->getBoardInstanceID()
+                ) {
+                    $items[] = $item;
+                }
             }
         }
         $templates = $availableTemplateCollectionFactory->getAvailableTemplates(
             $instance, $this->request->request->get('slot')
         );
 
-        $itemObjectGroups = $contentPopulator->createContentObjects($items);
+        // This response is built from user-supplied input and returned directly to the browser, so the
+        // content must be limited to what the current user is permitted to view.
+        $itemObjectGroups = $contentPopulator->createContentObjects($items, true);
         return new JsonResponse($this->createSlotTemplateJsonArray($templates, $itemObjectGroups));
     }
 

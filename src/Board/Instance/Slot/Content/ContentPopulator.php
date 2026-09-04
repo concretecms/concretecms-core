@@ -37,9 +37,12 @@ class ContentPopulator
      * a large pool of potential content objects for them. These will be placed into slot templates.
      *
      * @param ItemProviderInterface[] $items
+     * @param bool $enforceViewPermissions Restrict the generated content to what the current user may
+     *                                     view. Defaults to false because board generation runs without
+     *                                     a session; request-scoped callers must opt in.
      * @return ItemObjectGroup[]
      */
-    public function createContentObjects($items) : array
+    public function createContentObjects($items, bool $enforceViewPermissions = false) : array
     {
         $groups = [];
         foreach($items as $instanceItem) {
@@ -61,7 +64,7 @@ class ContentPopulator
             } else {
                 $logger = $this->loggerFactory->createNullLogger();
             }
-            $contentObjects = $contentPopulator->createContentObjects($itemData, $logger);
+            $contentObjects = $contentPopulator->createContentObjects($itemData, $logger, $enforceViewPermissions);
             $groups[] = new ItemObjectGroup($instanceItem, $contentObjects);
         }
         return $groups;
