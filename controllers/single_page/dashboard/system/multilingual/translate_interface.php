@@ -101,7 +101,7 @@ class TranslateInterface extends DashboardSitePageController
         if ($this->post('action') == 'export') {
             if (Core::make('token')->validate()) {
                 $defaultSourceLocale = $this->getSite()->getConfigRepository()->get('multilingual.default_source_locale');
-                $list = Section::getList();
+                $list = Section::getList($this->getSite());
                 foreach ($list as $section) {
                     if ($section->getLocale() != $defaultSourceLocale) {
                         $translations = $section->getSectionInterfaceTranslations();
@@ -166,7 +166,7 @@ class TranslateInterface extends DashboardSitePageController
             if (!Core::make('token')->validate('export_translations')) {
                 throw new \Exception(Core::make('token')->getErrorMessage());
             }
-            $section = Section::getByLocale($localeCode);
+            $section = Section::getByLocale($localeCode, $this->getSite());
             if (is_object($section) && (!$section->isError())) {
                 if ($section->getLocale() == $this->site->getConfigRepository()->get('multilingual.default_source_locale')) {
                     $section = null;
