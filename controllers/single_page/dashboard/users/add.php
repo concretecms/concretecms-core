@@ -2,6 +2,7 @@
 
 namespace Concrete\Controller\SinglePage\Dashboard\Users;
 
+use Concrete\Core\Error\UserMessageException;
 use Concrete\Core\Page\Controller\DashboardPageController;
 use Concrete\Core\Permission\Checker;
 use Concrete\Core\User\Group\GroupRepository;
@@ -20,6 +21,8 @@ class Add extends DashboardPageController
      */
     public function view()
     {
+        $this->checkAddUsersPermission();
+
         $locales = Localization::getAvailableInterfaceLanguageDescriptions();
         $attribs = UserAttributeKey::getRegistrationList();
         $assignment = PermissionKey::getByHandle('edit_user_properties')->getMyAssignment();
@@ -43,6 +46,8 @@ class Add extends DashboardPageController
      */
     public function submit()
     {
+        $this->checkAddUsersPermission();
+
         $assignment = PermissionKey::getByHandle('edit_user_properties')->getMyAssignment();
         $postRequest = $this->request->request;
         $username = trim($postRequest->get('uName'));
@@ -132,5 +137,18 @@ class Add extends DashboardPageController
             $this->view();
         }
         return;
+    }
+
+    /**
+     * @throws \Concrete\Core\Error\UserMessageException when the current user may not add users
+     *
+     * @return void
+     */
+    private function checkAddUsersPermission()
+    {
+        $permissions = new Checker();
+        if (!$permissions->canAddUsers()) {
+            throw new UserMessageException(t('You do not have access to add users.'));
+        }
     }
 }

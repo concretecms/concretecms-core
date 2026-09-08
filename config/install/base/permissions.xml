@@ -466,6 +466,12 @@
             </access>
         </permissionkey>
 
+        <permissionkey handle="add_users" name="Add Users" description="Controls whether a user can add users." package="" category="user">
+            <access>
+                <group name="Administrators" description=""/>
+            </access>
+        </permissionkey>
+
         <permissionkey handle="access_api" name="Access API" package="" category="admin">
             <access>
                 <group name="Administrators" description=""/>

@@ -179,10 +179,19 @@ class Users extends ApiController
      *         description="Successful files operation",
      *         @OA\JsonContent(ref="#/components/schemas/User"),
      *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="You do not have the proper permissions to add this resource."
+     *     ),
      * )
      */
     public function add()
     {
+        $permissions = new Checker();
+        if (!$permissions->canAddUsers()) {
+            return $this->error(t('You do not have access to add users.'), 401);
+        }
+
         $content = json_decode($this->request->getContent(), true);
 
         $e = $this->app->make('error');
