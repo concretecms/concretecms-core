@@ -1,11 +1,13 @@
 <?php
 namespace Concrete\Controller\SinglePage\Dashboard\System\Express\Entities;
 
+use Concrete\Core\Controller\Traits\DashboardExpressEntityBreadcrumbTrait;
 use Concrete\Core\Express\EntryList;
 use Concrete\Core\Page\Controller\DashboardPageController;
 
 class OrderEntries extends DashboardPageController
 {
+    use DashboardExpressEntityBreadcrumbTrait;
 
     public function view($id = null)
     {
