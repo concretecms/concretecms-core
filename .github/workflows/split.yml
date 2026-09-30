@@ -1,15 +1,11 @@
 name: Split
 
 on:
-  # Started by the "Notify splitter" workflow of the source repository
-  repository_dispatch:
-    types:
-      - split
   # Started periodically, to keep the cache alive and to process what didn't start the split
   # (late at night in Portland)
   schedule:
     - cron: "30 10 * * 1,4"
-  # Started manually
+  # Started by the "Notify splitter" workflow of the source repository, or manually
   workflow_dispatch:
     inputs:
       from-scratch:

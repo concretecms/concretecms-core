@@ -13,7 +13,7 @@ The split is performed by [incremental-git-filterbranch](https://github.com/conc
 ### How it works
 
 1. Someone pushes a branch or a tag to [concretecms/concretecms](https://github.com/concretecms/concretecms).
-2. The `Notify splitter` workflow of that repository (`.github/workflows/notify-splitter.yml`) sends a `repository_dispatch` event to this repository, by using a token.
+2. The `Notify splitter` workflow of that repository (`.github/workflows/notify-splitter.yml`) starts the `Split` workflow of this repository, by using a token.
 3. The `Split` workflow of this repository (`.github/workflows/split.yml`) processes the new commits and tags.
 4. The `Split` workflow pushes the result to this repository, by using the token provided by GitHub Actions.
 
@@ -32,7 +32,7 @@ If the cache is not available, the whole source repository is processed again: i
       - Resource owner: `concretecms` (the organization must allow fine-grained personal access tokens, and an owner may have to approve the token)
       - Expiration: choose an expiration date, and remember to renew the token before it expires
       - Repository access: `Only select repositories`, and select `concretecms/concretecms-core`
-      - Permissions: `Contents` > `Read and write` (it's the permission required to send `repository_dispatch` events)
+      - Permissions: `Actions` > `Read and write` (it's the permission required to start a workflow)
       - copy the generated token (`github_pat_...`): it's displayed only once
    2. Save the token as a secret of the source repository:
       - go to https://github.com/concretecms/concretecms/settings/secrets/actions
