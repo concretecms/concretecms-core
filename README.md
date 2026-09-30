@@ -46,6 +46,7 @@ If the cache is not available, the whole source repository is processed again: i
 - A new tag starts the split only if its commit contains the `Notify splitter` workflow.
 - Deleted branches and tags are handled by the `Notify splitter` workflow of the default branch of concretecms.
 - Only one split runs at a time. If other splits are requested in the meantime, only the most recent one waits: the other ones are cancelled by GitHub. That's not a problem, since every run processes all the new commits and tags.
+- The branches and the tags to be processed are defined by the `BRANCH_WHITELIST` and `TAG_BLACKLIST` variables in `.github/workflows/split.yml`. The `Notify splitter` workflow reads them from there, so that it doesn't start the split for the other branches and tags.
 - The version of incremental-git-filterbranch to be used is defined by the `INCREMENTAL_FILTER_BRANCH_VERSION` variable in `.github/workflows/split.yml`.
 - To process the whole source repository again (for example after upgrading to a version of incremental-git-filterbranch that fixes the way commits are rewritten), start the `Split` workflow manually, checking the `from-scratch` option. Please remark that it takes about 20 minutes.
 - For debugging purposes, you can download the working directory used by a run: start the `Split` workflow manually, checking the `save-work-directory` option. You'll find it in the artifacts of the run, for 3 days.

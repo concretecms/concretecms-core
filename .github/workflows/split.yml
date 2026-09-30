@@ -37,7 +37,12 @@ env:
   DESTINATION_REPOSITORY: https://github.com/${{ github.repository }}.git
   # The branch of this repository that contains this workflow: it must be the default branch
   SPLITTER_BRANCH: core-splitter
-  INCREMENTAL_FILTER_BRANCH_VERSION: 2.2.0
+  # The branches and the tags of the source repository to be processed
+  # (see the --branch-whitelist and --tag-blacklist options of incremental-git-filterbranch).
+  # These values are also read by the "Notify splitter" workflow of the source repository: don't rename or move them
+  BRANCH_WHITELIST: master rx:.+\.x rx:.+-dev rx:release/.*
+  TAG_BLACKLIST: rx:5\..*
+  INCREMENTAL_FILTER_BRANCH_VERSION: 2.2.1
 
 jobs:
   split:
@@ -83,8 +88,8 @@ jobs:
           ./incremental-git-filterbranch \
             --workdir "$PWD/work" \
             --no-lock \
-            --branch-whitelist 'master rx:.+\.x rx:.+-dev rx:release\/.*' \
-            --tag-blacklist 'rx:5\..*' \
+            --branch-whitelist "$BRANCH_WHITELIST" \
+            --tag-blacklist "$TAG_BLACKLIST" \
             --prune-branches \
             --prune-branches-exclude "$SPLITTER_BRANCH" \
             --prune-tags \
