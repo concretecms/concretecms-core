@@ -29,7 +29,7 @@ permissions:
   contents: write
 
 env:
-  SOURCE_REPOSITORY: https://github.com/mlocati/testsplit-whole.git
+  SOURCE_REPOSITORY: https://github.com/concretecms/concretecms.git
   DESTINATION_REPOSITORY: https://github.com/${{ github.repository }}.git
   # The branch of this repository that contains this workflow: it must be the default branch
   SPLITTER_BRANCH: core-splitter
@@ -43,6 +43,8 @@ env:
 jobs:
   split:
     name: Split
+    # Don't run in the forks of this repository
+    if: github.repository == 'concretecms/concretecms-core'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
